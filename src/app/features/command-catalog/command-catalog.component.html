@@ -1,0 +1,42 @@
+<section class="catalog">
+  <div class="intro">
+    <div>
+      <p class="eyebrow">Celem ecosystem</p>
+      <h1>Commands</h1>
+      <p class="summary">
+        Searchable command reference generated from the project documentation in Celem2026.
+      </p>
+    </div>
+    <dl>
+      <div>
+        <dt>{{ totalCount() }}</dt>
+        <dd>Total</dd>
+      </div>
+      <div>
+        <dt>{{ visibleCount() }}</dt>
+        <dd>Visible</dd>
+      </div>
+      <div>
+        <dt>{{ projects().length }}</dt>
+        <dd>Projects</dd>
+      </div>
+    </dl>
+  </div>
+
+  <celem-command-toolbar
+    [filters]="filters()"
+    [projects]="projects()"
+    [permissions]="permissions()"
+    [languages]="languages()"
+    (filtersChange)="updateFilters($event)" />
+
+  @if (filteredCommands().length > 0) {
+    <section class="grid" aria-live="polite">
+      @for (command of filteredCommands(); track command.id) {
+        <celem-command-card [command]="command" [searchTerm]="filters().query" />
+      }
+    </section>
+  } @else {
+    <p class="empty">No commands match the current filters.</p>
+  }
+</section>

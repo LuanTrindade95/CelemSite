@@ -1,0 +1,62 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 76px;
+  padding: 10px clamp(16px, 4vw, 44px);
+  border-bottom: 1px solid rgba(81, 91, 104, 0.58);
+  background: rgba(3, 4, 6, 0.86);
+  backdrop-filter: blur(14px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--celem-text);
+  text-decoration: none;
+}
+
+.brand img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+
+.brand strong,
+.brand small {
+  display: block;
+}
+
+.brand strong {
+  font-size: 1.03rem;
+  letter-spacing: 0;
+}
+
+.brand small,
+nav a {
+  color: var(--celem-muted);
+}
+
+nav a {
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: var(--celem-focus);
+}
+
+main {
+  width: min(1460px, 100%);
+  margin: 0 auto;
+  padding: clamp(18px, 4vw, 42px);
+}

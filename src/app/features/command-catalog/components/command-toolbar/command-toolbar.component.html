@@ -1,0 +1,51 @@
+<section class="toolbar" aria-label="Command filters">
+  <label class="search">
+    <span>Search</span>
+    <input
+      type="search"
+      [ngModel]="filters.query"
+      (ngModelChange)="update({ query: $event })"
+      placeholder="Search commands, aliases, examples..."
+      autocomplete="off">
+  </label>
+
+  <label>
+    <span>Project</span>
+    <select [ngModel]="filters.project" (ngModelChange)="update({ project: $event })">
+      <option value="">All projects</option>
+      @for (project of projects; track project) {
+        <option [value]="project">{{ project }}</option>
+      }
+    </select>
+  </label>
+
+  <label>
+    <span>Permission</span>
+    <select [ngModel]="filters.permission" (ngModelChange)="update({ permission: $event })">
+      <option value="">All permissions</option>
+      @for (permission of permissions; track permission) {
+        <option [value]="permission">{{ permission }}</option>
+      }
+    </select>
+  </label>
+
+  <label>
+    <span>Language</span>
+    <select [ngModel]="filters.language" (ngModelChange)="update({ language: $event })">
+      <option value="">All languages</option>
+      @for (language of languages; track language) {
+        <option [value]="language">{{ language }}</option>
+      }
+    </select>
+  </label>
+
+  <label>
+    <span>Sort</span>
+    <select [ngModel]="filters.sortMode" (ngModelChange)="updateSortMode($event)">
+      <option value="project">Project</option>
+      <option value="command">Command</option>
+      <option value="permission">Permission</option>
+      <option value="language">Language</option>
+    </select>
+  </label>
+</section>

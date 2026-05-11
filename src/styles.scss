@@ -1,0 +1,49 @@
+:root {
+  --celem-bg: #030406;
+  --celem-bg-2: #090b11;
+  --celem-panel: #0a0c11;
+  --celem-panel-2: #10141b;
+  --celem-border: #515b68;
+  --celem-accent: #b43a40;
+  --celem-accent-strong: #d2484e;
+  --celem-gold: #c5a56a;
+  --celem-text: #e5e7eb;
+  --celem-muted: #a6adba;
+  --celem-success: #4e9b6d;
+  --celem-warning: #d38a32;
+  --celem-danger: #8d2e35;
+  --celem-focus: #f2d28a;
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+  background:
+    linear-gradient(140deg, rgba(180, 58, 64, 0.14), transparent 34%),
+    linear-gradient(180deg, var(--celem-bg), var(--celem-bg-2) 48%, #130e10);
+  color: var(--celem-text);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button,
+select,
+input {
+  border-radius: 6px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--celem-focus);
+  outline-offset: 2px;
+}

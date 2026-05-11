@@ -1,0 +1,42 @@
+<article class="command-card">
+  <header>
+    <div>
+      <p class="project">{{ command.projectName }}</p>
+      <code [celemHighlightSearch]="command.command" [searchTerm]="searchTerm"></code>
+    </div>
+    <span class="permission" [class.admin]="command.category.toLowerCase().includes('admin')">{{ command.permission }}</span>
+  </header>
+
+  <p class="description">{{ command.description }}</p>
+
+  @if (command.aliases.length > 0) {
+    <section class="chips" aria-label="Aliases">
+      @for (alias of command.aliases; track alias) {
+        <code>{{ alias }}</code>
+      }
+    </section>
+  }
+
+  @if (command.usage) {
+    <section>
+      <h3>Usage</h3>
+      <code class="block">{{ command.usage }}</code>
+    </section>
+  }
+
+  @if (command.examples.length > 0) {
+    <section>
+      <h3>Examples</h3>
+      <div class="examples">
+        @for (example of command.examples; track example) {
+          <code>{{ example }}</code>
+        }
+      </div>
+    </section>
+  }
+
+  <footer>
+    <span>{{ command.language }}</span>
+    <span>{{ command.sourcePath }}</span>
+  </footer>
+</article>
