@@ -31,3 +31,9 @@ Deployment uses GitHub Actions and the official Pages artifact flow. This is pre
 ## Data Source
 
 Initial catalog rows are seeded in `CelemBackend` from `docs/*/commands.md` files and served through the public Supabase Edge Function `command-catalog`.
+
+## Metadata Platform Direction
+
+The target command ecosystem architecture is documented in [Command Metadata Platform RFC](docs/command-metadata-platform.md).
+
+The long-term direction is to keep Markdown as human documentation while promoting `commands.json` plus `commands.schema.json` to the official machine-readable source of truth. Supabase remains the centralized metadata platform for public APIs, search, autocomplete, and future semantic/AI integrations.
