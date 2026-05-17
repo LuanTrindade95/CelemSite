@@ -18,8 +18,10 @@ describe('CommandToolbarComponent', () => {
       sortMode: 'project',
     });
     fixture.componentRef.setInput('projects', ['CelemBank']);
-    fixture.componentRef.setInput('permissions', ['Player']);
-    fixture.componentRef.setInput('languages', ['en']);
+    fixture.componentRef.setInput('permissions', ['player']);
+    fixture.componentRef.setInput('languages', ['english']);
+    fixture.componentRef.setInput('displayCategory', (category: string) => category);
+    fixture.componentRef.setInput('displayLanguage', (languageCode: string) => languageCode);
     fixture.detectChanges();
   });
 

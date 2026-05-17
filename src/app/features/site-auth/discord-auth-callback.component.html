@@ -1,0 +1,14 @@
+<section class="auth-state">
+  <div class="panel">
+    @if (isLoading()) {
+      <p class="eyebrow">Discord</p>
+      <h1>{{ text('authLoadingTitle') }}</h1>
+      <p>{{ text('authLoadingDescription') }}</p>
+    } @else {
+      <p class="eyebrow">Discord</p>
+      <h1>{{ text('authErrorTitle') }}</h1>
+      <p>{{ callbackError() }}</p>
+      <button type="button" (click)="goBack()">{{ text('backToCatalog') }}</button>
+    }
+  </div>
+</section>

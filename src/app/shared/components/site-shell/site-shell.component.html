@@ -3,9 +3,34 @@
     <img src="assets/images/celem-logo.png" alt="Celem" width="54" height="54">
     <span>
       <strong>Reino Sagrado de Celem</strong>
-      <small>Command catalog</small>
+      <small>{{ text('brandSubtitle') }}</small>
     </span>
   </a>
+
+  <div class="header-controls">
+    <label class="language-picker">
+      <span>{{ text('language') }}</span>
+      <select [ngModel]="currentLanguage()" (ngModelChange)="changeLanguage($event)">
+        @for (language of languageOptions; track language.code) {
+          <option [value]="language.code">{{ language.displayName }}</option>
+        }
+      </select>
+    </label>
+
+    @if (session().user; as user) {
+      <div class="session-chip">
+        @if (user.avatarUrl) {
+          <img [src]="user.avatarUrl" [alt]="user.displayName">
+        }
+        <span>{{ user.displayName }}</span>
+        <button type="button" class="ghost" (click)="logout()">{{ text('logout') }}</button>
+      </div>
+    } @else {
+      <button type="button" class="discord-button" [disabled]="isLoadingSession()" (click)="login()">
+        {{ text('login') }}
+      </button>
+    }
+  </div>
 </header>
 
 <main>

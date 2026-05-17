@@ -4,6 +4,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { CommandCatalogApiService } from './command-catalog-api.service';
 
 describe('CommandCatalogApiService', () => {
+  const languageCode = 'english';
   let service: CommandCatalogApiService;
   let http: HttpTestingController;
 
@@ -18,27 +19,30 @@ describe('CommandCatalogApiService', () => {
 
   afterEach(() => http.verify());
 
-  it('loads commands from the public Edge Function', () => {
-    service.loadCommands().subscribe((commands) => {
+  it('loads commands from the protected site Edge Function', () => {
+    service.loadCommands(languageCode).subscribe((commands) => {
       expect(commands.length).toBe(1);
       expect(commands[0].command).toBe('.bank balance');
     });
 
-    const request = http.expectOne('https://oaivdxyvlqyrrickkldl.supabase.co/functions/v1/command-catalog');
+    const request = http.expectOne((candidate) =>
+      candidate.url === 'https://oaivdxyvlqyrrickkldl.supabase.co/functions/v1/site-command-catalog'
+      && candidate.params.get('language') === languageCode
+      && candidate.withCredentials);
     request.flush({
       success: true,
       data: [{
         id: '1',
         projectSlug: 'celem-bank',
         projectName: 'CelemBank',
-        category: 'Player',
+        category: 'player',
         command: '.bank balance',
         aliases: [],
         permission: 'Player',
         description: 'Shows the balance.',
         usage: '.bank balance',
         examples: ['.bank balance'],
-        language: 'en',
+        language: 'english',
         sourcePath: 'CelemBank/docs/user/commands.md',
         sortOrder: 1,
       }],
@@ -46,12 +50,19 @@ describe('CommandCatalogApiService', () => {
     });
   });
 
-  it('falls back to local commands when the request fails', () => {
-    service.loadCommands().subscribe((commands) => {
+  it('falls back to local commands when both API requests fail', () => {
+    service.loadCommands(languageCode).subscribe((commands) => {
       expect(commands.length).toBeGreaterThan(0);
     });
 
-    const request = http.expectOne('https://oaivdxyvlqyrrickkldl.supabase.co/functions/v1/command-catalog');
-    request.flush('error', { status: 500, statusText: 'Server Error' });
+    const protectedRequest = http.expectOne((candidate) =>
+      candidate.url === 'https://oaivdxyvlqyrrickkldl.supabase.co/functions/v1/site-command-catalog'
+      && candidate.params.get('language') === languageCode);
+    protectedRequest.flush('error', { status: 500, statusText: 'Server Error' });
+
+    const publicRequest = http.expectOne((candidate) =>
+      candidate.url === 'https://oaivdxyvlqyrrickkldl.supabase.co/functions/v1/command-catalog'
+      && candidate.params.get('language') === languageCode);
+    publicRequest.flush('error', { status: 500, statusText: 'Server Error' });
   });
 });

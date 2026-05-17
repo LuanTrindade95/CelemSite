@@ -10,7 +10,7 @@
   <p class="description">{{ command.description }}</p>
 
   @if (command.aliases.length > 0) {
-    <section class="chips" aria-label="Aliases">
+    <section class="chips" [attr.aria-label]="text('aliases')">
       @for (alias of command.aliases; track alias) {
         <code>{{ alias }}</code>
       }
@@ -19,14 +19,14 @@
 
   @if (command.usage) {
     <section>
-      <h3>Usage</h3>
+      <h3>{{ text('usage') }}</h3>
       <code class="block">{{ command.usage }}</code>
     </section>
   }
 
   @if (command.examples.length > 0) {
     <section>
-      <h3>Examples</h3>
+      <h3>{{ text('examples') }}</h3>
       <div class="examples">
         @for (example of command.examples; track example) {
           <code>{{ example }}</code>
@@ -36,7 +36,7 @@
   }
 
   <footer>
-    <span>{{ command.language }}</span>
+    <span>{{ displayLanguage(command.language) }}</span>
     <span>{{ command.sourcePath }}</span>
   </footer>
 </article>

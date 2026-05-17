@@ -1,9 +1,12 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { distinctUntilChanged, switchMap } from 'rxjs';
 import { CommandCardComponent } from './components/command-card/command-card.component';
 import { CommandToolbarComponent } from './components/command-toolbar/command-toolbar.component';
 import { CommandCatalogApiService } from './services/command-catalog-api.service';
 import { CommandCatalogFilters, CommandCatalogItem } from './models/command-catalog.models';
+import { SiteI18nService } from '../../shared/services/site-i18n.service';
+import { SiteLanguageService } from '../../shared/services/site-language.service';
 
 const INITIAL_FILTERS: CommandCatalogFilters = {
   query: '',
@@ -22,8 +25,17 @@ const INITIAL_FILTERS: CommandCatalogFilters = {
 })
 export class CommandCatalogComponent {
   private readonly api = inject(CommandCatalogApiService);
+  private readonly i18n = inject(SiteI18nService);
+  private readonly language = inject(SiteLanguageService);
 
-  protected readonly commands = toSignal(this.api.loadCommands(), { initialValue: [] });
+  protected readonly text = (key: Parameters<SiteI18nService['text']>[0]) => this.i18n.text(key);
+  protected readonly commands = toSignal(
+    toObservable(this.language.currentLanguage).pipe(
+      distinctUntilChanged(),
+      switchMap((languageCode) => this.api.loadCommands(languageCode)),
+    ),
+    { initialValue: [] },
+  );
   protected readonly filters = signal<CommandCatalogFilters>(INITIAL_FILTERS);
   protected readonly projects = computed(() => unique(this.commands().map((command) => command.projectName)));
   protected readonly permissions = computed(() => unique(this.commands().map((command) => command.category)));
@@ -31,6 +43,9 @@ export class CommandCatalogComponent {
   protected readonly filteredCommands = computed(() => filterAndSort(this.commands(), this.filters()));
   protected readonly visibleCount = computed(() => this.filteredCommands().length);
   protected readonly totalCount = computed(() => this.commands().length);
+  protected readonly displayCategory = (category: string) =>
+    normalizeCategory(category) === 'admin' ? this.text('adminCategory') : this.text('playerCategory');
+  protected readonly displayLanguage = (languageCode: string) => this.language.getDisplayName(languageCode);
 
   protected updateFilters(filters: CommandCatalogFilters): void {
     this.filters.set(filters);
@@ -42,7 +57,7 @@ function filterAndSort(commands: CommandCatalogItem[], filters: CommandCatalogFi
 
   return commands
     .filter((command) => !filters.project || command.projectName === filters.project)
-    .filter((command) => !filters.permission || command.category === filters.permission)
+    .filter((command) => !filters.permission || normalizeCategory(command.category) === normalizeCategory(filters.permission))
     .filter((command) => !filters.language || command.language === filters.language)
     .filter((command) => !query || searchableText(command).includes(query))
     .sort((left, right) => compareCommands(left, right, filters.sortMode));
@@ -51,7 +66,7 @@ function filterAndSort(commands: CommandCatalogItem[], filters: CommandCatalogFi
 function searchableText(command: CommandCatalogItem): string {
   return [
     command.projectName,
-    command.category,
+    normalizeCategory(command.category),
     command.command,
     command.permission,
     command.description,
@@ -68,7 +83,7 @@ function compareCommands(left: CommandCatalogItem, right: CommandCatalogItem, so
     case 'command':
       return left.command.localeCompare(right.command);
     case 'permission':
-      return left.category.localeCompare(right.category) || left.projectName.localeCompare(right.projectName);
+      return normalizeCategory(left.category).localeCompare(normalizeCategory(right.category)) || left.projectName.localeCompare(right.projectName);
     case 'language':
       return left.language.localeCompare(right.language) || left.projectName.localeCompare(right.projectName);
     case 'project':
@@ -79,4 +94,8 @@ function compareCommands(left: CommandCatalogItem, right: CommandCatalogItem, so
 
 function unique(values: string[]): string[] {
   return [...new Set(values.filter(Boolean))].sort((left, right) => left.localeCompare(right));
+}
+
+function normalizeCategory(value: string): string {
+  return value.trim().toLowerCase();
 }

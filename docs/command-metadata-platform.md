@@ -2,9 +2,16 @@
 
 ## Status
 
-Proposed.
+Partially implemented.
 
-This document defines the target architecture for evolving the Celem plugin command catalog from Markdown-seeded rows into a structured metadata platform. It is a planning document for CelemSite, CelemBackend, and plugin repositories. It does not replace current runtime behavior until the migration plan is implemented.
+This document defines the target architecture for evolving the Celem plugin command catalog into a structured metadata platform. It is still forward-looking, but parts of the runtime are now active in `CelemSite` and `CelemBackend`.
+
+Current implemented pieces:
+
+- plugin command translation import now prefers `Localization/Commands.json` and complements missing metadata with localized `Command` / `CommandAlias` attributes.
+- public and authenticated catalog payloads are separated at the Supabase Edge Function layer.
+- Discord role filtering now happens server-side before authenticated catalog responses are returned.
+- the site UI now uses the V Rising language set and persists language preference locally and, for authenticated users, in Supabase.
 
 ## Current Platform Alignment
 
@@ -14,6 +21,7 @@ The current ecosystem already has useful foundations that should be reused inste
 - CelemCore command metadata already includes command name, group, aliases, language, `adminOnly`, required permissions, usage, description, parameters, and `[Remainder]` behavior.
 - CelemCore localization already supports player/server language resolution and shared JSON translation resources.
 - CelemBackend already exposes a public Supabase Edge Function named `command-catalog`.
+- CelemBackend now also exposes a credentialed `site-command-catalog` function plus site session/login/logout/language helpers.
 - CelemBackend already has read-heavy Edge Function cache and IP rate-limit helpers that can be reused for command metadata APIs.
 - CelemSite already has an Angular command catalog feature that can evolve from a flat DTO to a richer structured API model.
 
@@ -25,7 +33,7 @@ The Celem ecosystem should separate human documentation from machine-readable me
 
 Markdown remains the human documentation layer. It is still the right format for explanations, command risk notes, screenshots, examples, troubleshooting, and developer context. It should not remain the machine source of truth because Markdown is presentation-oriented, hard to validate consistently, weak for automation, and fragile for synchronization.
 
-Structured JSON becomes the official machine-readable source of truth. Every plugin that exposes commands should publish a `commands.json` file validated by `commands.schema.json`. Supabase should store both the raw manifest for auditability and normalized rows for API, search, filtering, analytics, autocomplete, and future AI retrieval.
+Structured metadata remains the target machine-readable source of truth. The current live implementation generates a protected/public runtime catalog directly from plugin localization resources and localized C# command attributes. A future `commands.json` contract can still sit on top of that model when the ecosystem is ready.
 
 The architecture has these layers:
 
@@ -864,7 +872,12 @@ Stable IDs over command strings: more upfront discipline, but required for telem
 
 ## Implementation Notes for This Repository
 
-The current CelemSite command catalog still consumes `https://oaivdxyvlqyrrickkldl.supabase.co/functions/v1/command-catalog` and falls back to local seeded rows. This RFC documents the target platform architecture; implementation should happen in separate task branches for backend schema, sync automation, plugin manifests, and Angular API model changes.
+The current site consumes:
+
+- `https://oaivdxyvlqyrrickkldl.supabase.co/functions/v1/site-command-catalog` for credentialed reads with server-side role filtering.
+- `https://oaivdxyvlqyrrickkldl.supabase.co/functions/v1/command-catalog` for public-only fallback reads.
+
+The current backend catalog bundle is generated from plugin source under `Celem2026` rather than from Markdown docs.
 
 ## Sources Verified
 

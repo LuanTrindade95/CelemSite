@@ -6,6 +6,7 @@ export interface ApiEnvelope<T> {
 
 export interface CommandCatalogItem {
   id: string;
+  commandKey?: string;
   projectSlug: string;
   projectName: string;
   category: string;
@@ -18,6 +19,7 @@ export interface CommandCatalogItem {
   language: string;
   sourcePath: string;
   sortOrder: number;
+  isInternalPlugin?: boolean;
   updatedAt?: string;
 }
 

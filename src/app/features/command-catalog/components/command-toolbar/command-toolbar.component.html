@@ -1,18 +1,18 @@
 <section class="toolbar" aria-label="Command filters">
   <label class="search">
-    <span>Search</span>
+    <span>{{ text('search') }}</span>
     <input
       type="search"
       [ngModel]="filters.query"
       (ngModelChange)="update({ query: $event })"
-      placeholder="Search commands, aliases, examples..."
+      [placeholder]="text('searchPlaceholder')"
       autocomplete="off">
   </label>
 
   <label>
-    <span>Project</span>
+    <span>{{ text('project') }}</span>
     <select [ngModel]="filters.project" (ngModelChange)="update({ project: $event })">
-      <option value="">All projects</option>
+      <option value="">{{ text('allProjects') }}</option>
       @for (project of projects; track project) {
         <option [value]="project">{{ project }}</option>
       }
@@ -20,32 +20,32 @@
   </label>
 
   <label>
-    <span>Permission</span>
+    <span>{{ text('permission') }}</span>
     <select [ngModel]="filters.permission" (ngModelChange)="update({ permission: $event })">
-      <option value="">All permissions</option>
+      <option value="">{{ text('allPermissions') }}</option>
       @for (permission of permissions; track permission) {
-        <option [value]="permission">{{ permission }}</option>
+        <option [value]="permission">{{ displayCategory(permission) }}</option>
       }
     </select>
   </label>
 
   <label>
-    <span>Language</span>
+    <span>{{ text('language') }}</span>
     <select [ngModel]="filters.language" (ngModelChange)="update({ language: $event })">
-      <option value="">All languages</option>
+      <option value="">{{ text('allLanguages') }}</option>
       @for (language of languages; track language) {
-        <option [value]="language">{{ language }}</option>
+        <option [value]="language">{{ displayLanguage(language) }}</option>
       }
     </select>
   </label>
 
   <label>
-    <span>Sort</span>
+    <span>{{ text('sort') }}</span>
     <select [ngModel]="filters.sortMode" (ngModelChange)="updateSortMode($event)">
-      <option value="project">Project</option>
-      <option value="command">Command</option>
-      <option value="permission">Permission</option>
-      <option value="language">Language</option>
+      <option value="project">{{ text('sortProject') }}</option>
+      <option value="command">{{ text('sortCommand') }}</option>
+      <option value="permission">{{ text('sortPermission') }}</option>
+      <option value="language">{{ text('sortLanguage') }}</option>
     </select>
   </label>
 </section>

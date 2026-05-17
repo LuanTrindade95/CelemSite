@@ -1,24 +1,24 @@
 <section class="catalog">
   <div class="intro">
     <div>
-      <p class="eyebrow">Celem ecosystem</p>
-      <h1>Commands</h1>
+      <p class="eyebrow">{{ text('eyebrow') }}</p>
+      <h1>{{ text('catalogTitle') }}</h1>
       <p class="summary">
-        Searchable command reference generated from the project documentation in Celem2026.
+        {{ text('catalogSummary') }}
       </p>
     </div>
     <dl>
       <div>
         <dt>{{ totalCount() }}</dt>
-        <dd>Total</dd>
+        <dd>{{ text('total') }}</dd>
       </div>
       <div>
         <dt>{{ visibleCount() }}</dt>
-        <dd>Visible</dd>
+        <dd>{{ text('visible') }}</dd>
       </div>
       <div>
         <dt>{{ projects().length }}</dt>
-        <dd>Projects</dd>
+        <dd>{{ text('projects') }}</dd>
       </div>
     </dl>
   </div>
@@ -28,6 +28,8 @@
     [projects]="projects()"
     [permissions]="permissions()"
     [languages]="languages()"
+    [displayLanguage]="displayLanguage"
+    [displayCategory]="displayCategory"
     (filtersChange)="updateFilters($event)" />
 
   @if (filteredCommands().length > 0) {
@@ -37,6 +39,6 @@
       }
     </section>
   } @else {
-    <p class="empty">No commands match the current filters.</p>
+    <p class="empty">{{ text('empty') }}</p>
   }
 </section>
