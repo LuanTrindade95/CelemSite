@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiteAuthService } from '../../services/site-auth.service';
+import { SiteAuthService, SiteSessionPayload } from '../../services/site-auth.service';
 import { SiteI18nService } from '../../services/site-i18n.service';
 import { SiteLanguageService } from '../../services/site-language.service';
 
@@ -21,6 +21,18 @@ export class SiteShellComponent {
   protected readonly currentLanguage = this.language.currentLanguage;
   protected readonly languageOptions = this.language.options;
   protected readonly text = (key: Parameters<SiteI18nService['text']>[0]) => this.i18n.text(key);
+  protected readonly headerProfile = (): { displayName: string; avatarUrl: string } | null => {
+    const session = this.session();
+    if (!session.user) {
+      return null;
+    }
+
+    const primaryMembership = this.resolvePrimaryMembership(session);
+    return {
+      displayName: primaryMembership?.displayName ?? session.user.displayName,
+      avatarUrl: primaryMembership?.avatarUrl ?? session.user.avatarUrl,
+    };
+  };
 
   protected async changeLanguage(languageCode: string): Promise<void> {
     await this.language.setLanguage(languageCode, this.session().isAuthenticated);
@@ -32,5 +44,9 @@ export class SiteShellComponent {
 
   protected async logout(): Promise<void> {
     await this.auth.logout();
+  }
+
+  private resolvePrimaryMembership(session: SiteSessionPayload) {
+    return session.memberships.find((membership) => membership.isMember) ?? session.memberships[0] ?? null;
   }
 }

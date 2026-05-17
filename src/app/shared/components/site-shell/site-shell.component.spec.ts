@@ -58,4 +58,37 @@ describe('SiteShellComponent', () => {
     expect(logoutButton).not.toBeNull();
     expect(logoutButton?.textContent?.trim().length).toBeGreaterThan(0);
   });
+
+  it('prefers the guild membership display name and avatar for the authenticated header', () => {
+    authService.session.set({
+      isAuthenticated: true,
+      user: {
+        id: 'user-1',
+        discordId: 'discord-1',
+        displayName: 'Global User',
+        avatarUrl: 'https://cdn.example/global-avatar.png',
+      },
+      memberships: [
+        {
+          guildId: 'guild-1',
+          displayName: 'Guild Nickname',
+          avatarUrl: 'https://cdn.example/guild-avatar.png',
+          isMember: true,
+          roleIds: [],
+        },
+      ],
+      isAdmin: false,
+      preferredLanguageCode: 'english',
+      languageOptions: [],
+    });
+
+    fixture.detectChanges();
+
+    const authenticatedAccount = fixture.nativeElement.querySelector('.discord-account--authenticated') as HTMLElement | null;
+    const avatar = fixture.nativeElement.querySelector('.discord-account-avatar img') as HTMLImageElement | null;
+
+    expect(authenticatedAccount?.textContent).toContain('Guild Nickname');
+    expect(authenticatedAccount?.textContent).not.toContain('Global User');
+    expect(avatar?.getAttribute('src')).toBe('https://cdn.example/guild-avatar.png');
+  });
 });
