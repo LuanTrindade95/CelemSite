@@ -18,12 +18,25 @@
     </label>
 
     @if (session().user; as user) {
-      <div class="session-chip">
-        @if (user.avatarUrl) {
-          <img [src]="user.avatarUrl" [alt]="user.displayName">
-        }
-        <span>{{ user.displayName }}</span>
-        <button type="button" class="ghost" (click)="logout()">{{ text('logout') }}</button>
+      <div class="header-session">
+        <div class="discord-account" [attr.title]="user.displayName">
+          <div class="discord-account-copy">
+            <strong>{{ user.displayName }}</strong>
+            <span>DISCORD</span>
+          </div>
+
+          <div class="discord-account-avatar" aria-hidden="true">
+            @if (user.avatarUrl) {
+              <img [src]="user.avatarUrl" alt="">
+            } @else {
+              <span>DR</span>
+            }
+          </div>
+        </div>
+
+        <button type="button" class="ghost ghost-inline" (click)="logout()">
+          {{ text('logout') }}
+        </button>
       </div>
     } @else {
       <button type="button" class="discord-button" [disabled]="isLoadingSession()" (click)="login()">
