@@ -17,17 +17,17 @@
       </select>
     </label>
 
-    @if (session().user; as user) {
+    @if (headerProfile(); as profile) {
       <div class="header-session">
-        <div class="discord-account discord-account--authenticated" [attr.title]="user.displayName">
+        <div class="discord-account discord-account--authenticated" [attr.title]="profile.displayName">
           <div class="discord-account-copy">
-            <strong>{{ user.displayName }}</strong>
+            <strong>{{ profile.displayName }}</strong>
             <span>DISCORD</span>
           </div>
 
           <div class="discord-account-avatar" aria-hidden="true">
-            @if (user.avatarUrl) {
-              <img [src]="user.avatarUrl" alt="">
+            @if (profile.avatarUrl) {
+              <img [src]="profile.avatarUrl" alt="">
             } @else {
               <span>DR</span>
             }
