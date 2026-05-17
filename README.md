@@ -27,11 +27,13 @@ npm install
 npm start
 ```
 
-The current local development server used for this task is:
+`npm start` is pinned to the local Discord-auth origin accepted by the published backend:
 
 ```text
 http://127.0.0.1:4201/
 ```
+
+Use `127.0.0.1`, not `localhost`, when testing the Discord flow locally. The `site-auth-login` edge function validates the callback origin exactly before redirecting to Supabase Auth.
 
 ## Verification
 

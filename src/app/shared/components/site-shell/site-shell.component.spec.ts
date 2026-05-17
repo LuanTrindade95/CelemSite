@@ -20,6 +20,16 @@ describe('SiteShellComponent', () => {
     expect(fixture.nativeElement.textContent).toContain('Reino Sagrado de Celem');
   });
 
+  it('renders the framed anonymous discord account state', () => {
+    const anonymousAccount = fixture.nativeElement.querySelector('.discord-account--anonymous') as HTMLButtonElement | null;
+    expect(anonymousAccount).not.toBeNull();
+    expect(anonymousAccount?.textContent).toContain('DISCORD');
+
+    const compactLoginButton = fixture.nativeElement.querySelector('.discord-button--compact') as HTMLButtonElement | null;
+    expect(compactLoginButton).not.toBeNull();
+    expect(compactLoginButton?.textContent?.trim().length).toBeGreaterThan(0);
+  });
+
   it('renders the launcher-style discord account block for authenticated users', () => {
     authService.session.set({
       isAuthenticated: true,
@@ -40,6 +50,9 @@ describe('SiteShellComponent', () => {
     const text = fixture.nativeElement.textContent;
     expect(text).toContain('Luan');
     expect(text).toContain('DISCORD');
+
+    const authenticatedAccount = fixture.nativeElement.querySelector('.discord-account--authenticated');
+    expect(authenticatedAccount).not.toBeNull();
 
     const logoutButton = fixture.nativeElement.querySelector('.ghost-inline') as HTMLButtonElement | null;
     expect(logoutButton).not.toBeNull();

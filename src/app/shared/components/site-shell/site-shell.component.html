@@ -19,7 +19,7 @@
 
     @if (session().user; as user) {
       <div class="header-session">
-        <div class="discord-account" [attr.title]="user.displayName">
+        <div class="discord-account discord-account--authenticated" [attr.title]="user.displayName">
           <div class="discord-account-copy">
             <strong>{{ user.displayName }}</strong>
             <span>DISCORD</span>
@@ -39,7 +39,22 @@
         </button>
       </div>
     } @else {
-      <button type="button" class="discord-button" [disabled]="isLoadingSession()" (click)="login()">
+      <button
+        type="button"
+        class="discord-account discord-account--anonymous"
+        [disabled]="isLoadingSession()"
+        (click)="login()">
+        <span class="discord-account-copy">
+          <strong>DISCORD</strong>
+          <span>{{ text('login') }}</span>
+        </span>
+
+        <span class="discord-account-avatar" aria-hidden="true">
+          <span>DR</span>
+        </span>
+      </button>
+
+      <button type="button" class="discord-button discord-button--compact" [disabled]="isLoadingSession()" (click)="login()">
         {{ text('login') }}
       </button>
     }
