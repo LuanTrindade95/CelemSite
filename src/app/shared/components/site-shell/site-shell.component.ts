@@ -28,10 +28,12 @@ export class SiteShellComponent {
     }
 
     const primaryMembership = this.resolvePrimaryMembership(session);
-    return {
-      displayName: primaryMembership?.displayName ?? session.user.displayName,
-      avatarUrl: primaryMembership?.avatarUrl ?? session.user.avatarUrl,
-    };
+    return primaryMembership
+      ? {
+          displayName: primaryMembership.displayName,
+          avatarUrl: primaryMembership.avatarUrl,
+        }
+      : null;
   };
 
   protected async changeLanguage(languageCode: string): Promise<void> {
@@ -47,6 +49,6 @@ export class SiteShellComponent {
   }
 
   private resolvePrimaryMembership(session: SiteSessionPayload) {
-    return session.memberships.find((membership) => membership.isMember) ?? session.memberships[0] ?? null;
+    return session.memberships.find((membership) => membership.isMember) ?? null;
   }
 }

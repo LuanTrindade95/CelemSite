@@ -30,7 +30,7 @@ describe('SiteShellComponent', () => {
     expect(compactLoginButton?.textContent?.trim().length).toBeGreaterThan(0);
   });
 
-  it('renders the launcher-style discord account block for authenticated users', () => {
+  it('keeps the anonymous discord account state when the session has no guild membership', () => {
     authService.session.set({
       isAuthenticated: true,
       user: {
@@ -40,6 +40,42 @@ describe('SiteShellComponent', () => {
         avatarUrl: 'https://cdn.example/avatar.png',
       },
       memberships: [],
+      isAdmin: false,
+      preferredLanguageCode: 'english',
+      languageOptions: [],
+    });
+
+    fixture.detectChanges();
+
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('DISCORD');
+    expect(text).not.toContain('Luan');
+
+    const authenticatedAccount = fixture.nativeElement.querySelector('.discord-account--authenticated');
+    expect(authenticatedAccount).toBeNull();
+
+    const anonymousAccount = fixture.nativeElement.querySelector('.discord-account--anonymous');
+    expect(anonymousAccount).not.toBeNull();
+  });
+
+  it('renders the launcher-style discord account block for authenticated guild members', () => {
+    authService.session.set({
+      isAuthenticated: true,
+      user: {
+        id: 'user-1',
+        discordId: 'discord-1',
+        displayName: 'Global User',
+        avatarUrl: 'https://cdn.example/global-avatar.png',
+      },
+      memberships: [
+        {
+          guildId: 'guild-1',
+          displayName: 'Luan',
+          avatarUrl: 'https://cdn.example/guild-avatar.png',
+          isMember: true,
+          roleIds: [],
+        },
+      ],
       isAdmin: false,
       preferredLanguageCode: 'english',
       languageOptions: [],
