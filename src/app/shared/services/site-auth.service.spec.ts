@@ -27,18 +27,19 @@ describe('SiteAuthService redirect helpers', () => {
   });
 
   it('keeps production callback origins unchanged', () => {
-    const callbackUrl = buildSiteAuthCallbackUrl('https://luantrindade95.github.io/CelemSite/', '');
+    const callbackUrl = buildSiteAuthCallbackUrl('https://luantrindade95.github.io/CelemSite/', '', '');
 
-    expect(callbackUrl).toBe('https://luantrindade95.github.io/CelemSite/auth/callback');
+    expect(callbackUrl).toBe('https://luantrindade95.github.io/CelemSite/');
   });
 
   it('uses an explicit auth redirect base when one is provided', () => {
     const callbackUrl = buildSiteAuthCallbackUrl(
       'https://preview.example/',
       'https://luantrindade95.github.io/CelemSite/',
+      '',
     );
 
-    expect(callbackUrl).toBe('https://luantrindade95.github.io/CelemSite/auth/callback');
+    expect(callbackUrl).toBe('https://luantrindade95.github.io/CelemSite/');
   });
 
   it('keeps local callbacks local even when a hosted redirect base is configured', () => {
@@ -66,5 +67,18 @@ describe('SiteAuthService redirect helpers', () => {
     expect(parsed.origin).toBe('http://127.0.0.1:4201');
     expect(parsed.pathname).toBe('/functions/v1/site-auth-login');
     expect(parsed.searchParams.get('redirectTo')).toBe('http://127.0.0.1:4201/auth/callback');
+  });
+
+  it('builds the hosted Discord login handoff with the GitHub Pages root callback', () => {
+    const loginUrl = buildSiteAuthLoginUrl(
+      'https://luantrindade95.github.io/CelemSite/',
+      'https://luantrindade95.github.io/CelemSite/',
+      '',
+    );
+    const parsed = new URL(loginUrl);
+
+    expect(parsed.origin).toBe('https://luantrindade95.github.io');
+    expect(parsed.pathname).toBe('/functions/v1/site-auth-login');
+    expect(parsed.searchParams.get('redirectTo')).toBe('https://luantrindade95.github.io/CelemSite/');
   });
 });

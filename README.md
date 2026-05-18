@@ -48,7 +48,7 @@ Avoid testing from random Angular ports such as `localhost:62418`; Supabase Auth
 Environment files live under `src/environments/`:
 
 - `environment.local.ts` keeps Discord callbacks on the fixed local callback origin accepted by Supabase Auth.
-- `environment.production.ts` sends Discord callbacks to `https://luantrindade95.github.io/CelemSite/`.
+- `environment.production.ts` sends Discord callbacks to the GitHub Pages site root `https://luantrindade95.github.io/CelemSite/`, then the Angular app reroutes the hosted OAuth query to the internal callback component without triggering a second Pages deep-link request.
 
 Use these scripts when switching targets:
 
@@ -97,7 +97,7 @@ Recommended site callback URLs:
 ```text
 http://127.0.0.1:4201/auth/callback
 http://127.0.0.1:4200/auth/callback
-https://luantrindade95.github.io/CelemSite/auth/callback
+https://luantrindade95.github.io/CelemSite/
 ```
 
 ### 3. Configure backend-side secrets and allowed origins
@@ -154,6 +154,8 @@ npm run build:pages
 ## GitHub Pages
 
 Deployment uses GitHub Actions and the official Pages artifact flow. This is preferred over a `gh-pages` branch because Angular builds and tests stay reproducible on every push to `main`.
+
+The hosted Discord OAuth callback returns to the GitHub Pages site root instead of a deep route, so the production login flow avoids a Pages callback request that would otherwise start as an HTTP `404`. A dedicated `404.html` SPA redirect shim is still published for any future deep links that may be added later.
 
 ## Data Source
 

@@ -36,10 +36,6 @@ jobs:
       - name: Build
         run: npm run build:pages
 
-      - name: Prepare SPA fallback
-        shell: bash
-        run: cp dist/celem-site/browser/index.html dist/celem-site/browser/404.html
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

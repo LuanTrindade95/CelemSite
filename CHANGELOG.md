@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2026-05-18 17:12:00 -03:00
+
+- Switched the hosted Discord callback target from `/auth/callback` to the GitHub Pages site root, then rerouted the OAuth query to the internal callback component inside Angular so the login flow no longer starts with a Pages `404` response.
+- Replaced the GitHub Pages fallback copy with a dedicated SPA `404.html` redirect shim for future deep links.
+
 ## 2026-05-18 16:47:00 -03:00
 
 - Removed the site callback dependency on a custom OAuth `state` value so the hosted GitHub Pages Discord login flow stays compatible with the Supabase Auth PKCE state handling.

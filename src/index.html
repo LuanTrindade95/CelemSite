@@ -7,6 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Catálogo pesquisável de comandos dos plugins do Reino Sagrado de Celem">
     <link rel="icon" type="image/png" href="assets/images/celem-logo.png">
+    <script>
+      (function () {
+        var sessionKey = 'celem.site.pages.redirect';
+        var redirectTarget = window.sessionStorage.getItem(sessionKey);
+        if (!redirectTarget) {
+          return;
+        }
+
+        window.sessionStorage.removeItem(sessionKey);
+        var currentTarget = window.location.pathname + window.location.search + window.location.hash;
+        if (redirectTarget === currentTarget) {
+          return;
+        }
+
+        window.history.replaceState(null, '', redirectTarget);
+      })();
+    </script>
   </head>
   <body>
     <celem-root></celem-root>
