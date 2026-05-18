@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 127.0.0.1 --port 4201",
+    "start": "npm run start:local",
+    "start:local": "ng serve --configuration local --host 127.0.0.1 --port 4201",
     "build": "ng build",
+    "build:local": "ng build --configuration local",
     "build:pages": "ng build --configuration production --base-href /CelemSite/",
     "test": "ng test --watch=false",
     "lint": "ng lint"

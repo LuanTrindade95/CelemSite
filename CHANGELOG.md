@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2026-05-18 09:12:00 -03:00
+
+- Canonicalized the full local Discord login handoff to `http://127.0.0.1:4200`, not just the callback target, so PKCE cookies and the OAuth callback stay on the same loopback host.
+- Added explicit local and production Angular environments for Supabase function endpoints and Discord callback routing.
+- Routed local Supabase Edge Function calls through the Angular dev-server proxy to avoid CORS failures during local testing.
+- Fixed local Discord callback generation to always use `http://127.0.0.1:4200/auth/callback`, even if a browser is opened on a `localhost` alias or a random dev-server port.
+- Added regression coverage for local, loopback, and production Discord login redirect URL generation.
+
 ## 2026-05-17 18:52:00 -03:00
 
 - Added Discord login, callback recovery, logout, and session restoration for `CelemSite` using the shared Supabase Auth PKCE flow already used by the launcher.

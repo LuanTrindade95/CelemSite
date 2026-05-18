@@ -1,0 +1,8 @@
+{
+  "/functions/v1": {
+    "target": "https://oaivdxyvlqyrrickkldl.supabase.co",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "warn"
+  }
+}
