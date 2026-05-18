@@ -41,6 +41,7 @@ const ANONYMOUS_SESSION: SiteSessionPayload = {
 
 const DEFAULT_LOCAL_AUTH_BASE_URL = 'http://127.0.0.1:4201/';
 const SUPPORTED_LOCAL_AUTH_PORTS = new Set(['4200', '4201']);
+const PENDING_LOGIN_PREFERENCE_STORAGE_KEY = 'celem.site.auth.remember';
 
 export function buildSiteAuthCallbackUrl(baseUri: string, redirectBaseUrl = environment.siteAuthRedirectBaseUrl): string {
   const currentUrl = new URL(baseUri);
@@ -122,15 +123,18 @@ export class SiteAuthService {
     }
   }
 
-  public beginDiscordLogin(): void {
+  public beginDiscordLogin(rememberSession = true): void {
+    this.persistPendingLoginPreference(rememberSession);
     window.location.assign(buildSiteAuthLoginUrl(document.baseURI));
   }
 
   public async exchangeDiscordCallback(code: string, state: string): Promise<boolean> {
+    const rememberSession = this.consumePendingLoginPreference();
+
     try {
       const response = await firstValueFrom(this.http.post<ApiEnvelope<SiteSessionPayload>>(
         SITE_API_ENDPOINTS.siteAuthExchange,
-        { code, state },
+        { code, state, rememberSession },
         { withCredentials: true },
       ));
       if (!response.success) {
@@ -144,6 +148,7 @@ export class SiteAuthService {
       this.session.set(ANONYMOUS_SESSION);
       return false;
     } finally {
+      this.clearPendingLoginPreference();
       this.isLoading.set(false);
     }
   }
@@ -158,5 +163,29 @@ export class SiteAuthService {
     } finally {
       this.session.set(ANONYMOUS_SESSION);
     }
+  }
+
+  private persistPendingLoginPreference(rememberSession: boolean): void {
+    if (typeof sessionStorage === 'undefined') {
+      return;
+    }
+
+    sessionStorage.setItem(PENDING_LOGIN_PREFERENCE_STORAGE_KEY, rememberSession ? '1' : '0');
+  }
+
+  private consumePendingLoginPreference(): boolean {
+    if (typeof sessionStorage === 'undefined') {
+      return true;
+    }
+
+    return sessionStorage.getItem(PENDING_LOGIN_PREFERENCE_STORAGE_KEY) !== '0';
+  }
+
+  private clearPendingLoginPreference(): void {
+    if (typeof sessionStorage === 'undefined') {
+      return;
+    }
+
+    sessionStorage.removeItem(PENDING_LOGIN_PREFERENCE_STORAGE_KEY);
   }
 }

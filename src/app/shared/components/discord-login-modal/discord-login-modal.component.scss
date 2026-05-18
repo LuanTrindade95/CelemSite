@@ -1,0 +1,127 @@
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+}
+
+.modal-backdrop {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 100%;
+  padding: 24px;
+  background: rgba(2, 3, 6, 0.76);
+  backdrop-filter: blur(12px);
+}
+
+.modal-panel {
+  width: min(460px, 100%);
+  padding: 24px;
+  border: 1px solid rgba(197, 165, 106, 0.5);
+  background:
+    linear-gradient(180deg, rgba(14, 17, 22, 0.96), rgba(10, 12, 17, 0.98)),
+    linear-gradient(140deg, rgba(180, 58, 64, 0.12), transparent 45%);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.46);
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.modal-eyebrow {
+  margin: 0 0 4px;
+  color: var(--celem-gold);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.32rem;
+}
+
+.modal-close {
+  min-width: 36px;
+  min-height: 36px;
+  border: 1px solid rgba(81, 91, 104, 0.58);
+  background: rgba(10, 12, 17, 0.82);
+  color: var(--celem-text);
+  cursor: pointer;
+}
+
+.modal-copy {
+  margin: 18px 0 0;
+  color: var(--celem-muted);
+  line-height: 1.55;
+}
+
+.modal-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  color: var(--celem-text);
+}
+
+.modal-checkbox input {
+  width: 16px;
+  height: 16px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.primary-button,
+.secondary-button {
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.primary-button {
+  border: 1px solid rgba(210, 72, 78, 0.7);
+  background: linear-gradient(180deg, rgba(180, 58, 64, 0.94), rgba(141, 46, 53, 0.98));
+  color: #fff7f7;
+}
+
+.secondary-button {
+  border: 1px solid rgba(81, 91, 104, 0.58);
+  background: rgba(10, 12, 17, 0.82);
+  color: var(--celem-text);
+}
+
+.primary-button[disabled],
+.secondary-button[disabled],
+.modal-close[disabled] {
+  cursor: default;
+  opacity: 0.65;
+}
+
+@media (max-width: 640px) {
+  .modal-backdrop {
+    padding: 16px;
+  }
+
+  .modal-panel {
+    padding: 20px;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+  }
+}

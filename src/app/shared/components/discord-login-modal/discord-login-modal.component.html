@@ -1,0 +1,47 @@
+<div class="modal-backdrop" (click)="closeFromBackdrop()">
+  <section
+    class="modal-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="discord-login-modal-title"
+    aria-describedby="discord-login-modal-description"
+    (click)="stopPropagation($event)">
+    <header class="modal-header">
+      <div>
+        <p class="modal-eyebrow">Discord</p>
+        <h2 id="discord-login-modal-title">{{ text('loginModalTitle') }}</h2>
+      </div>
+
+      <button
+        type="button"
+        class="modal-close"
+        [disabled]="isBusy"
+        [attr.aria-label]="text('loginModalCancel')"
+        (click)="closeFromBackdrop()">
+        ×
+      </button>
+    </header>
+
+    <p id="discord-login-modal-description" class="modal-copy">
+      {{ text('loginModalDescription') }}
+    </p>
+
+    <label class="modal-checkbox">
+      <input
+        type="checkbox"
+        [ngModel]="rememberSession"
+        (ngModelChange)="updateRememberSession($event)">
+      <span>{{ text('loginModalRemember') }}</span>
+    </label>
+
+    <footer class="modal-actions">
+      <button type="button" class="secondary-button" [disabled]="isBusy" (click)="closeFromBackdrop()">
+        {{ text('loginModalCancel') }}
+      </button>
+
+      <button type="button" class="primary-button" [disabled]="isBusy" autofocus (click)="confirm()">
+        {{ text('loginModalConfirm') }}
+      </button>
+    </footer>
+  </section>
+</div>
