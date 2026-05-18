@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DiscordLoginModalComponent } from '../discord-login-modal/discord-login-modal.component';
 import { SiteAuthService, SiteSessionPayload } from '../../services/site-auth.service';
 import { SiteI18nService } from '../../services/site-i18n.service';
 import { SiteLanguageService } from '../../services/site-language.service';
@@ -7,7 +8,7 @@ import { SiteLanguageService } from '../../services/site-language.service';
 @Component({
   selector: 'celem-site-shell',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, DiscordLoginModalComponent],
   templateUrl: './site-shell.component.html',
   styleUrl: './site-shell.component.scss',
 })
@@ -20,6 +21,8 @@ export class SiteShellComponent {
   protected readonly isLoadingSession = this.auth.isLoading;
   protected readonly currentLanguage = this.language.currentLanguage;
   protected readonly languageOptions = this.language.options;
+  protected readonly isLoginModalOpen = signal(false);
+  protected readonly rememberSession = signal(true);
   protected readonly text = (key: Parameters<SiteI18nService['text']>[0]) => this.i18n.text(key);
   protected readonly headerProfile = (): { displayName: string; avatarUrl: string } | null => {
     const session = this.session();
@@ -40,8 +43,25 @@ export class SiteShellComponent {
     await this.language.setLanguage(languageCode, this.session().isAuthenticated);
   }
 
-  protected login(): void {
-    this.auth.beginDiscordLogin();
+  protected openLoginModal(): void {
+    if (this.isLoadingSession()) {
+      return;
+    }
+
+    this.isLoginModalOpen.set(true);
+  }
+
+  protected closeLoginModal(): void {
+    this.isLoginModalOpen.set(false);
+  }
+
+  protected updateRememberSession(rememberSession: boolean): void {
+    this.rememberSession.set(rememberSession);
+  }
+
+  protected confirmLogin(): void {
+    this.closeLoginModal();
+    this.auth.beginDiscordLogin(this.rememberSession());
   }
 
   protected async logout(): Promise<void> {

@@ -15,6 +15,8 @@ The catalog is structured as a feature component so it can become one page insid
 The site now includes:
 
 - Discord login aligned with the launcher Supabase Auth PKCE flow.
+- Discord login confirmation modal before the OAuth redirect starts.
+- Optional "keep me signed in" behavior that controls whether the browser keeps a persistent site session or only a browser-session cookie.
 - Session recovery and refresh through backend-owned HTTPOnly cookies.
 - Role-aware command visibility enforced in Supabase Edge Functions before the payload leaves the backend.
 - Global UI language selection using the V Rising language set.
@@ -55,6 +57,90 @@ npm run start:local
 npm run build:local
 npm run build:pages
 ```
+
+## Discord Auth UX
+
+Current site login behavior:
+
+- logged out users see the Discord login action in the header
+- clicking the login action opens a confirmation modal before the OAuth redirect
+- the modal explains that the Discord account will be used and exposes the "keep me signed in" option
+- when "keep me signed in" is enabled, the backend issues persistent HTTPOnly cookies
+- when "keep me signed in" is disabled, the backend issues browser-session cookies that disappear after the browser closes
+- after login, the header shows the guild-aware display name plus avatar, with logout applied immediately and without a manual refresh
+
+## Discord / Supabase Setup
+
+`CelemSite` does not read Discord secrets directly. The Angular app only consumes the callback routing defined in `src/environments/`. Discord secrets stay in the Supabase/Auth + Edge Function side of `CelemBackend`.
+
+### 1. Create the Discord application
+
+In the Discord Developer Portal:
+
+1. Create or open the Discord application used by Celem.
+2. Copy the application `Client ID`.
+3. Generate or copy the application `Client Secret`.
+4. Keep both values out of the frontend.
+
+### 2. Configure the Supabase Auth Discord provider
+
+In the Supabase dashboard for the same project:
+
+1. Enable the Discord provider in Supabase Auth.
+2. Paste the Discord `Client ID` and `Client Secret`.
+3. Keep the provider scopes aligned with the current site flow: `identify guilds.members.read`.
+4. Add the allowed site callback URLs in the Supabase Auth redirect URL list.
+
+Recommended site callback URLs:
+
+```text
+http://127.0.0.1:4201/auth/callback
+http://127.0.0.1:4200/auth/callback
+https://luantrindade95.github.io/CelemSite/auth/callback
+```
+
+### 3. Configure backend-side secrets and allowed origins
+
+These values belong to `CelemBackend` / Supabase Edge Functions, not to Angular:
+
+```env
+CELEM_SUPABASE_URL=https://<project-ref>.supabase.co
+DISCORD_CLIENT_ID=
+DISCORD_CLIENT_SECRET=
+DISCORD_REDIRECT_URI=https://<project-ref>.supabase.co/functions/v1/discord-callback
+DISCORD_BOT_TOKEN=
+SITE_ALLOWED_ORIGINS=http://127.0.0.1:4201,http://127.0.0.1:4200,https://luantrindade95.github.io
+```
+
+Notes:
+
+- `DISCORD_REDIRECT_URI` is still used by the backend-owned `discord-*` Edge Function flow and must remain backend-only.
+- The site login path itself uses Supabase Auth plus the site callback URLs above.
+- `SITE_ALLOWED_ORIGINS` must include every local or hosted origin that is allowed to call `site-auth-login`, `site-auth-exchange`, `site-session`, and `site-logout`.
+
+### 4. Run locally
+
+```powershell
+npm install
+npm start
+```
+
+The canonical local origin is:
+
+```text
+http://127.0.0.1:4201/
+```
+
+### 5. Test the login flow locally
+
+1. Start the Angular dev server with `npm start`.
+2. Open `http://127.0.0.1:4201/`.
+3. Click `Discord login`.
+4. Confirm the modal and choose whether to keep the session after closing the browser.
+5. Complete the Discord OAuth flow.
+6. Verify that the header updates with avatar, display name, and logout.
+7. If "keep me signed in" was disabled, close the browser completely and confirm that the session is gone on the next open.
+8. If "keep me signed in" was enabled, reopen the browser and confirm that the session is restored without logging in again.
 
 ## Verification
 

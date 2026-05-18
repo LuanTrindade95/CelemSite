@@ -30,6 +30,26 @@ describe('SiteShellComponent', () => {
     expect(compactLoginButton?.textContent?.trim().length).toBeGreaterThan(0);
   });
 
+  it('opens the Discord confirmation modal before starting the login flow', () => {
+    const beginDiscordLoginSpy = spyOn(authService, 'beginDiscordLogin').and.stub();
+    authService.isLoading.set(false);
+    fixture.detectChanges();
+
+    const anonymousAccount = fixture.nativeElement.querySelector('.discord-account--anonymous') as HTMLButtonElement;
+    anonymousAccount.click();
+    fixture.detectChanges();
+
+    const modal = fixture.nativeElement.querySelector('celem-discord-login-modal');
+    const confirmButton = fixture.nativeElement.querySelector('.primary-button') as HTMLButtonElement;
+
+    expect(modal).not.toBeNull();
+    fixture.componentInstance['rememberSession'].set(false);
+    fixture.detectChanges();
+    confirmButton.click();
+
+    expect(beginDiscordLoginSpy).toHaveBeenCalledOnceWith(false);
+  });
+
   it('keeps the anonymous discord account state when the session has no guild membership', () => {
     authService.session.set({
       isAuthenticated: true,

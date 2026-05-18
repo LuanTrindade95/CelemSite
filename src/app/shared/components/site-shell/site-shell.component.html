@@ -43,7 +43,7 @@
         type="button"
         class="discord-account discord-account--anonymous"
         [disabled]="isLoadingSession()"
-        (click)="login()">
+        (click)="openLoginModal()">
         <span class="discord-account-copy">
           <strong>DISCORD</strong>
           <span>{{ text('login') }}</span>
@@ -54,7 +54,7 @@
         </span>
       </button>
 
-      <button type="button" class="discord-button discord-button--compact" [disabled]="isLoadingSession()" (click)="login()">
+      <button type="button" class="discord-button discord-button--compact" [disabled]="isLoadingSession()" (click)="openLoginModal()">
         {{ text('login') }}
       </button>
     }
@@ -64,3 +64,12 @@
 <main>
   <ng-content />
 </main>
+
+@if (isLoginModalOpen()) {
+  <celem-discord-login-modal
+    [isBusy]="isLoadingSession()"
+    [rememberSession]="rememberSession()"
+    (cancelLogin)="closeLoginModal()"
+    (confirmLogin)="confirmLogin()"
+    (rememberSessionChange)="updateRememberSession($event)" />
+}

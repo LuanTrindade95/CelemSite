@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2026-05-18 16:24:39 -03:00
+
+- Added a reusable Discord login confirmation modal before the CelemSite OAuth handoff, with backdrop click and `Esc` close behavior.
+- Added the optional "keep me signed in" choice to the site login flow and forwarded that preference through the Discord callback exchange.
+- Documented the local and hosted Discord auth setup, callback URLs, and manual QA steps for the new session-persistence behavior.
+
 ## 2026-05-18 09:12:00 -03:00
 
 - Canonicalized the full local Discord login handoff to `http://127.0.0.1:4200`, not just the callback target, so PKCE cookies and the OAuth callback stay on the same loopback host.

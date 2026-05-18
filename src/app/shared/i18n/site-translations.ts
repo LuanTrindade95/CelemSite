@@ -33,9 +33,14 @@ export type SiteTranslationKey =
   | 'authLoadingDescription'
   | 'authErrorTitle'
   | 'authErrorDescription'
-  | 'backToCatalog';
+  | 'backToCatalog'
+  | 'loginModalTitle'
+  | 'loginModalDescription'
+  | 'loginModalRemember'
+  | 'loginModalConfirm'
+  | 'loginModalCancel';
 
-export type SiteTranslationDictionary = Record<SiteTranslationKey, string>;
+export type SiteTranslationDictionary = Partial<Record<SiteTranslationKey, string>>;
 
 export const SITE_TRANSLATIONS: Record<SiteLanguageCode, SiteTranslationDictionary> = {
   english: {
@@ -72,6 +77,11 @@ export const SITE_TRANSLATIONS: Record<SiteLanguageCode, SiteTranslationDictiona
     authErrorTitle: 'Discord login failed',
     authErrorDescription: 'The session could not be completed. Return to the catalog and try again.',
     backToCatalog: 'Back to catalog',
+    loginModalTitle: 'Continue with Discord',
+    loginModalDescription: 'You will be redirected to Discord to authenticate and load your Celem permissions on return.',
+    loginModalRemember: 'Keep me signed in on this browser',
+    loginModalConfirm: 'Continue',
+    loginModalCancel: 'Cancel',
   },
   french: {
     brandSubtitle: 'Catalogue des commandes',
@@ -212,6 +222,11 @@ export const SITE_TRANSLATIONS: Record<SiteLanguageCode, SiteTranslationDictiona
     authErrorTitle: 'Falha no login do Discord',
     authErrorDescription: 'Não foi possível concluir a sessão. Volte ao catálogo e tente novamente.',
     backToCatalog: 'Voltar ao catálogo',
+    loginModalTitle: 'Continuar com Discord',
+    loginModalDescription: 'Você será redirecionado ao Discord para autenticar e, ao voltar, carregar suas permissões do Celem.',
+    loginModalRemember: 'Manter conectado neste navegador',
+    loginModalConfirm: 'Continuar',
+    loginModalCancel: 'Cancelar',
   },
   schinese: {
     brandSubtitle: '命令目录',
