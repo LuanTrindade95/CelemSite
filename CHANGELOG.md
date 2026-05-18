@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2026-05-18 16:39:00 -03:00
+
+- Fixed the authenticated site header fallback so Discord login now shows the user's display name and avatar even when no guild-specific membership profile is returned.
+
 ## 2026-05-18 16:24:39 -03:00
 
 - Added a reusable Discord login confirmation modal before the CelemSite OAuth handoff, with backdrop click and `Esc` close behavior.
