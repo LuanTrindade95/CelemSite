@@ -31,15 +31,14 @@ export class DiscordAuthCallbackComponent {
     this.isLoading.set(true);
     const requestUrl = new URL(window.location.href);
     const code = requestUrl.searchParams.get('code')?.trim() ?? '';
-    const state = requestUrl.searchParams.get('state')?.trim() ?? '';
 
-    if (!code || !state) {
+    if (!code) {
       this.hasError.set(true);
       this.isLoading.set(false);
       return;
     }
 
-    const success = await this.auth.exchangeDiscordCallback(code, state);
+    const success = await this.auth.exchangeDiscordCallback(code);
     if (!success) {
       this.hasError.set(true);
       this.isLoading.set(false);

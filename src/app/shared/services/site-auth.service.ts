@@ -128,13 +128,13 @@ export class SiteAuthService {
     window.location.assign(buildSiteAuthLoginUrl(document.baseURI));
   }
 
-  public async exchangeDiscordCallback(code: string, state: string): Promise<boolean> {
+  public async exchangeDiscordCallback(code: string): Promise<boolean> {
     const rememberSession = this.consumePendingLoginPreference();
 
     try {
       const response = await firstValueFrom(this.http.post<ApiEnvelope<SiteSessionPayload>>(
         SITE_API_ENDPOINTS.siteAuthExchange,
-        { code, state, rememberSession },
+        { code, rememberSession },
         { withCredentials: true },
       ));
       if (!response.success) {
