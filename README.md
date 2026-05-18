@@ -67,6 +67,7 @@ Current site login behavior:
 - the modal explains that the Discord account will be used and exposes the "keep me signed in" option
 - when "keep me signed in" is enabled, the backend issues persistent HTTPOnly cookies
 - when "keep me signed in" is disabled, the backend issues browser-session cookies that disappear after the browser closes
+- the hosted login flow relies on the Supabase Auth PKCE-managed OAuth state and does not inject a second custom site state parameter
 - after login, the header shows the guild-aware display name plus avatar when available, otherwise it falls back to the authenticated Discord user profile without requiring a manual refresh
 
 ## Discord / Supabase Setup

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2026-05-18 16:47:00 -03:00
+
+- Removed the site callback dependency on a custom OAuth `state` value so the hosted GitHub Pages Discord login flow stays compatible with the Supabase Auth PKCE state handling.
+
 ## 2026-05-18 16:39:00 -03:00
 
 - Fixed the authenticated site header fallback so Discord login now shows the user's display name and avatar even when no guild-specific membership profile is returned.
