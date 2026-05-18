@@ -43,12 +43,16 @@ const DEFAULT_LOCAL_AUTH_BASE_URL = 'http://127.0.0.1:4201/';
 const SUPPORTED_LOCAL_AUTH_PORTS = new Set(['4200', '4201']);
 const PENDING_LOGIN_PREFERENCE_STORAGE_KEY = 'celem.site.auth.remember';
 
-export function buildSiteAuthCallbackUrl(baseUri: string, redirectBaseUrl = environment.siteAuthRedirectBaseUrl): string {
+export function buildSiteAuthCallbackUrl(
+  baseUri: string,
+  redirectBaseUrl = environment.siteAuthRedirectBaseUrl,
+  callbackPath = environment.siteAuthCallbackPath,
+): string {
   const currentUrl = new URL(baseUri);
   const callbackBaseUrl = isLocalHostName(currentUrl.hostname)
     ? resolveLocalAuthBaseUrl(currentUrl, redirectBaseUrl)
     : resolveConfiguredCallbackBaseUrl(baseUri, redirectBaseUrl);
-  return new URL(environment.siteAuthCallbackPath, callbackBaseUrl).toString();
+  return new URL(callbackPath, callbackBaseUrl).toString();
 }
 
 function resolveLocalAuthBaseUrl(currentUrl: URL, redirectBaseUrl: string): string {
@@ -84,12 +88,16 @@ function buildLoopbackBaseUrl(port: string): string {
   return `http://127.0.0.1:${port}/`;
 }
 
-export function buildSiteAuthLoginUrl(baseUri: string, redirectBaseUrl = environment.siteAuthRedirectBaseUrl): string {
+export function buildSiteAuthLoginUrl(
+  baseUri: string,
+  redirectBaseUrl = environment.siteAuthRedirectBaseUrl,
+  callbackPath = environment.siteAuthCallbackPath,
+): string {
   const currentUrl = new URL(baseUri);
   const callbackBaseUrl = isLocalHostName(currentUrl.hostname)
     ? resolveLocalAuthBaseUrl(currentUrl, redirectBaseUrl)
     : resolveConfiguredCallbackBaseUrl(baseUri, redirectBaseUrl);
-  const redirectTo = new URL(environment.siteAuthCallbackPath, callbackBaseUrl).toString();
+  const redirectTo = buildSiteAuthCallbackUrl(baseUri, redirectBaseUrl, callbackPath);
   const loginUrl = new URL(SITE_API_ENDPOINTS.siteAuthLogin, isLocalHostName(currentUrl.hostname) ? callbackBaseUrl : baseUri);
   loginUrl.searchParams.set('redirectTo', redirectTo);
   return loginUrl.toString();

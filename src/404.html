@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <title>Reino Sagrado de Celem</title>
+    <script>
+      (function () {
+        var sessionKey = 'celem.site.pages.redirect';
+        var locationValue = window.location;
+        var segments = locationValue.pathname.split('/');
+        var repoSegment = segments.length > 1 && segments[1] ? '/' + segments[1] + '/' : '/';
+        var redirectTarget = locationValue.pathname + locationValue.search + locationValue.hash;
+
+        window.sessionStorage.setItem(sessionKey, redirectTarget);
+        locationValue.replace(locationValue.origin + repoSegment);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
