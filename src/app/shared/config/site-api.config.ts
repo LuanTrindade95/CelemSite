@@ -1,4 +1,6 @@
-export const SITE_FUNCTIONS_BASE_URL = 'https://oaivdxyvlqyrrickkldl.supabase.co/functions/v1';
+import { environment } from '../../../environments/environment';
+
+export const SITE_FUNCTIONS_BASE_URL = environment.siteFunctionsBaseUrl;
 
 export const SITE_API_ENDPOINTS = {
   publicCommandCatalog: `${SITE_FUNCTIONS_BASE_URL}/command-catalog`,

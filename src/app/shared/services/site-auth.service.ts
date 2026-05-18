@@ -4,6 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import { SITE_API_ENDPOINTS } from '../config/site-api.config';
 import { SITE_LANGUAGE_OPTIONS, SiteLanguageCode } from '../i18n/site-language';
 import { ApiEnvelope } from '../../features/command-catalog/models/command-catalog.models';
+import { environment } from '../../../environments/environment';
 
 export interface SiteSessionUser {
   id: string;
@@ -38,6 +39,61 @@ const ANONYMOUS_SESSION: SiteSessionPayload = {
   languageOptions: SITE_LANGUAGE_OPTIONS,
 };
 
+const DEFAULT_LOCAL_AUTH_BASE_URL = 'http://127.0.0.1:4201/';
+const SUPPORTED_LOCAL_AUTH_PORTS = new Set(['4200', '4201']);
+
+export function buildSiteAuthCallbackUrl(baseUri: string, redirectBaseUrl = environment.siteAuthRedirectBaseUrl): string {
+  const currentUrl = new URL(baseUri);
+  const callbackBaseUrl = isLocalHostName(currentUrl.hostname)
+    ? resolveLocalAuthBaseUrl(currentUrl, redirectBaseUrl)
+    : resolveConfiguredCallbackBaseUrl(baseUri, redirectBaseUrl);
+  return new URL(environment.siteAuthCallbackPath, callbackBaseUrl).toString();
+}
+
+function resolveLocalAuthBaseUrl(currentUrl: URL, redirectBaseUrl: string): string {
+  if (isSupportedLocalAuthPort(currentUrl.port)) {
+    return buildLoopbackBaseUrl(currentUrl.port);
+  }
+
+  if (!redirectBaseUrl.trim().length) {
+    return DEFAULT_LOCAL_AUTH_BASE_URL;
+  }
+
+  const configuredUrl = new URL(redirectBaseUrl);
+  if (isLocalHostName(configuredUrl.hostname) && isSupportedLocalAuthPort(configuredUrl.port)) {
+    return buildLoopbackBaseUrl(configuredUrl.port);
+  }
+
+  return DEFAULT_LOCAL_AUTH_BASE_URL;
+}
+
+function resolveConfiguredCallbackBaseUrl(baseUri: string, redirectBaseUrl: string): string {
+  return redirectBaseUrl.trim().length > 0 ? redirectBaseUrl : baseUri;
+}
+
+function isLocalHostName(hostname: string): boolean {
+  return hostname === 'localhost' || hostname === '127.0.0.1';
+}
+
+function isSupportedLocalAuthPort(port: string): boolean {
+  return SUPPORTED_LOCAL_AUTH_PORTS.has(port);
+}
+
+function buildLoopbackBaseUrl(port: string): string {
+  return `http://127.0.0.1:${port}/`;
+}
+
+export function buildSiteAuthLoginUrl(baseUri: string, redirectBaseUrl = environment.siteAuthRedirectBaseUrl): string {
+  const currentUrl = new URL(baseUri);
+  const callbackBaseUrl = isLocalHostName(currentUrl.hostname)
+    ? resolveLocalAuthBaseUrl(currentUrl, redirectBaseUrl)
+    : resolveConfiguredCallbackBaseUrl(baseUri, redirectBaseUrl);
+  const redirectTo = new URL(environment.siteAuthCallbackPath, callbackBaseUrl).toString();
+  const loginUrl = new URL(SITE_API_ENDPOINTS.siteAuthLogin, isLocalHostName(currentUrl.hostname) ? callbackBaseUrl : baseUri);
+  loginUrl.searchParams.set('redirectTo', redirectTo);
+  return loginUrl.toString();
+}
+
 @Injectable({ providedIn: 'root' })
 export class SiteAuthService {
   private readonly http = inject(HttpClient);
@@ -67,9 +123,7 @@ export class SiteAuthService {
   }
 
   public beginDiscordLogin(): void {
-    const redirectTo = new URL('auth/callback', document.baseURI).toString();
-    const target = `${SITE_API_ENDPOINTS.siteAuthLogin}?redirectTo=${encodeURIComponent(redirectTo)}`;
-    window.location.assign(target);
+    window.location.assign(buildSiteAuthLoginUrl(document.baseURI));
   }
 
   public async exchangeDiscordCallback(code: string, state: string): Promise<boolean> {

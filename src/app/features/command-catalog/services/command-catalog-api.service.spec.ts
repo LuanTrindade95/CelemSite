@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { CommandCatalogApiService } from './command-catalog-api.service';
+import { SITE_API_ENDPOINTS } from '../../../shared/config/site-api.config';
 
 describe('CommandCatalogApiService', () => {
   const languageCode = 'english';
@@ -26,7 +27,7 @@ describe('CommandCatalogApiService', () => {
     });
 
     const request = http.expectOne((candidate) =>
-      candidate.url === 'https://oaivdxyvlqyrrickkldl.supabase.co/functions/v1/site-command-catalog'
+      candidate.url === SITE_API_ENDPOINTS.siteCommandCatalog
       && candidate.params.get('language') === languageCode
       && candidate.withCredentials);
     request.flush({
@@ -56,12 +57,12 @@ describe('CommandCatalogApiService', () => {
     });
 
     const protectedRequest = http.expectOne((candidate) =>
-      candidate.url === 'https://oaivdxyvlqyrrickkldl.supabase.co/functions/v1/site-command-catalog'
+      candidate.url === SITE_API_ENDPOINTS.siteCommandCatalog
       && candidate.params.get('language') === languageCode);
     protectedRequest.flush('error', { status: 500, statusText: 'Server Error' });
 
     const publicRequest = http.expectOne((candidate) =>
-      candidate.url === 'https://oaivdxyvlqyrrickkldl.supabase.co/functions/v1/command-catalog'
+      candidate.url === SITE_API_ENDPOINTS.publicCommandCatalog
       && candidate.params.get('language') === languageCode);
     publicRequest.flush('error', { status: 500, statusText: 'Server Error' });
   });

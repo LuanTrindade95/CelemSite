@@ -27,13 +27,34 @@ npm install
 npm start
 ```
 
-`npm start` is pinned to the local Discord-auth origin accepted by the published backend:
+`npm start` uses the local environment and defaults to the canonical loopback origin already used by the local project flow:
 
 ```text
 http://127.0.0.1:4201/
 ```
 
-Use `127.0.0.1`, not `localhost`, when testing the Discord flow locally. The `site-auth-login` edge function validates the callback origin exactly before redirecting to Supabase Auth.
+Local API calls use the Angular dev-server proxy in `proxy.conf.json`, so the browser calls `/functions/v1/*` on the same local origin and the dev server forwards the request to Supabase. This avoids local CORS failures without weakening backend origin validation. The Discord login handoff also starts on `127.0.0.1`, so the PKCE cookies created by `site-auth-login` stay on the same host that receives the callback.
+
+For Discord login, the local environment sends the callback to the canonical loopback host while preserving a supported local dev port (`4200` or `4201`). The default is:
+
+```text
+http://127.0.0.1:4201/auth/callback
+```
+
+Avoid testing from random Angular ports such as `localhost:62418`; Supabase Auth and the PKCE cookies are intentionally pinned to the supported loopback callback ports above.
+
+Environment files live under `src/environments/`:
+
+- `environment.local.ts` keeps Discord callbacks on the fixed local callback origin accepted by Supabase Auth.
+- `environment.production.ts` sends Discord callbacks to `https://luantrindade95.github.io/CelemSite/`.
+
+Use these scripts when switching targets:
+
+```powershell
+npm run start:local
+npm run build:local
+npm run build:pages
+```
 
 ## Verification
 
