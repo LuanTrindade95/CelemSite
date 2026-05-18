@@ -30,16 +30,6 @@
   </label>
 
   <label>
-    <span>{{ text('language') }}</span>
-    <select [ngModel]="filters.language" (ngModelChange)="update({ language: $event })">
-      <option value="">{{ text('allLanguages') }}</option>
-      @for (language of languages; track language) {
-        <option [value]="language">{{ displayLanguage(language) }}</option>
-      }
-    </select>
-  </label>
-
-  <label>
     <span>{{ text('sort') }}</span>
     <select [ngModel]="filters.sortMode" (ngModelChange)="updateSortMode($event)">
       <option value="project">{{ text('sortProject') }}</option>

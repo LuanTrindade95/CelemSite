@@ -9,6 +9,11 @@
 
 - Reloaded the command catalog when the site auth session changes so logout immediately drops privileged command visibility without requiring a page refresh.
 
+## 2026-05-18 17:52:00 -03:00
+
+- Removed the duplicate command-language toolbar filter so the global header language is now the single source of truth for localized command payloads.
+- Updated the language selection flow to synchronize the authenticated session preference in memory immediately, so the header language applies without waiting for a page reload.
+
 ## 2026-05-18 16:47:00 -03:00
 
 - Removed the site callback dependency on a custom OAuth `state` value so the hosted GitHub Pages Discord login flow stays compatible with the Supabase Auth PKCE state handling.
