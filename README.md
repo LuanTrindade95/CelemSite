@@ -69,6 +69,7 @@ Current site login behavior:
 - when "keep me signed in" is disabled, the backend issues browser-session cookies that disappear after the browser closes
 - the hosted login flow relies on the Supabase Auth PKCE-managed OAuth state and does not inject a second custom site state parameter
 - after login, the header shows the guild-aware display name plus avatar when available, otherwise it falls back to the authenticated Discord user profile without requiring a manual refresh
+- after logout, the catalog immediately reloads against the anonymous/public command source so admin-only visibility is removed without a browser refresh
 
 ## Discord / Supabase Setup
 

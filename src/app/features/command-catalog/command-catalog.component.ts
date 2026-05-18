@@ -5,6 +5,7 @@ import { CommandCardComponent } from './components/command-card/command-card.com
 import { CommandToolbarComponent } from './components/command-toolbar/command-toolbar.component';
 import { CommandCatalogApiService } from './services/command-catalog-api.service';
 import { CommandCatalogFilters, CommandCatalogItem } from './models/command-catalog.models';
+import { SiteAuthService, SiteSessionPayload } from '../../shared/services/site-auth.service';
 import { SiteI18nService } from '../../shared/services/site-i18n.service';
 import { SiteLanguageService } from '../../shared/services/site-language.service';
 
@@ -25,14 +26,21 @@ const INITIAL_FILTERS: CommandCatalogFilters = {
 })
 export class CommandCatalogComponent {
   private readonly api = inject(CommandCatalogApiService);
+  private readonly auth = inject(SiteAuthService);
   private readonly i18n = inject(SiteI18nService);
   private readonly language = inject(SiteLanguageService);
 
   protected readonly text = (key: Parameters<SiteI18nService['text']>[0]) => this.i18n.text(key);
   protected readonly commands = toSignal(
-    toObservable(this.language.currentLanguage).pipe(
-      distinctUntilChanged(),
-      switchMap((languageCode) => this.api.loadCommands(languageCode)),
+    toObservable(computed(() => ({
+      languageCode: this.language.currentLanguage(),
+      sessionKey: buildCatalogSessionKey(this.auth.session()),
+    }))).pipe(
+      distinctUntilChanged((left, right) =>
+        left.languageCode === right.languageCode
+        && left.sessionKey === right.sessionKey
+      ),
+      switchMap(({ languageCode }) => this.api.loadCommands(languageCode)),
     ),
     { initialValue: [] },
   );
@@ -98,4 +106,17 @@ function unique(values: string[]): string[] {
 
 function normalizeCategory(value: string): string {
   return value.trim().toLowerCase();
+}
+
+function buildCatalogSessionKey(session: SiteSessionPayload): string {
+  return JSON.stringify({
+    isAuthenticated: session.isAuthenticated,
+    userId: session.user?.id ?? '',
+    isAdmin: session.isAdmin,
+    memberships: session.memberships.map((membership) => ({
+      guildId: membership.guildId,
+      isMember: membership.isMember,
+      roleIds: [...membership.roleIds].sort(),
+    })),
+  });
 }
