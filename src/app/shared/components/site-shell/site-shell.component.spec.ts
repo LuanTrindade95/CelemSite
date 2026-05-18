@@ -50,7 +50,7 @@ describe('SiteShellComponent', () => {
     expect(beginDiscordLoginSpy).toHaveBeenCalledOnceWith(false);
   });
 
-  it('keeps the anonymous discord account state when the session has no guild membership', () => {
+  it('falls back to the authenticated Discord user when the session has no guild membership', () => {
     authService.session.set({
       isAuthenticated: true,
       user: {
@@ -68,14 +68,14 @@ describe('SiteShellComponent', () => {
     fixture.detectChanges();
 
     const text = fixture.nativeElement.textContent;
+    expect(text).toContain('Luan');
     expect(text).toContain('DISCORD');
-    expect(text).not.toContain('Luan');
 
     const authenticatedAccount = fixture.nativeElement.querySelector('.discord-account--authenticated');
-    expect(authenticatedAccount).toBeNull();
+    expect(authenticatedAccount).not.toBeNull();
 
     const anonymousAccount = fixture.nativeElement.querySelector('.discord-account--anonymous');
-    expect(anonymousAccount).not.toBeNull();
+    expect(anonymousAccount).toBeNull();
   });
 
   it('renders the launcher-style discord account block for authenticated guild members', () => {

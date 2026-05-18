@@ -36,7 +36,10 @@ export class SiteShellComponent {
           displayName: primaryMembership.displayName,
           avatarUrl: primaryMembership.avatarUrl,
         }
-      : null;
+      : {
+          displayName: session.user.displayName,
+          avatarUrl: session.user.avatarUrl,
+        };
   };
 
   protected async changeLanguage(languageCode: string): Promise<void> {
