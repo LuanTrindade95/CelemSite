@@ -21,6 +21,9 @@ The site now includes:
 - Role-aware command visibility enforced in Supabase Edge Functions before the payload leaves the backend.
 - Global UI language selection using the V Rising language set.
 - Command translation selection sourced from plugin `Localization/Commands.json` and completed by localized command attributes when the JSON is incomplete.
+- A compact top navigation that keeps the command catalog as the primary live page while exposing future `Launcher`, `Interface`, and `About` routes as in-progress placeholders.
+- A premium catalog hero with primary search, `Ctrl + K` shortcut focus, popular quick filters, responsive view toggle, and client-side pagination with six cards per page.
+- A header brand lockup inspired by the Reino Sagrado de Celem visual identity, with the logo paired to a two-line title treatment instead of the older subtitle copy.
 
 ## Development
 
@@ -71,7 +74,22 @@ Current site login behavior:
 - after login, the header shows the guild-aware display name plus avatar when available, otherwise it falls back to the authenticated Discord user profile without requiring a manual refresh
 - after logout, the catalog immediately reloads against the anonymous/public command source so admin-only visibility is removed without a browser refresh
 - the catalog no longer exposes a second per-page language filter; the global header language applies immediately and is the single language source for both UI text and command payloads
-- the main layout keeps the existing dark V Rising-inspired identity while using a lighter authenticated profile block, a counter-free hero section, and a fully filled responsive filter card
+- the main layout keeps the existing dark V Rising-inspired identity while adding a compact premium header, a search-first hero, responsive filter drawer behavior on mobile, smaller command cards, and a minimal footer
+
+## Catalog UX
+
+Current catalog behavior:
+
+- the primary search field lives in the hero section and supports `Ctrl + K` to focus it instantly
+- popular pills reuse the existing search or permission filters instead of adding a second tagging system
+- project and sort controls stay inline on desktop with responsive two-column and three-column layouts, then move into a mobile filter drawer on smaller screens
+- the permission filter only appears for authenticated administrators
+- sort options are intentionally limited to `Project` and `Command`
+- the catalog supports both grid and list views
+- pagination is client-side, shows six commands per page, and exposes previous/next arrows alongside the page numbers
+- the hero is intentionally shorter so the first six cards appear earlier on load without changing the overall structure of the page
+- grid cards keep a stable visual height on desktop while preserving responsive stacking on tablet and mobile
+- the main command cards now prioritize the command, summary, primary usage, compact metadata, and copy action instead of long example-heavy bodies
 
 ## Discord / Supabase Setup
 

@@ -23,7 +23,8 @@ export interface CommandCatalogItem {
   updatedAt?: string;
 }
 
-export type SortMode = 'project' | 'command' | 'permission' | 'language';
+export type SortMode = 'project' | 'command';
+export type ViewMode = 'grid' | 'list';
 
 export interface CommandCatalogFilters {
   query: string;

@@ -1,42 +1,32 @@
-<article class="command-card">
+<article class="command-card" [class.command-card--list]="viewMode === 'list'">
   <header>
     <div>
       <p class="project">{{ command.projectName }}</p>
       <code [celemHighlightSearch]="command.command" [searchTerm]="searchTerm"></code>
     </div>
-    <span class="permission" [class.admin]="command.category.toLowerCase().includes('admin')">{{ command.permission }}</span>
+    <span class="permission" [class.admin]="command.category.toLowerCase().includes('admin')">{{ displayPermission() }}</span>
   </header>
 
-  <p class="description">{{ command.description }}</p>
-
-  @if (command.aliases.length > 0) {
-    <section class="chips" [attr.aria-label]="text('aliases')">
-      @for (alias of command.aliases; track alias) {
-        <code>{{ alias }}</code>
-      }
-    </section>
-  }
+  <p class="description" [attr.title]="command.description">{{ command.description }}</p>
 
   @if (command.usage) {
-    <section>
+    <section class="usage-block">
       <h3>{{ text('usage') }}</h3>
       <code class="block">{{ command.usage }}</code>
     </section>
   }
 
-  @if (command.examples.length > 0) {
-    <section>
-      <h3>{{ text('examples') }}</h3>
-      <div class="examples">
-        @for (example of command.examples; track example) {
-          <code>{{ example }}</code>
-        }
-      </div>
-    </section>
-  }
-
   <footer>
-    <span>{{ displayLanguage(command.language) }}</span>
-    <span>{{ command.sourcePath }}</span>
+    <div class="meta">
+      <span class="meta-pill">{{ displayLanguage(command.language) }}</span>
+      <span class="meta-pill">{{ displayPermission() }}</span>
+      @if (metadataCountLabel(); as countLabel) {
+        <span class="meta-count">{{ countLabel }}</span>
+      }
+    </div>
+
+    <button type="button" class="copy-button" (click)="copyPrimaryUsage()">
+      {{ copied() ? text('copied') : text('copy') }}
+    </button>
   </footer>
 </article>

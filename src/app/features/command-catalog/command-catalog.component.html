@@ -7,21 +7,96 @@
         {{ text('catalogSummary') }}
       </p>
     </div>
+
+    <div class="hero-search">
+      <label class="hero-search__field">
+        <span>{{ text('search') }}</span>
+        <input
+          #searchInput
+          type="search"
+          [ngModel]="filters().query"
+          (ngModelChange)="updateQuery($event)"
+          [placeholder]="text('searchPlaceholder')"
+          autocomplete="off">
+        <kbd>Ctrl + K</kbd>
+      </label>
+
+      <div class="hero-search__tags">
+        <span>{{ text('popularSearches') }}</span>
+        <div class="hero-search__tag-list">
+          @for (filter of popularFilters; track filter.labelKey) {
+            <button
+              type="button"
+              class="tag-pill"
+              [class.tag-pill--active]="isPopularFilterActive(filter)"
+              (click)="applyPopularFilter(filter)">
+              {{ text(filter.labelKey) }}
+            </button>
+          }
+        </div>
+      </div>
+    </div>
   </div>
 
   <celem-command-toolbar
     [filters]="filters()"
     [projects]="projects()"
     [permissions]="permissions()"
+    [canFilterByPermission]="canFilterByPermission()"
     [displayCategory]="displayCategory"
     (filtersChange)="updateFilters($event)" />
 
+  <section class="results-bar" aria-label="Catalog display controls">
+    <p class="results-bar__summary">{{ resultsText() }}</p>
+
+    <div class="view-toggle" role="group" aria-label="View mode">
+      <button
+        type="button"
+        [class.is-active]="viewMode() === 'grid'"
+        (click)="updateViewMode('grid')">
+        {{ text('viewGrid') }}
+      </button>
+      <button
+        type="button"
+        [class.is-active]="viewMode() === 'list'"
+        (click)="updateViewMode('list')">
+        {{ text('viewList') }}
+      </button>
+    </div>
+  </section>
+
   @if (filteredCommands().length > 0) {
-    <section class="grid" aria-live="polite">
-      @for (command of filteredCommands(); track command.id) {
-        <celem-command-card [command]="command" [searchTerm]="filters().query" />
+    <section class="grid" [class.grid--list]="viewMode() === 'list'" aria-live="polite">
+      @for (command of paginatedCommands(); track command.id) {
+        <celem-command-card [command]="command" [searchTerm]="filters().query" [viewMode]="viewMode()" />
       }
     </section>
+
+    @if (pageCount() > 1) {
+      <nav class="pagination" aria-label="Catalog pagination">
+        <button
+          type="button"
+          class="pagination__arrow"
+          [disabled]="!canGoToPreviousPage()"
+          (click)="goToPreviousPage()">
+          {{ text('paginationPrevious') }}
+        </button>
+
+        @for (page of pageNumbers(); track page) {
+          <button type="button" [class.is-active]="page === currentPage()" (click)="goToPage(page)">
+            {{ page }}
+          </button>
+        }
+
+        <button
+          type="button"
+          class="pagination__arrow"
+          [disabled]="!canGoToNextPage()"
+          (click)="goToNextPage()">
+          {{ text('paginationNext') }}
+        </button>
+      </nav>
+    }
   } @else {
     <p class="empty">{{ text('empty') }}</p>
   }
