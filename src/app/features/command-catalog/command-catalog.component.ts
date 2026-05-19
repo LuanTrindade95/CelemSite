@@ -47,8 +47,6 @@ export class CommandCatalogComponent {
   protected readonly projects = computed(() => unique(this.commands().map((command) => command.projectName)));
   protected readonly permissions = computed(() => unique(this.commands().map((command) => command.category)));
   protected readonly filteredCommands = computed(() => filterAndSort(this.commands(), this.filters()));
-  protected readonly visibleCount = computed(() => this.filteredCommands().length);
-  protected readonly totalCount = computed(() => this.commands().length);
   protected readonly displayCategory = (category: string) =>
     normalizeCategory(category) === 'admin' ? this.text('adminCategory') : this.text('playerCategory');
 

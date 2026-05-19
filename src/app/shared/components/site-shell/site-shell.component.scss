@@ -10,9 +10,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  min-height: 76px;
-  padding: 10px clamp(16px, 4vw, 44px);
+  gap: 18px;
+  min-height: 72px;
+  padding: 8px clamp(16px, 4vw, 40px);
   border-bottom: 1px solid rgba(81, 91, 104, 0.58);
   background: rgba(3, 4, 6, 0.86);
   backdrop-filter: blur(14px);
@@ -49,27 +49,27 @@
 
 .header-controls {
   display: flex;
-  align-items: flex-end;
-  gap: 12px;
+  align-items: center;
+  gap: 10px;
   flex-wrap: wrap;
   justify-content: flex-end;
 }
 
 .language-picker {
   display: grid;
-  gap: 6px;
-  min-width: 190px;
+  gap: 4px;
+  min-width: 182px;
 }
 
 .language-picker span {
-  font-size: 0.78rem;
+  font-size: 0.74rem;
 }
 
 .language-picker select,
 .discord-button,
 .ghost {
-  min-height: 40px;
-  padding: 0 12px;
+  min-height: 38px;
+  padding: 0 11px;
   border: 1px solid rgba(81, 91, 104, 0.58);
   border-radius: 8px;
   background: rgba(10, 12, 17, 0.82);
@@ -78,23 +78,23 @@
 
 .header-session {
   display: flex;
-  align-items: flex-end;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
 }
 
 .discord-account {
-  display: grid;
-  grid-template-columns: minmax(96px, 168px) 42px;
-  gap: 10px;
-  min-height: 40px;
-  border: 0;
-  border-radius: 6px;
-  background: linear-gradient(180deg, rgba(10, 12, 17, 0.92), rgba(6, 7, 10, 1));
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 4px 5px 4px 10px;
+  border: 1px solid rgba(81, 91, 104, 0.38);
+  border-radius: 999px;
+  background: rgba(10, 12, 17, 0.34);
 }
 
 .discord-account-copy {
   display: grid;
-  justify-items: end;
   min-width: 0;
 }
 
@@ -102,35 +102,29 @@
 .discord-account-copy span {
   display: block;
   width: 100%;
-  text-align: right;
 }
 
 .discord-account-copy strong {
   overflow: hidden;
   color: var(--celem-text);
-  font-size: 0.84rem;
-  font-weight: 700;
+  font-size: 0.8rem;
+  font-weight: 600;
   line-height: 1.15;
   text-overflow: ellipsis;
-  text-transform: uppercase;
   white-space: nowrap;
 }
 
 .discord-account-copy span {
-  margin-top: 2px;
-  color: var(--celem-gold);
-  font-size: 0.68rem;
+  margin-top: 1px;
+  color: var(--celem-muted);
+  font-size: 0.63rem;
   font-weight: 600;
   line-height: 1.1;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   overflow: hidden;
   text-overflow: ellipsis;
   text-transform: uppercase;
   white-space: nowrap;
-}
-
-.discord-account--authenticated {
-  border-color: transparent;
 }
 
 .discord-account--authenticated .discord-account-copy strong {
@@ -142,31 +136,31 @@
   transition:
     border-color 160ms ease,
     background 160ms ease,
-    transform 160ms ease;
+    color 160ms ease;
 }
 
 .discord-account--anonymous:hover,
 .discord-account--anonymous:focus-visible {
-  background: linear-gradient(180deg, rgba(14, 16, 21, 0.96), rgba(8, 9, 12, 0.92));
-  transform: translateY(-1px);
+  border-color: rgba(150, 132, 102, 0.52);
+  background: rgba(16, 18, 23, 0.55);
 }
 
 .discord-account--anonymous[disabled] {
   cursor: default;
   opacity: 0.7;
-  transform: none;
 }
 
 .discord-account-avatar {
   position: relative;
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
   overflow: hidden;
-  border: 1px solid #5c5248;
+  border: 1px solid rgba(132, 116, 98, 0.82);
   border-radius: 50%;
-  background: #18130e;
+  background: #17120d;
 }
 
 .discord-account-avatar img {
@@ -177,7 +171,7 @@
 
 .discord-account-avatar span {
   color: var(--celem-gold);
-  font-size: 0.78rem;
+  font-size: 0.68rem;
   font-weight: 600;
 }
 
@@ -186,17 +180,18 @@
 }
 
 .ghost-inline {
-  min-height: 40px;
-  padding: 0;
+  min-height: auto;
+  padding: 0 2px;
   border: 0;
   background: transparent;
   color: var(--celem-muted);
-  font-size: 0.76rem;
+  font-size: 0.72rem;
+  line-height: 1;
 }
 
 .ghost-inline:hover,
 .ghost-inline:focus-visible {
-  color: var(--celem-text);
+  color: var(--celem-gold);
 }
 
 .discord-button,
@@ -218,11 +213,13 @@ main {
 @media (max-width: 760px) {
   .site-header {
     align-items: flex-start;
+    gap: 14px;
   }
 
   .header-controls {
     width: 100%;
     justify-content: stretch;
+    gap: 8px;
   }
 
   .language-picker,
@@ -239,11 +236,39 @@ main {
   }
 
   .discord-account {
-    grid-template-columns: minmax(0, 1fr) 42px;
+    max-width: min(100%, 280px);
   }
 
   .discord-button--compact {
     display: inline-flex;
     justify-content: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .brand img {
+    width: 46px;
+    height: 46px;
+  }
+
+  .brand strong {
+    font-size: 0.95rem;
+  }
+
+  .header-session {
+    gap: 8px;
+  }
+
+  .discord-account {
+    flex: 1 1 auto;
+    max-width: none;
+  }
+
+  .discord-account-copy strong {
+    font-size: 0.76rem;
+  }
+
+  .ghost-inline {
+    flex: 0 0 auto;
   }
 }

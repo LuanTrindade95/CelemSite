@@ -71,6 +71,7 @@ Current site login behavior:
 - after login, the header shows the guild-aware display name plus avatar when available, otherwise it falls back to the authenticated Discord user profile without requiring a manual refresh
 - after logout, the catalog immediately reloads against the anonymous/public command source so admin-only visibility is removed without a browser refresh
 - the catalog no longer exposes a second per-page language filter; the global header language applies immediately and is the single language source for both UI text and command payloads
+- the main layout keeps the existing dark V Rising-inspired identity while using a lighter authenticated profile block, a counter-free hero section, and a fully filled responsive filter card
 
 ## Discord / Supabase Setup
 
