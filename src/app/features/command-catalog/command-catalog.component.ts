@@ -13,7 +13,6 @@ const INITIAL_FILTERS: CommandCatalogFilters = {
   query: '',
   project: '',
   permission: '',
-  language: '',
   sortMode: 'project',
 };
 
@@ -47,13 +46,11 @@ export class CommandCatalogComponent {
   protected readonly filters = signal<CommandCatalogFilters>(INITIAL_FILTERS);
   protected readonly projects = computed(() => unique(this.commands().map((command) => command.projectName)));
   protected readonly permissions = computed(() => unique(this.commands().map((command) => command.category)));
-  protected readonly languages = computed(() => unique(this.commands().map((command) => command.language)));
   protected readonly filteredCommands = computed(() => filterAndSort(this.commands(), this.filters()));
   protected readonly visibleCount = computed(() => this.filteredCommands().length);
   protected readonly totalCount = computed(() => this.commands().length);
   protected readonly displayCategory = (category: string) =>
     normalizeCategory(category) === 'admin' ? this.text('adminCategory') : this.text('playerCategory');
-  protected readonly displayLanguage = (languageCode: string) => this.language.getDisplayName(languageCode);
 
   protected updateFilters(filters: CommandCatalogFilters): void {
     this.filters.set(filters);
@@ -66,7 +63,6 @@ function filterAndSort(commands: CommandCatalogItem[], filters: CommandCatalogFi
   return commands
     .filter((command) => !filters.project || command.projectName === filters.project)
     .filter((command) => !filters.permission || normalizeCategory(command.category) === normalizeCategory(filters.permission))
-    .filter((command) => !filters.language || command.language === filters.language)
     .filter((command) => !query || searchableText(command).includes(query))
     .sort((left, right) => compareCommands(left, right, filters.sortMode));
 }

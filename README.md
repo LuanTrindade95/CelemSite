@@ -70,6 +70,7 @@ Current site login behavior:
 - the hosted login flow relies on the Supabase Auth PKCE-managed OAuth state and does not inject a second custom site state parameter
 - after login, the header shows the guild-aware display name plus avatar when available, otherwise it falls back to the authenticated Discord user profile without requiring a manual refresh
 - after logout, the catalog immediately reloads against the anonymous/public command source so admin-only visibility is removed without a browser refresh
+- the catalog no longer exposes a second per-page language filter; the global header language applies immediately and is the single language source for both UI text and command payloads
 
 ## Discord / Supabase Setup
 

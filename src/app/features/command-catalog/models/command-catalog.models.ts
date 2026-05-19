@@ -29,6 +29,5 @@ export interface CommandCatalogFilters {
   query: string;
   project: string;
   permission: string;
-  language: string;
   sortMode: SortMode;
 }

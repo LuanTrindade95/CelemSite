@@ -4,6 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import { SITE_API_ENDPOINTS } from '../config/site-api.config';
 import { normalizeSiteLanguageCode, SITE_LANGUAGE_OPTIONS, SiteLanguageCode } from '../i18n/site-language';
 import { ApiEnvelope } from '../../features/command-catalog/models/command-catalog.models';
+import { SiteAuthService } from './site-auth.service';
 
 const STORAGE_KEY = 'celem.site.language';
 const COOKIE_KEY = 'celem_site_lang';
@@ -11,6 +12,7 @@ const COOKIE_KEY = 'celem_site_lang';
 @Injectable({ providedIn: 'root' })
 export class SiteLanguageService {
   private readonly http = inject(HttpClient);
+  private readonly auth = inject(SiteAuthService);
 
   public readonly options = SITE_LANGUAGE_OPTIONS;
   public readonly currentLanguage = signal<SiteLanguageCode>(this.resolveInitialLanguage());
@@ -33,6 +35,8 @@ export class SiteLanguageService {
     if (!isAuthenticated) {
       return;
     }
+
+    this.auth.updatePreferredLanguage(normalized);
 
     try {
       await firstValueFrom(this.http.post<ApiEnvelope<{ preferredLanguageCode: SiteLanguageCode }>>(

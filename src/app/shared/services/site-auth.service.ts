@@ -173,6 +173,15 @@ export class SiteAuthService {
     }
   }
 
+  public updatePreferredLanguage(languageCode: SiteLanguageCode): void {
+    this.session.update((session) => session.isAuthenticated
+      ? {
+          ...session,
+          preferredLanguageCode: languageCode,
+        }
+      : session);
+  }
+
   private persistPendingLoginPreference(rememberSession: boolean): void {
     if (typeof sessionStorage === 'undefined') {
       return;
