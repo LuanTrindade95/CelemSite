@@ -1,26 +1,12 @@
 <section class="catalog">
   <div class="intro">
-    <div>
+    <div class="intro-copy">
       <p class="eyebrow">{{ text('eyebrow') }}</p>
       <h1>{{ text('catalogTitle') }}</h1>
       <p class="summary">
         {{ text('catalogSummary') }}
       </p>
     </div>
-    <dl>
-      <div>
-        <dt>{{ totalCount() }}</dt>
-        <dd>{{ text('total') }}</dd>
-      </div>
-      <div>
-        <dt>{{ visibleCount() }}</dt>
-        <dd>{{ text('visible') }}</dd>
-      </div>
-      <div>
-        <dt>{{ projects().length }}</dt>
-        <dd>{{ text('projects') }}</dd>
-      </div>
-    </dl>
   </div>
 
   <celem-command-toolbar

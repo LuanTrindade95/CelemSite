@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2026-05-19 17:08:00 -03:00
+
+- Refined the authenticated header profile block to be more compact, quieter, and better aligned with the language selector across desktop, tablet, and mobile breakpoints.
+- Removed the three hero counters and rebalanced the hero spacing so the command intro copy uses the freed space without leaving empty layout gaps.
+- Reworked the filter toolbar grid so the search field has visual priority, the remaining selects fill the card width more evenly, and the whole block stacks cleanly on smaller screens.
+
 ## 2026-05-18 17:12:00 -03:00
 
 - Switched the hosted Discord callback target from `/auth/callback` to the GitHub Pages site root, then rerouted the OAuth query to the internal callback component inside Angular so the login flow no longer starts with a Pages `404` response.
