@@ -19,13 +19,16 @@ describe('SiteShellComponent', () => {
   });
 
   it('renders the Reino Sagrado de Celem brand', () => {
-    expect(fixture.nativeElement.textContent).toContain('Reino Sagrado de Celem');
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('Reino Sagrado');
+    expect(text).toContain('Celem');
   });
 
   it('renders the framed anonymous discord account state', () => {
     const loginButton = fixture.nativeElement.querySelector('.discord-button--login') as HTMLButtonElement | null;
+    const loginButtonIcon = fixture.nativeElement.querySelector('.discord-button__icon svg') as SVGElement | null;
     expect(loginButton).not.toBeNull();
-    expect(loginButton?.textContent).toContain('Discord');
+    expect(loginButtonIcon).not.toBeNull();
   });
 
   it('renders the top navigation and minimal footer', () => {

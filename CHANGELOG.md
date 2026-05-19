@@ -1,5 +1,31 @@
 # CHANGELOG
 
+## 2026-05-19 12:01:00 -03:00
+
+- Restored responsive behavior for the catalog filters by giving the desktop toolbar dedicated two-control and three-control layouts while keeping the mobile drawer resilient when the administrator-only permission filter is present.
+
+## 2026-05-19 11:31:00 -03:00
+
+- Restricted the command permission filter to authenticated administrators only and simplified the sort options to `Project` and `Command`.
+
+## 2026-05-19 11:24:00 -03:00
+
+- Reduced the visual span of the `Reino Sagrado de` line in the header brand lockup so it stays closer to the width of `CELEM`.
+
+## 2026-05-19 11:06:00 -03:00
+
+- Reduced the header brand lockup size, restored the existing site font language for the title, and moved the horizontal navigation into a centered header column.
+
+## 2026-05-19 10:56:00 -03:00
+
+- Updated the site header branding to use a larger emblem plus a two-line Reino Sagrado / Celem title lockup, removing the old subtitle text.
+
+## 2026-05-19 10:49:00 -03:00
+
+- Tightened the command catalog hero and surrounding spacing so the first six cards appear sooner after page load.
+- Stabilized the desktop grid card height to reduce perceived blur/jump when changing pages while keeping tablet and mobile layouts responsive.
+- Added functional previous/next pagination arrows alongside the existing page number buttons.
+
 ## 2026-05-19 09:45:00 -03:00
 
 - Replaced the global site background with a darker cinematic composition built from subtle red and gold radial glows plus low-contrast ambient particles, without changing layout, components, spacing, or interaction behavior.

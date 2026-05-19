@@ -18,6 +18,7 @@ describe('CommandToolbarComponent', () => {
     });
     fixture.componentRef.setInput('projects', ['CelemBank']);
     fixture.componentRef.setInput('permissions', ['player']);
+    fixture.componentRef.setInput('canFilterByPermission', true);
     fixture.componentRef.setInput('displayCategory', (category: string) => category);
     fixture.detectChanges();
   });
@@ -34,5 +35,26 @@ describe('CommandToolbarComponent', () => {
 
     fixture.componentInstance.closeDrawer();
     expect(fixture.componentInstance.isDrawerOpen()).toBeFalse();
+  });
+
+  it('hides the permission filter when the viewer is not an admin', () => {
+    fixture.componentRef.setInput('canFilterByPermission', false);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).not.toContain('permission');
+  });
+
+  it('uses the admin layout only when the permission filter is visible', () => {
+    const toolbar = fixture.nativeElement.querySelector('.toolbar') as HTMLElement;
+    const desktop = fixture.nativeElement.querySelector('.toolbar__desktop') as HTMLElement;
+
+    expect(toolbar.classList.contains('toolbar--admin')).toBeTrue();
+    expect(desktop.classList.contains('toolbar__desktop--admin')).toBeTrue();
+
+    fixture.componentRef.setInput('canFilterByPermission', false);
+    fixture.detectChanges();
+
+    expect(toolbar.classList.contains('toolbar--admin')).toBeFalse();
+    expect(desktop.classList.contains('toolbar__desktop--admin')).toBeFalse();
   });
 });

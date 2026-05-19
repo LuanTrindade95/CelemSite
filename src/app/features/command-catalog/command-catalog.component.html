@@ -42,6 +42,7 @@
     [filters]="filters()"
     [projects]="projects()"
     [permissions]="permissions()"
+    [canFilterByPermission]="canFilterByPermission()"
     [displayCategory]="displayCategory"
     (filtersChange)="updateFilters($event)" />
 
@@ -73,11 +74,27 @@
 
     @if (pageCount() > 1) {
       <nav class="pagination" aria-label="Catalog pagination">
+        <button
+          type="button"
+          class="pagination__arrow"
+          [disabled]="!canGoToPreviousPage()"
+          (click)="goToPreviousPage()">
+          {{ text('paginationPrevious') }}
+        </button>
+
         @for (page of pageNumbers(); track page) {
           <button type="button" [class.is-active]="page === currentPage()" (click)="goToPage(page)">
             {{ page }}
           </button>
         }
+
+        <button
+          type="button"
+          class="pagination__arrow"
+          [disabled]="!canGoToNextPage()"
+          (click)="goToNextPage()">
+          {{ text('paginationNext') }}
+        </button>
       </nav>
     }
   } @else {

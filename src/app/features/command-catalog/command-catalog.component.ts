@@ -49,6 +49,10 @@ export class CommandCatalogComponent {
   protected readonly viewMode = signal<ViewMode>('grid');
   protected readonly currentPage = signal(1);
   protected readonly pageSize = 6;
+  protected readonly canFilterByPermission = computed(() => {
+    const session = this.auth.session();
+    return session.isAuthenticated && session.isAdmin;
+  });
   protected readonly popularFilters: ReadonlyArray<
     | { labelKey: 'popularBank' | 'popularEconomy' | 'popularTeleports'; kind: 'query' }
     | { labelKey: 'popularAdmin' | 'popularPlayer'; kind: 'permission'; permission: 'admin' | 'player' }
@@ -79,6 +83,15 @@ export class CommandCatalogComponent {
       const pageCount = this.pageCount();
       if (this.currentPage() > pageCount) {
         this.currentPage.set(pageCount);
+      }
+    });
+
+    effect(() => {
+      if (!this.canFilterByPermission() && this.filters().permission) {
+        this.filters.set({
+          ...this.filters(),
+          permission: '',
+        });
       }
     });
   }
@@ -133,12 +146,28 @@ export class CommandCatalogComponent {
     this.viewMode.set(viewMode);
   }
 
+  protected canGoToPreviousPage(): boolean {
+    return this.currentPage() > 1;
+  }
+
+  protected canGoToNextPage(): boolean {
+    return this.currentPage() < this.pageCount();
+  }
+
   protected goToPage(page: number): void {
     if (page < 1 || page > this.pageCount() || page === this.currentPage()) {
       return;
     }
 
     this.currentPage.set(page);
+  }
+
+  protected goToPreviousPage(): void {
+    this.goToPage(this.currentPage() - 1);
+  }
+
+  protected goToNextPage(): void {
+    this.goToPage(this.currentPage() + 1);
   }
 
   protected resultsText(): string {
@@ -179,10 +208,6 @@ function compareCommands(left: CommandCatalogItem, right: CommandCatalogItem, so
   switch (sortMode) {
     case 'command':
       return left.command.localeCompare(right.command);
-    case 'permission':
-      return normalizeCategory(left.category).localeCompare(normalizeCategory(right.category)) || left.projectName.localeCompare(right.projectName);
-    case 'language':
-      return left.language.localeCompare(right.language) || left.projectName.localeCompare(right.projectName);
     case 'project':
     default:
       return left.projectName.localeCompare(right.projectName) || left.sortOrder - right.sortOrder || left.command.localeCompare(right.command);

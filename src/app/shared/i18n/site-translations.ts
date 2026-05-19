@@ -39,6 +39,8 @@ export type SiteTranslationKey =
   | 'popularTeleports'
   | 'popularPlayer'
   | 'resultsFound'
+  | 'paginationPrevious'
+  | 'paginationNext'
   | 'viewGrid'
   | 'viewList'
   | 'empty'
@@ -107,6 +109,8 @@ export const SITE_TRANSLATIONS: Record<SiteLanguageCode, SiteTranslationDictiona
     popularTeleports: 'Teleports',
     popularPlayer: 'Player',
     resultsFound: 'commands found',
+    paginationPrevious: 'Previous',
+    paginationNext: 'Next',
     viewGrid: 'Grid',
     viewList: 'List',
     empty: 'No commands match the current filters.',
@@ -277,6 +281,8 @@ export const SITE_TRANSLATIONS: Record<SiteLanguageCode, SiteTranslationDictiona
     popularTeleports: 'Teleportes',
     popularPlayer: 'Jogador',
     resultsFound: 'comandos encontrados',
+    paginationPrevious: 'Anterior',
+    paginationNext: 'Próxima',
     viewGrid: 'Grade',
     viewList: 'Lista',
     empty: 'Nenhum comando corresponde aos filtros atuais.',

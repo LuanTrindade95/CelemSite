@@ -132,6 +132,31 @@ describe('CommandCatalogComponent', () => {
     expect(fixture.nativeElement.textContent).toContain('.player command 7');
   });
 
+  it('navigates with previous and next pagination arrows', async () => {
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const arrowButtons = [...fixture.nativeElement.querySelectorAll('.pagination__arrow')] as HTMLButtonElement[];
+    const previousButton = arrowButtons[0];
+    const nextButton = arrowButtons[1];
+
+    expect(previousButton.disabled).toBeTrue();
+    expect(nextButton.disabled).toBeFalse();
+
+    nextButton.click();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).toContain('.player command 7');
+    expect(previousButton.disabled).toBeFalse();
+    expect(nextButton.disabled).toBeTrue();
+
+    previousButton.click();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).toContain('.player command 1');
+    expect(fixture.nativeElement.textContent).not.toContain('.player command 7');
+  });
+
   it('focuses the main search input when Ctrl+K is pressed', async () => {
     const searchInput = fixture.nativeElement.querySelector('.hero-search__field input') as HTMLInputElement;
 

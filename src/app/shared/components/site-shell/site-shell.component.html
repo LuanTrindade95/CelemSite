@@ -2,24 +2,24 @@
   <div class="site-header__leading">
     <a class="brand" routerLink="/" aria-label="CelemSite">
       <img src="assets/images/celem-logo.png" alt="Celem" width="54" height="54">
-      <span>
-        <strong>Reino Sagrado de Celem</strong>
-        <small>{{ text('brandSubtitle') }}</small>
+      <span class="brand-copy">
+        <small>Reino Sagrado de</small>
+        <strong>Celem</strong>
       </span>
     </a>
-
-    <nav class="site-nav" aria-label="Primary">
-      @for (item of navigationItems; track item.route) {
-        <a
-          class="site-nav__link"
-          [routerLink]="item.route"
-          routerLinkActive="site-nav__link--active"
-          [routerLinkActiveOptions]="{ exact: item.exact }">
-          {{ text(item.labelKey) }}
-        </a>
-      }
-    </nav>
   </div>
+
+  <nav class="site-nav" aria-label="Primary">
+    @for (item of navigationItems; track item.route) {
+      <a
+        class="site-nav__link"
+        [routerLink]="item.route"
+        routerLinkActive="site-nav__link--active"
+        [routerLinkActiveOptions]="{ exact: item.exact }">
+        {{ text(item.labelKey) }}
+      </a>
+    }
+  </nav>
 
   <div class="header-controls">
     <label class="language-picker">

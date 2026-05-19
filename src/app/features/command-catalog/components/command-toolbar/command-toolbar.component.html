@@ -1,5 +1,5 @@
-<section class="toolbar" aria-label="Command filters">
-  <div class="toolbar__desktop">
+<section class="toolbar" [class.toolbar--admin]="canFilterByPermission" aria-label="Command filters">
+  <div class="toolbar__desktop" [class.toolbar__desktop--admin]="canFilterByPermission">
     <label>
       <span>{{ text('project') }}</span>
       <select [ngModel]="filters.project" (ngModelChange)="update({ project: $event })">
@@ -10,23 +10,23 @@
       </select>
     </label>
 
-    <label>
-      <span>{{ text('permission') }}</span>
-      <select [ngModel]="filters.permission" (ngModelChange)="update({ permission: $event })">
-        <option value="">{{ text('allPermissions') }}</option>
-        @for (permission of permissions; track permission) {
-          <option [value]="permission">{{ displayCategory(permission) }}</option>
-        }
-      </select>
-    </label>
+    @if (canFilterByPermission) {
+      <label>
+        <span>{{ text('permission') }}</span>
+        <select [ngModel]="filters.permission" (ngModelChange)="update({ permission: $event })">
+          <option value="">{{ text('allPermissions') }}</option>
+          @for (permission of permissions; track permission) {
+            <option [value]="permission">{{ displayCategory(permission) }}</option>
+          }
+        </select>
+      </label>
+    }
 
     <label>
       <span>{{ text('sort') }}</span>
       <select [ngModel]="filters.sortMode" (ngModelChange)="updateSortMode($event)">
         <option value="project">{{ text('sortProject') }}</option>
         <option value="command">{{ text('sortCommand') }}</option>
-        <option value="permission">{{ text('sortPermission') }}</option>
-        <option value="language">{{ text('sortLanguage') }}</option>
       </select>
     </label>
   </div>
@@ -63,23 +63,23 @@
         </select>
       </label>
 
-      <label>
-        <span>{{ text('permission') }}</span>
-        <select [ngModel]="filters.permission" (ngModelChange)="update({ permission: $event })">
-          <option value="">{{ text('allPermissions') }}</option>
-          @for (permission of permissions; track permission) {
-            <option [value]="permission">{{ displayCategory(permission) }}</option>
-          }
-        </select>
-      </label>
+      @if (canFilterByPermission) {
+        <label>
+          <span>{{ text('permission') }}</span>
+          <select [ngModel]="filters.permission" (ngModelChange)="update({ permission: $event })">
+            <option value="">{{ text('allPermissions') }}</option>
+            @for (permission of permissions; track permission) {
+              <option [value]="permission">{{ displayCategory(permission) }}</option>
+            }
+          </select>
+        </label>
+      }
 
       <label>
         <span>{{ text('sort') }}</span>
         <select [ngModel]="filters.sortMode" (ngModelChange)="updateSortMode($event)">
           <option value="project">{{ text('sortProject') }}</option>
           <option value="command">{{ text('sortCommand') }}</option>
-          <option value="permission">{{ text('sortPermission') }}</option>
-          <option value="language">{{ text('sortLanguage') }}</option>
         </select>
       </label>
     </div>

@@ -23,6 +23,7 @@ The site now includes:
 - Command translation selection sourced from plugin `Localization/Commands.json` and completed by localized command attributes when the JSON is incomplete.
 - A compact top navigation that keeps the command catalog as the primary live page while exposing future `Launcher`, `Interface`, and `About` routes as in-progress placeholders.
 - A premium catalog hero with primary search, `Ctrl + K` shortcut focus, popular quick filters, responsive view toggle, and client-side pagination with six cards per page.
+- A header brand lockup inspired by the Reino Sagrado de Celem visual identity, with the logo paired to a two-line title treatment instead of the older subtitle copy.
 
 ## Development
 
@@ -81,9 +82,13 @@ Current catalog behavior:
 
 - the primary search field lives in the hero section and supports `Ctrl + K` to focus it instantly
 - popular pills reuse the existing search or permission filters instead of adding a second tagging system
-- project, permission, and sort controls stay inline on desktop and move into a mobile filter drawer on smaller screens
+- project and sort controls stay inline on desktop with responsive two-column and three-column layouts, then move into a mobile filter drawer on smaller screens
+- the permission filter only appears for authenticated administrators
+- sort options are intentionally limited to `Project` and `Command`
 - the catalog supports both grid and list views
-- pagination is client-side and shows six commands per page
+- pagination is client-side, shows six commands per page, and exposes previous/next arrows alongside the page numbers
+- the hero is intentionally shorter so the first six cards appear earlier on load without changing the overall structure of the page
+- grid cards keep a stable visual height on desktop while preserving responsive stacking on tablet and mobile
 - the main command cards now prioritize the command, summary, primary usage, compact metadata, and copy action instead of long example-heavy bodies
 
 ## Discord / Supabase Setup

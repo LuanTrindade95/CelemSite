@@ -16,6 +16,7 @@ export class CommandToolbarComponent {
   @Input({ required: true }) public filters!: CommandCatalogFilters;
   @Input({ required: true }) public projects: string[] = [];
   @Input({ required: true }) public permissions: string[] = [];
+  @Input() public canFilterByPermission = false;
   @Input({ required: true }) public displayCategory!: (category: string) => string;
   @Output() public filtersChange = new EventEmitter<CommandCatalogFilters>();
 
