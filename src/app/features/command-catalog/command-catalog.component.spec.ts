@@ -3,6 +3,7 @@ import { signal } from '@angular/core';
 import { of } from 'rxjs';
 import { CommandCatalogComponent } from './command-catalog.component';
 import { CommandCatalogApiService } from './services/command-catalog-api.service';
+import { CommandCatalogItem } from './models/command-catalog.models';
 import { SiteAuthService, SiteSessionPayload } from '../../shared/services/site-auth.service';
 import { SiteLanguageService } from '../../shared/services/site-language.service';
 import { SiteI18nService } from '../../shared/services/site-i18n.service';
@@ -19,36 +20,8 @@ describe('CommandCatalogComponent', () => {
   });
   const currentLanguage = signal<'english'>('english');
   const loadCommands = jasmine.createSpy('loadCommands').and.callFake(() => of(session().isAuthenticated
-    ? [{
-        id: 'admin',
-        projectSlug: 'celem-bank',
-        projectName: 'CelemBank',
-        category: 'admin',
-        command: '.bank admin',
-        aliases: [],
-        permission: 'Admin',
-        description: 'Shows admin command.',
-        usage: '.bank admin',
-        examples: ['.bank admin'],
-        language: 'english',
-        sourcePath: 'CelemBank/docs/admin/commands.md',
-        sortOrder: 1,
-      }]
-    : [{
-        id: 'player',
-        projectSlug: 'celem-bank',
-        projectName: 'CelemBank',
-        category: 'player',
-        command: '.bank balance',
-        aliases: [],
-        permission: 'Player',
-        description: 'Shows the balance.',
-        usage: '.bank balance',
-        examples: ['.bank balance'],
-        language: 'english',
-        sourcePath: 'CelemBank/docs/user/commands.md',
-        sortOrder: 1,
-      }]));
+    ? buildCommands('admin', 7)
+    : buildCommands('player', 7)));
 
   beforeEach(async () => {
     session.set({
@@ -98,7 +71,7 @@ describe('CommandCatalogComponent', () => {
   });
 
   it('renders loaded commands', () => {
-    expect(fixture.nativeElement.textContent).toContain('.bank balance');
+    expect(fixture.nativeElement.textContent).toContain('.player command 1');
   });
 
   it('reloads the catalog when the auth session changes during logout', async () => {
@@ -125,7 +98,7 @@ describe('CommandCatalogComponent', () => {
     await fixture.whenStable();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.textContent).toContain('.bank admin');
+    expect(fixture.nativeElement.textContent).toContain('.admin command 1');
 
     session.set({
       isAuthenticated: false,
@@ -140,7 +113,50 @@ describe('CommandCatalogComponent', () => {
     fixture.detectChanges();
 
     expect(loadCommands).toHaveBeenCalledTimes(3);
-    expect(fixture.nativeElement.textContent).toContain('.bank balance');
-    expect(fixture.nativeElement.textContent).not.toContain('.bank admin');
+    expect(fixture.nativeElement.textContent).toContain('.player command 1');
+    expect(fixture.nativeElement.textContent).not.toContain('.admin command 1');
+  });
+
+  it('paginates the catalog with six cards per page', async () => {
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('celem-command-card').length).toBe(6);
+    expect(fixture.nativeElement.textContent).not.toContain('.player command 7');
+
+    const pageButtons = [...fixture.nativeElement.querySelectorAll('.pagination button')] as HTMLButtonElement[];
+    pageButtons.at(-1)?.click();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('celem-command-card').length).toBe(1);
+    expect(fixture.nativeElement.textContent).toContain('.player command 7');
+  });
+
+  it('focuses the main search input when Ctrl+K is pressed', async () => {
+    const searchInput = fixture.nativeElement.querySelector('.hero-search__field input') as HTMLInputElement;
+
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true }));
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(document.activeElement).toBe(searchInput);
   });
 });
+
+function buildCommands(category: 'admin' | 'player', count: number): CommandCatalogItem[] {
+  return Array.from({ length: count }, (_, index) => ({
+    id: `${category}-${index + 1}`,
+    projectSlug: 'celem-bank',
+    projectName: 'CelemBank',
+    category,
+    command: `.${category} command ${index + 1}`,
+    aliases: index % 2 === 0 ? [`.${category} alias ${index + 1}`] : [],
+    permission: category === 'admin' ? 'Admin' : 'Player',
+    description: `Shows ${category} command ${index + 1}.`,
+    usage: `.${category} command ${index + 1}`,
+    examples: [`example ${index + 1}`],
+    language: 'english',
+    sourcePath: `CelemBank/docs/${category}/commands-${index + 1}.md`,
+    sortOrder: index + 1,
+  }));
+}

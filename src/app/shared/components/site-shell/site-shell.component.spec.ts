@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { SiteShellComponent } from './site-shell.component';
 import { SiteAuthService } from '../../services/site-auth.service';
 
@@ -9,6 +10,7 @@ describe('SiteShellComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SiteShellComponent],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     authService = TestBed.inject(SiteAuthService);
@@ -21,13 +23,18 @@ describe('SiteShellComponent', () => {
   });
 
   it('renders the framed anonymous discord account state', () => {
-    const anonymousAccount = fixture.nativeElement.querySelector('.discord-account--anonymous') as HTMLButtonElement | null;
-    expect(anonymousAccount).not.toBeNull();
-    expect(anonymousAccount?.textContent).toContain('DISCORD');
+    const loginButton = fixture.nativeElement.querySelector('.discord-button--login') as HTMLButtonElement | null;
+    expect(loginButton).not.toBeNull();
+    expect(loginButton?.textContent).toContain('Discord');
+  });
 
-    const compactLoginButton = fixture.nativeElement.querySelector('.discord-button--compact') as HTMLButtonElement | null;
-    expect(compactLoginButton).not.toBeNull();
-    expect(compactLoginButton?.textContent?.trim().length).toBeGreaterThan(0);
+  it('renders the top navigation and minimal footer', () => {
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('Home');
+    expect(text).toContain('Comandos');
+    expect(text).toContain('Launcher');
+    expect(text).toContain('Sobre');
+    expect(text).toContain('Catálogo oficial de comandos');
   });
 
   it('opens the Discord confirmation modal before starting the login flow', () => {
@@ -35,8 +42,8 @@ describe('SiteShellComponent', () => {
     authService.isLoading.set(false);
     fixture.detectChanges();
 
-    const anonymousAccount = fixture.nativeElement.querySelector('.discord-account--anonymous') as HTMLButtonElement;
-    anonymousAccount.click();
+    const loginButton = fixture.nativeElement.querySelector('.discord-button--login') as HTMLButtonElement;
+    loginButton.click();
     fixture.detectChanges();
 
     const modal = fixture.nativeElement.querySelector('celem-discord-login-modal');
@@ -74,8 +81,8 @@ describe('SiteShellComponent', () => {
     const authenticatedAccount = fixture.nativeElement.querySelector('.discord-account--authenticated');
     expect(authenticatedAccount).not.toBeNull();
 
-    const anonymousAccount = fixture.nativeElement.querySelector('.discord-account--anonymous');
-    expect(anonymousAccount).toBeNull();
+    const loginButton = fixture.nativeElement.querySelector('.discord-button--login');
+    expect(loginButton).toBeNull();
   });
 
   it('renders the launcher-style discord account block for authenticated guild members', () => {

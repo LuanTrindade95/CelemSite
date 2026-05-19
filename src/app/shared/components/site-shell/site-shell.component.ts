@@ -1,6 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { DiscordLoginModalComponent } from '../discord-login-modal/discord-login-modal.component';
+import { SiteTranslationKey } from '../../i18n/site-translations';
 import { SiteAuthService, SiteSessionPayload } from '../../services/site-auth.service';
 import { SiteI18nService } from '../../services/site-i18n.service';
 import { SiteLanguageService } from '../../services/site-language.service';
@@ -8,7 +10,7 @@ import { SiteLanguageService } from '../../services/site-language.service';
 @Component({
   selector: 'celem-site-shell',
   standalone: true,
-  imports: [FormsModule, DiscordLoginModalComponent],
+  imports: [FormsModule, RouterLink, RouterLinkActive, DiscordLoginModalComponent],
   templateUrl: './site-shell.component.html',
   styleUrl: './site-shell.component.scss',
 })
@@ -23,6 +25,13 @@ export class SiteShellComponent {
   protected readonly languageOptions = this.language.options;
   protected readonly isLoginModalOpen = signal(false);
   protected readonly rememberSession = signal(true);
+  protected readonly navigationItems: ReadonlyArray<{ route: string; labelKey: SiteTranslationKey; exact: boolean }> = [
+    { route: '/', labelKey: 'navHome', exact: true },
+    { route: '/commands', labelKey: 'navCommands', exact: true },
+    { route: '/launcher', labelKey: 'navLauncher', exact: true },
+    { route: '/interface', labelKey: 'navInterface', exact: true },
+    { route: '/about', labelKey: 'navAbout', exact: true },
+  ];
   protected readonly text = (key: Parameters<SiteI18nService['text']>[0]) => this.i18n.text(key);
   protected readonly headerProfile = (): { displayName: string; avatarUrl: string } | null => {
     const session = this.session();

@@ -24,7 +24,15 @@ describe('CommandToolbarComponent', () => {
 
   it('emits updated filters', () => {
     spyOn(fixture.componentInstance.filtersChange, 'emit');
-    fixture.componentInstance.update({ query: 'bank' });
-    expect(fixture.componentInstance.filtersChange.emit).toHaveBeenCalledWith(jasmine.objectContaining({ query: 'bank' }));
+    fixture.componentInstance.update({ permission: 'player' });
+    expect(fixture.componentInstance.filtersChange.emit).toHaveBeenCalledWith(jasmine.objectContaining({ permission: 'player' }));
+  });
+
+  it('opens and closes the mobile filter drawer state', () => {
+    fixture.componentInstance.openDrawer();
+    expect(fixture.componentInstance.isDrawerOpen()).toBeTrue();
+
+    fixture.componentInstance.closeDrawer();
+    expect(fixture.componentInstance.isDrawerOpen()).toBeFalse();
   });
 });

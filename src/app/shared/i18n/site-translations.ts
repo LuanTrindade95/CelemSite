@@ -5,6 +5,11 @@ export type SiteTranslationKey =
   | 'login'
   | 'logout'
   | 'language'
+  | 'navHome'
+  | 'navCommands'
+  | 'navLauncher'
+  | 'navInterface'
+  | 'navAbout'
   | 'eyebrow'
   | 'catalogTitle'
   | 'catalogSummary'
@@ -25,10 +30,30 @@ export type SiteTranslationKey =
   | 'sortCommand'
   | 'sortPermission'
   | 'sortLanguage'
+  | 'filters'
+  | 'filtersClose'
+  | 'popularSearches'
+  | 'popularBank'
+  | 'popularAdmin'
+  | 'popularEconomy'
+  | 'popularTeleports'
+  | 'popularPlayer'
+  | 'resultsFound'
+  | 'viewGrid'
+  | 'viewList'
   | 'empty'
   | 'aliases'
+  | 'aliasesCount'
   | 'usage'
   | 'examples'
+  | 'examplesCount'
+  | 'copy'
+  | 'copied'
+  | 'underConstructionEyebrow'
+  | 'underConstructionSummary'
+  | 'browseCommands'
+  | 'footerLeft'
+  | 'footerRight'
   | 'authLoadingTitle'
   | 'authLoadingDescription'
   | 'authErrorTitle'
@@ -48,14 +73,19 @@ export const SITE_TRANSLATIONS: Record<SiteLanguageCode, SiteTranslationDictiona
     login: 'Discord login',
     logout: 'Logout',
     language: 'Language',
+    navHome: 'Home',
+    navCommands: 'Commands',
+    navLauncher: 'Launcher',
+    navInterface: 'Interface',
+    navAbout: 'About',
     eyebrow: 'Celem ecosystem',
     catalogTitle: 'Commands',
-    catalogSummary: 'Searchable command reference generated from the plugin metadata in Celem2026.',
+    catalogSummary: 'Search commands, aliases, examples, and permissions from plugins across the Celem ecosystem.',
     total: 'Total',
     visible: 'Visible',
     projects: 'Projects',
     search: 'Search',
-    searchPlaceholder: 'Search commands, aliases, examples...',
+    searchPlaceholder: 'Search commands, aliases, permissions, and examples...',
     project: 'Project',
     allProjects: 'All projects',
     permission: 'Permission',
@@ -68,10 +98,30 @@ export const SITE_TRANSLATIONS: Record<SiteLanguageCode, SiteTranslationDictiona
     sortCommand: 'Command',
     sortPermission: 'Permission',
     sortLanguage: 'Language',
+    filters: 'Filters',
+    filtersClose: 'Close',
+    popularSearches: 'Popular filters',
+    popularBank: 'Bank',
+    popularAdmin: 'Admin',
+    popularEconomy: 'Economy',
+    popularTeleports: 'Teleports',
+    popularPlayer: 'Player',
+    resultsFound: 'commands found',
+    viewGrid: 'Grid',
+    viewList: 'List',
     empty: 'No commands match the current filters.',
     aliases: 'Aliases',
+    aliasesCount: 'aliases',
     usage: 'Usage',
     examples: 'Examples',
+    examplesCount: 'examples',
+    copy: 'Copy',
+    copied: 'Copied',
+    underConstructionEyebrow: 'Expanding the platform',
+    underConstructionSummary: 'This area is already mapped in the new navigation, but its dedicated experience is still under construction for a future release.',
+    browseCommands: 'Browse commands',
+    footerLeft: '© Reino Sagrado de Celem · Official command catalog',
+    footerRight: 'Made with ♥ by the community',
     authLoadingTitle: 'Finishing Discord login',
     authLoadingDescription: 'Validating the session and loading your permissions.',
     authErrorTitle: 'Discord login failed',
@@ -193,14 +243,19 @@ export const SITE_TRANSLATIONS: Record<SiteLanguageCode, SiteTranslationDictiona
     login: 'Entrar com Discord',
     logout: 'Sair',
     language: 'Idioma',
+    navHome: 'Home',
+    navCommands: 'Comandos',
+    navLauncher: 'Launcher',
+    navInterface: 'Interface',
+    navAbout: 'Sobre',
     eyebrow: 'Ecossistema Celem',
     catalogTitle: 'Comandos',
-    catalogSummary: 'Referência pesquisável de comandos gerada a partir dos metadados dos plugins do Celem2026.',
+    catalogSummary: 'Pesquise comandos, aliases, exemplos e permissões dos plugins do ecossistema Celem.',
     total: 'Total',
     visible: 'Visíveis',
     projects: 'Projetos',
     search: 'Buscar',
-    searchPlaceholder: 'Buscar comandos, aliases, exemplos...',
+    searchPlaceholder: 'Buscar comandos, aliases, permissões e exemplos...',
     project: 'Projeto',
     allProjects: 'Todos os projetos',
     permission: 'Permissão',
@@ -213,10 +268,30 @@ export const SITE_TRANSLATIONS: Record<SiteLanguageCode, SiteTranslationDictiona
     sortCommand: 'Comando',
     sortPermission: 'Permissão',
     sortLanguage: 'Idioma',
+    filters: 'Filtros',
+    filtersClose: 'Fechar',
+    popularSearches: 'Populares',
+    popularBank: 'Banco',
+    popularAdmin: 'Admin',
+    popularEconomy: 'Economia',
+    popularTeleports: 'Teleportes',
+    popularPlayer: 'Jogador',
+    resultsFound: 'comandos encontrados',
+    viewGrid: 'Grade',
+    viewList: 'Lista',
     empty: 'Nenhum comando corresponde aos filtros atuais.',
     aliases: 'Aliases',
+    aliasesCount: 'aliases',
     usage: 'Uso',
     examples: 'Exemplos',
+    examplesCount: 'exemplos',
+    copy: 'Copiar',
+    copied: 'Copiado',
+    underConstructionEyebrow: 'Ecossistema em expansão',
+    underConstructionSummary: 'Esta área já faz parte da nova navegação, mas a experiência dedicada ainda está em construção para uma próxima entrega.',
+    browseCommands: 'Explorar comandos',
+    footerLeft: '© Reino Sagrado de Celem · Catálogo oficial de comandos',
+    footerRight: 'Feito com ♥ pela comunidade',
     authLoadingTitle: 'Finalizando login do Discord',
     authLoadingDescription: 'Validando a sessão e carregando suas permissões.',
     authErrorTitle: 'Falha no login do Discord',

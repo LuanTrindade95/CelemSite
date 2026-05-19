@@ -24,6 +24,7 @@ export interface CommandCatalogItem {
 }
 
 export type SortMode = 'project' | 'command' | 'permission' | 'language';
+export type ViewMode = 'grid' | 'list';
 
 export interface CommandCatalogFilters {
   query: string;

@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2026-05-19 09:41:00 -03:00
+
+- Added a compact top navigation to `CelemSite`, keeping the command catalog as the primary live route and wiring future `Launcher`, `Interface`, and `About` pages to dedicated under-construction placeholders.
+- Rebuilt the catalog hero around a larger search experience with `Ctrl + K` focus, popular quick filters, a premium two-column layout, and cleaner responsive spacing.
+- Reworked the filter area into an inline desktop control bar plus a mobile drawer, then added functional grid/list toggles and client-side pagination with six command cards per page.
+- Reduced command card density by truncating descriptions, keeping only the main usage block, moving metadata into a compact footer, and adding a copy action.
+- Replaced the old shell ending with a minimal footer and updated the header to use a lighter Discord login button plus the new route navigation.
+
 ## 2026-05-19 17:08:00 -03:00
 
 - Refined the authenticated header profile block to be more compact, quieter, and better aligned with the language selector across desktop, tablet, and mobile breakpoints.
