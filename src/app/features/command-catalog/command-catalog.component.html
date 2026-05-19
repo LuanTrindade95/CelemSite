@@ -20,21 +20,6 @@
           autocomplete="off">
         <kbd>Ctrl + K</kbd>
       </label>
-
-      <div class="hero-search__tags">
-        <span>{{ text('popularSearches') }}</span>
-        <div class="hero-search__tag-list">
-          @for (filter of popularFilters; track filter.labelKey) {
-            <button
-              type="button"
-              class="tag-pill"
-              [class.tag-pill--active]="isPopularFilterActive(filter)"
-              (click)="applyPopularFilter(filter)">
-              {{ text(filter.labelKey) }}
-            </button>
-          }
-        </div>
-      </div>
     </div>
   </div>
 

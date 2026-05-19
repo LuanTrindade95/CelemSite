@@ -53,16 +53,6 @@ export class CommandCatalogComponent {
     const session = this.auth.session();
     return session.isAuthenticated && session.isAdmin;
   });
-  protected readonly popularFilters: ReadonlyArray<
-    | { labelKey: 'popularBank' | 'popularEconomy' | 'popularTeleports'; kind: 'query' }
-    | { labelKey: 'popularAdmin' | 'popularPlayer'; kind: 'permission'; permission: 'admin' | 'player' }
-  > = [
-    { labelKey: 'popularBank', kind: 'query' },
-    { labelKey: 'popularAdmin', kind: 'permission', permission: 'admin' },
-    { labelKey: 'popularEconomy', kind: 'query' },
-    { labelKey: 'popularTeleports', kind: 'query' },
-    { labelKey: 'popularPlayer', kind: 'permission', permission: 'player' },
-  ];
   protected readonly projects = computed(() => unique(this.commands().map((command) => command.projectName)));
   protected readonly permissions = computed(() => unique(this.commands().map((command) => command.category)));
   protected readonly filteredCommands = computed(() => filterAndSort(this.commands(), this.filters()));
@@ -120,26 +110,6 @@ export class CommandCatalogComponent {
   protected updateFilters(filters: CommandCatalogFilters): void {
     this.filters.set(filters);
     this.currentPage.set(1);
-  }
-
-  protected applyPopularFilter(filter: typeof this.popularFilters[number]): void {
-    if (filter.kind === 'permission') {
-      this.updateFilters({
-        ...this.filters(),
-        permission: filter.permission,
-      });
-      return;
-    }
-
-    this.updateQuery(this.text(filter.labelKey));
-  }
-
-  protected isPopularFilterActive(filter: typeof this.popularFilters[number]): boolean {
-    if (filter.kind === 'permission') {
-      return normalizeCategory(this.filters().permission) === filter.permission;
-    }
-
-    return this.filters().query.trim().toLocaleLowerCase() === this.text(filter.labelKey).trim().toLocaleLowerCase();
   }
 
   protected updateViewMode(viewMode: ViewMode): void {

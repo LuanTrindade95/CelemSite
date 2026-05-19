@@ -55,14 +55,12 @@ h1 {
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.2);
 }
 
-.hero-search__field,
-.hero-search__tags {
+.hero-search__field {
   display: grid;
   gap: 8px;
 }
 
-.hero-search__field span,
-.hero-search__tags > span {
+.hero-search__field span {
   color: var(--celem-muted);
   font-size: 0.76rem;
   font-weight: 600;
@@ -120,36 +118,6 @@ h1 {
   color: var(--celem-muted);
   font-size: 0.74rem;
   font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
-}
-
-.hero-search__tag-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.tag-pill {
-  min-height: 30px;
-  padding: 0 10px;
-  border: 1px solid rgba(62, 71, 86, 0.76);
-  border-radius: 999px;
-  background: rgba(13, 19, 31, 0.72);
-  color: var(--celem-muted);
-  cursor: pointer;
-  transition:
-    border-color 160ms ease,
-    background 160ms ease,
-    color 160ms ease,
-    transform 160ms ease;
-}
-
-.tag-pill:hover,
-.tag-pill:focus-visible,
-.tag-pill--active {
-  border-color: rgba(200, 164, 93, 0.4);
-  background: rgba(21, 29, 43, 0.94);
-  color: var(--celem-gold);
-  transform: translateY(-1px);
 }
 
 .results-bar {
