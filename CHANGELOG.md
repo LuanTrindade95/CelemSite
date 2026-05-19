@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2026-05-19 14:49:00 -03:00
+
+- Removed the popular filter pills from the command catalog hero so the search area stays more focused and minimal.
+
 ## 2026-05-19 12:01:00 -03:00
 
 - Restored responsive behavior for the catalog filters by giving the desktop toolbar dedicated two-control and three-control layouts while keeping the mobile drawer resilient when the administrator-only permission filter is present.

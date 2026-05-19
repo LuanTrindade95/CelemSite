@@ -81,7 +81,6 @@ Current site login behavior:
 Current catalog behavior:
 
 - the primary search field lives in the hero section and supports `Ctrl + K` to focus it instantly
-- popular pills reuse the existing search or permission filters instead of adding a second tagging system
 - project and sort controls stay inline on desktop with responsive two-column and three-column layouts, then move into a mobile filter drawer on smaller screens
 - the permission filter only appears for authenticated administrators
 - sort options are intentionally limited to `Project` and `Command`

@@ -32,12 +32,6 @@ export type SiteTranslationKey =
   | 'sortLanguage'
   | 'filters'
   | 'filtersClose'
-  | 'popularSearches'
-  | 'popularBank'
-  | 'popularAdmin'
-  | 'popularEconomy'
-  | 'popularTeleports'
-  | 'popularPlayer'
   | 'resultsFound'
   | 'paginationPrevious'
   | 'paginationNext'
@@ -102,12 +96,6 @@ export const SITE_TRANSLATIONS: Record<SiteLanguageCode, SiteTranslationDictiona
     sortLanguage: 'Language',
     filters: 'Filters',
     filtersClose: 'Close',
-    popularSearches: 'Popular filters',
-    popularBank: 'Bank',
-    popularAdmin: 'Admin',
-    popularEconomy: 'Economy',
-    popularTeleports: 'Teleports',
-    popularPlayer: 'Player',
     resultsFound: 'commands found',
     paginationPrevious: 'Previous',
     paginationNext: 'Next',
@@ -274,12 +262,6 @@ export const SITE_TRANSLATIONS: Record<SiteLanguageCode, SiteTranslationDictiona
     sortLanguage: 'Idioma',
     filters: 'Filtros',
     filtersClose: 'Fechar',
-    popularSearches: 'Populares',
-    popularBank: 'Banco',
-    popularAdmin: 'Admin',
-    popularEconomy: 'Economia',
-    popularTeleports: 'Teleportes',
-    popularPlayer: 'Jogador',
     resultsFound: 'comandos encontrados',
     paginationPrevious: 'Anterior',
     paginationNext: 'Próxima',
