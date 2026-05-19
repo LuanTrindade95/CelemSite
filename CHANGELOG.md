@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2026-05-19 09:45:00 -03:00
+
+- Replaced the global site background with a darker cinematic composition built from subtle red and gold radial glows plus low-contrast ambient particles, without changing layout, components, spacing, or interaction behavior.
+
 ## 2026-05-19 09:41:00 -03:00
 
 - Added a compact top navigation to `CelemSite`, keeping the command catalog as the primary live route and wiring future `Launcher`, `Interface`, and `About` pages to dedicated under-construction placeholders.

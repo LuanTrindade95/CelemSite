@@ -1,12 +1,12 @@
 :root {
-  --celem-bg: #030406;
-  --celem-bg-2: #090b11;
+  --celem-bg: #0b0b0b;
+  --celem-bg-2: #111111;
   --celem-panel: #0a0c11;
   --celem-panel-2: #10141b;
   --celem-border: #515b68;
   --celem-accent: #b43a40;
   --celem-accent-strong: #d2484e;
-  --celem-gold: #c5a56a;
+  --celem-gold: #c6a84a;
   --celem-text: #e5e7eb;
   --celem-muted: #a6adba;
   --celem-success: #4e9b6d;
@@ -25,10 +25,63 @@ html,
 body {
   min-height: 100%;
   margin: 0;
+}
+
+html {
+  background: var(--celem-bg);
+}
+
+body {
+  position: relative;
+  isolation: isolate;
   background:
-    linear-gradient(140deg, rgba(180, 58, 64, 0.14), transparent 34%),
-    linear-gradient(180deg, var(--celem-bg), var(--celem-bg-2) 48%, #130e10);
+    radial-gradient(circle at left 40%, rgba(94, 15, 23, 0.2) 0%, transparent 35%),
+    radial-gradient(circle at right 32%, rgba(198, 168, 74, 0.18) 0%, transparent 40%),
+    radial-gradient(circle at 50% 120%, rgba(43, 43, 43, 0.22) 0%, transparent 44%),
+    linear-gradient(180deg, var(--celem-bg) 0%, #0d0d0e 48%, var(--celem-bg-2) 100%);
   color: var(--celem-text);
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+body::before {
+  z-index: 0;
+  opacity: 0.34;
+  background-image:
+    radial-gradient(circle at 9% 18%, rgba(94, 15, 23, 0.26) 0 1px, transparent 2px),
+    radial-gradient(circle at 18% 66%, rgba(198, 168, 74, 0.18) 0 1px, transparent 2px),
+    radial-gradient(circle at 31% 42%, rgba(94, 15, 23, 0.18) 0 1px, transparent 2px),
+    radial-gradient(circle at 46% 81%, rgba(198, 168, 74, 0.14) 0 1px, transparent 2px),
+    radial-gradient(circle at 58% 26%, rgba(43, 43, 43, 0.26) 0 1px, transparent 2px),
+    radial-gradient(circle at 67% 58%, rgba(198, 168, 74, 0.16) 0 1px, transparent 2px),
+    radial-gradient(circle at 79% 17%, rgba(198, 168, 74, 0.16) 0 1px, transparent 2px),
+    radial-gradient(circle at 84% 72%, rgba(94, 15, 23, 0.2) 0 1px, transparent 2px),
+    radial-gradient(circle at 93% 38%, rgba(198, 168, 74, 0.14) 0 1px, transparent 2px);
+  filter: blur(0.4px);
+}
+
+body::after {
+  inset: -8%;
+  z-index: 0;
+  opacity: 0.62;
+  background:
+    radial-gradient(circle at 12% 44%, rgba(94, 15, 23, 0.15) 0%, transparent 28%),
+    radial-gradient(circle at 82% 24%, rgba(198, 168, 74, 0.12) 0%, transparent 30%),
+    radial-gradient(circle at 74% 78%, rgba(43, 43, 43, 0.2) 0%, transparent 24%);
+  filter: blur(72px);
+}
+
+body > celem-root {
+  position: relative;
+  z-index: 1;
+  display: block;
+  min-height: 100vh;
 }
 
 button,
@@ -46,4 +99,22 @@ input {
 :focus-visible {
   outline: 2px solid var(--celem-focus);
   outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  body {
+    background:
+      radial-gradient(circle at left 26%, rgba(94, 15, 23, 0.14) 0%, transparent 42%),
+      radial-gradient(circle at right 18%, rgba(198, 168, 74, 0.12) 0%, transparent 44%),
+      linear-gradient(180deg, var(--celem-bg) 0%, #0d0d0e 48%, var(--celem-bg-2) 100%);
+  }
+
+  body::before {
+    opacity: 0.24;
+  }
+
+  body::after {
+    opacity: 0.42;
+    filter: blur(56px);
+  }
 }
