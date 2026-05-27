@@ -1,0 +1,49 @@
+:host {
+  display: inline-flex;
+}
+
+.celem-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 11px;
+  border: 1px solid rgba(81, 91, 104, 0.44);
+  border-radius: var(--celem-radius-pill);
+  background: rgba(15, 20, 31, 0.74);
+  color: var(--celem-muted);
+  font-size: 0.74rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.celem-badge--gold {
+  border-color: color-mix(in srgb, var(--celem-gold) 48%, transparent);
+  background: transparent;
+  color: var(--celem-focus);
+  min-height: auto;
+  padding: 5px 9px;
+}
+
+.celem-badge--success {
+  border-color: color-mix(in srgb, var(--celem-success) 48%, transparent);
+  background: transparent;
+  color: #b7f0cf;
+  min-height: auto;
+  padding: 5px 9px;
+}
+
+.celem-badge--warning {
+  border-color: color-mix(in srgb, var(--celem-warning) 62%, transparent);
+  background: transparent;
+  color: #f4cf9d;
+  min-height: auto;
+  padding: 5px 9px;
+}
+
+.celem-badge--danger {
+  border-color: color-mix(in srgb, var(--celem-danger) 62%, transparent);
+  background: transparent;
+  color: #f0b7bd;
+  min-height: auto;
+  padding: 5px 9px;
+}

@@ -1,0 +1,44 @@
+:host {
+  display: block;
+}
+
+.celem-card {
+  display: grid;
+  gap: 13px;
+  height: 100%;
+  padding: 16px;
+  border: 1px solid rgba(67, 76, 91, 0.58);
+  border-radius: var(--celem-radius-md);
+  background:
+    linear-gradient(180deg, #0b1020f2, #070a12eb),
+    radial-gradient(circle at top right, rgba(200, 164, 93, 0.06), transparent 38%);
+  box-shadow: 0 18px 48px #0000002e;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.celem-card:hover,
+.celem-card:focus-within {
+  border-color: rgba(107, 121, 144, 0.7);
+  box-shadow: 0 20px 54px rgba(0, 0, 0, 0.24);
+  transform: translateY(-1px);
+}
+
+.celem-card__header,
+.celem-card__body,
+.celem-card__footer {
+  min-width: 0;
+}
+
+.celem-card__header:empty,
+.celem-card__footer:empty {
+  display: none;
+}
+
+.celem-card__footer {
+  padding-top: 2px;
+  border-top: 1px solid rgba(81, 91, 104, 0.26);
+  color: var(--celem-muted);
+}

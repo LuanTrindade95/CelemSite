@@ -1,0 +1,11 @@
+<figure
+  class="celem-media"
+  [class.celem-media--wide]="ratio === '16:9'"
+  [class.celem-media--standard]="ratio === '4:3'"
+  [class.celem-media--square]="ratio === '1:1'">
+  @if (src) {
+    <img [src]="src" [alt]="alt">
+  } @else {
+    <figcaption>{{ label }}</figcaption>
+  }
+</figure>

@@ -2,6 +2,8 @@
 
 Shared foundation reference for `CelemSite`. The site atmosphere belongs to the global `body`; pages and layout primitives stay transparent.
 
+Validação por fase: `ng build` + `tsc -p tsconfig.app.json --noEmit` + smoke visual. Target `lint` ausente no `angular.json`; ESLint pendente de decisão arquitetural fora do escopo da fundação.
+
 ## New Tokens
 
 | Token | Value | Purpose |
@@ -68,8 +70,106 @@ Example:
   subtitle="Shared primitives keep new pages aligned with the site foundation." />
 ```
 
+## CelemButton
+
+Selector: `celem-button`
+
+Espelha visualmente `.secondary-button` para `variant="secondary"` e `.ghost` para `variant="ghost"`. `variant="primary"` é o novo botão primário dourado do Brand Kit e não espelha a `.primary-button` vermelha atual.
+
+| Input | Type | Default | Purpose |
+|---|---|---|---|
+| `variant` | `'primary' \| 'secondary' \| 'ghost'` | `'primary'` | Visual treatment |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Button height and horizontal padding |
+| `href` | `string` | `''` | Renders an anchor when present; renders a button when empty |
+| `disabled` | `boolean` | `false` | Disables the native button or makes the anchor inert |
+
+| Output | Type | Purpose |
+|---|---|---|
+| `pressed` | `EventEmitter<MouseEvent>` | Emits when an enabled button or anchor is activated |
+
+Example:
+
+```html
+<celem-button variant="primary" (pressed)="save()">Save</celem-button>
+<celem-button variant="secondary">Cancel</celem-button>
+<celem-button variant="ghost" size="sm" href="/commands">Commands</celem-button>
+```
+
+## CelemCard
+
+Selector: `celem-card`
+
+Espelha visualmente `.command-card`: dark layered gradient, subtle top-right gold radial highlight, cold border, soft shadow, `--celem-radius-md`, and 160ms hover/focus-within lift.
+
+Projection slots:
+
+| Slot | Selector | Purpose |
+|---|---|---|
+| Header | `[celem-card-header]` | Optional header content |
+| Body | default `<ng-content>` | Main card content |
+| Footer | `[celem-card-footer]` | Optional footer content |
+
+Example:
+
+```html
+<celem-card>
+  <div celem-card-header>
+    <celem-badge tone="gold">Launcher</celem-badge>
+  </div>
+
+  <p>Shared card content.</p>
+
+  <div celem-card-footer>
+    <celem-button variant="ghost" size="sm">Open</celem-button>
+  </div>
+</celem-card>
+```
+
+## CelemBadge
+
+Selector: `celem-badge`
+
+Espelha visualmente `.meta-pill` and `.permission`: neutral uses the dark `.meta-pill` fill; semantic tones use the compact bordered `.permission` language with token-based colors.
+
+| Input | Type | Default | Purpose |
+|---|---|---|---|
+| `tone` | `'neutral' \| 'gold' \| 'success' \| 'warning' \| 'danger'` | `'neutral'` | Semantic color treatment |
+
+Example:
+
+```html
+<celem-badge>Neutral</celem-badge>
+<celem-badge tone="success">Player</celem-badge>
+<celem-badge tone="warning">Admin</celem-badge>
+```
+
+## CelemMediaPlaceholder
+
+Selector: `celem-media-placeholder`
+
+Provides a temporary media surface for pages that do not yet have final assets. It uses `--celem-radius-md`, a restrained haze, and the same dark premium surface language as the shared cards. When `src` is present, it renders a real image.
+
+| Input | Type | Default | Purpose |
+|---|---|---|---|
+| `ratio` | `'16:9' \| '4:3' \| '1:1'` | `'16:9'` | Stable media aspect ratio |
+| `src` | `string` | `''` | Optional image source |
+| `alt` | `string` | `''` | Image alt text when `src` is present |
+| `label` | `string` | `'Media pending'` | Placeholder label when no image source is present |
+
+Example:
+
+```html
+<celem-media-placeholder ratio="16:9" label="Launcher preview"></celem-media-placeholder>
+<celem-media-placeholder ratio="1:1" src="assets/images/celem-logo.png" alt="Celem"></celem-media-placeholder>
+```
+
+## Débitos visuais conhecidos
+
+- `.primary-button` vermelho do shell/modal Discord deve migrar em sessão futura para `CelemButton variant="primary"` dourado, com criação dedicada de `variant="danger"` para preservar ações destrutivas/vermelhas.
+- Radius `8px` do modal Discord está fora dos tokens canônicos de F0.2. Não migrar até uma sessão dedicada de alinhamento do modal.
+
 ## Background Rule
 
-Atmosfera no body, paginas transparentes.
+Atmosfera no body, páginas transparentes.
 
 Do not duplicate mist, fog, particles, or page atmosphere inside feature pages or shared section primitives. New pages should compose transparent sections over the existing global background.

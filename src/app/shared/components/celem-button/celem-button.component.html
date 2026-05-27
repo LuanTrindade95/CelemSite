@@ -1,0 +1,35 @@
+<ng-template #buttonContent>
+  <ng-content />
+</ng-template>
+
+@if (href) {
+  <a
+    class="celem-button"
+    [class.celem-button--primary]="variant === 'primary'"
+    [class.celem-button--secondary]="variant === 'secondary'"
+    [class.celem-button--ghost]="variant === 'ghost'"
+    [class.celem-button--sm]="size === 'sm'"
+    [class.celem-button--md]="size === 'md'"
+    [class.celem-button--lg]="size === 'lg'"
+    [class.celem-button--disabled]="disabled"
+    [href]="href"
+    [attr.aria-disabled]="disabled ? 'true' : null"
+    [attr.tabindex]="disabled ? -1 : null"
+    (click)="handleClick($event)">
+    <ng-container [ngTemplateOutlet]="buttonContent" />
+  </a>
+} @else {
+  <button
+    type="button"
+    class="celem-button"
+    [class.celem-button--primary]="variant === 'primary'"
+    [class.celem-button--secondary]="variant === 'secondary'"
+    [class.celem-button--ghost]="variant === 'ghost'"
+    [class.celem-button--sm]="size === 'sm'"
+    [class.celem-button--md]="size === 'md'"
+    [class.celem-button--lg]="size === 'lg'"
+    [disabled]="disabled"
+    (click)="handleClick($event)">
+    <ng-container [ngTemplateOutlet]="buttonContent" />
+  </button>
+}
