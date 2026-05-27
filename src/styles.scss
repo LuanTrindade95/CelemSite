@@ -13,8 +13,18 @@
   --celem-warning: #d38a32;
   --celem-danger: #8d2e35;
   --celem-focus: #f2d28a;
+  --celem-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --celem-font-mono: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  --celem-mist-red: rgba(94, 15, 23, 0.2);
+  --celem-mist-gold: rgba(198, 168, 74, 0.18);
+  --celem-fog-graphite: rgba(43, 43, 43, 0.22);
+  --celem-radius-sm: 6px;
+  --celem-radius-md: 12px;
+  --celem-radius-lg: 16px;
+  --celem-radius-xl: 20px;
+  --celem-radius-pill: 999px;
   color-scheme: dark;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--celem-font-sans);
 }
 
 * {
@@ -35,9 +45,9 @@ body {
   position: relative;
   isolation: isolate;
   background:
-    radial-gradient(circle at left 40%, rgba(94, 15, 23, 0.2) 0%, transparent 35%),
-    radial-gradient(circle at right 32%, rgba(198, 168, 74, 0.18) 0%, transparent 40%),
-    radial-gradient(circle at 50% 120%, rgba(43, 43, 43, 0.22) 0%, transparent 44%),
+    radial-gradient(circle at left 40%, var(--celem-mist-red) 0%, transparent 35%),
+    radial-gradient(circle at right 32%, var(--celem-mist-gold) 0%, transparent 40%),
+    radial-gradient(circle at 50% 120%, var(--celem-fog-graphite) 0%, transparent 44%),
     linear-gradient(180deg, var(--celem-bg) 0%, #0d0d0e 48%, var(--celem-bg-2) 100%);
   color: var(--celem-text);
 }

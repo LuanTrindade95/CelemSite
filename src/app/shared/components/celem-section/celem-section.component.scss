@@ -1,0 +1,27 @@
+:host {
+  display: block;
+}
+
+.celem-section {
+  padding-block: 18px;
+  background: transparent;
+}
+
+.celem-section--subtle {
+  padding-block: 12px;
+}
+
+.celem-section__container {
+  width: min(1180px, 100%);
+  margin-inline: auto;
+}
+
+@media (max-width: 760px) {
+  .celem-section {
+    padding-block: 16px;
+  }
+
+  .celem-section--subtle {
+    padding-block: 10px;
+  }
+}

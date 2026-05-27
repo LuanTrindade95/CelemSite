@@ -1,0 +1,45 @@
+:host {
+  display: block;
+}
+
+.celem-section-header {
+  display: grid;
+  gap: 8px;
+  max-width: 68ch;
+}
+
+.celem-section-header__eyebrow,
+.celem-section-header__subtitle,
+h2 {
+  margin: 0;
+}
+
+.celem-section-header__eyebrow {
+  color: var(--celem-gold);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+h2 {
+  color: var(--celem-text);
+  font-size: clamp(1.72rem, 3vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.celem-section-header__subtitle {
+  max-width: 62ch;
+  color: var(--celem-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 560px) {
+  h2 {
+    font-size: clamp(1.48rem, 9vw, 2.1rem);
+  }
+}
