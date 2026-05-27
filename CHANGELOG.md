@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2026-05-20 00:07:00 -03:00
+
+- Increased the desktop filter spacing to emphasize the two-column toolbar layout and refreshed command cards with the requested 12px radius plus updated premium surface values.
+
 ## 2026-05-19 14:49:00 -03:00
 
 - Removed the popular filter pills from the command catalog hero so the search area stays more focused and minimal.

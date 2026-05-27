@@ -193,3 +193,7 @@ Current runtime behavior:
 The target command ecosystem architecture is documented in [Command Metadata Platform RFC](docs/command-metadata-platform.md).
 
 The long-term direction is to keep Markdown as human documentation while promoting structured metadata and Supabase-backed normalization for public APIs, search, autocomplete, and future semantic/AI integrations.
+
+## Design Reference
+
+The current reusable visual identity is documented in [CelemSite Brand Kit](docs/celemsite-brand-kit.md).
