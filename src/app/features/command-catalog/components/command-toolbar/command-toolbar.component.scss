@@ -5,16 +5,19 @@
   justify-content: space-between;
   gap: 14px;
   width: 100%;
-  padding: 16px 18px;
+  padding-bottom: 24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 16px;
   border: 1px solid rgba(81, 91, 104, 0.56);
-  border-radius: 18px;
+  border-radius: 12px;
   background: rgba(10, 12, 17, 0.84);
 }
 
 .toolbar__desktop {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 64px;
   width: 100%;
 }
 
