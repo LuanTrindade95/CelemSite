@@ -5,7 +5,7 @@
         <celem-section-header
           eyebrow="SOBRE"
           title="Reino de Celem"
-          subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Esta apresentação institucional é placeholder e será refinada com a história real do projeto." />
+          subtitle="História placeholder do projeto." />
 
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. O Reino de Celem reúne ferramentas, interface e
@@ -21,8 +21,8 @@
     <div class="about-pillars">
       <celem-section-header
         eyebrow="Direção"
-        title="Missão, visão e objetivos"
-        subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Texto placeholder para orientar a estrutura institucional sem fechar copy final." />
+        title="Direção do Celem"
+        subtitle="Texto placeholder para a direção institucional." />
 
       <div class="about-pillars__grid">
         <celem-card>
@@ -58,10 +58,57 @@
   </celem-section>
 
   <celem-section>
-    <!-- COMUNIDADE & CONTATO -->
+    <div class="about-community">
+      <celem-section-header
+        eyebrow="Comunidade"
+        title="Comunidade Celem"
+        subtitle="Links placeholder para canais oficiais." />
+
+      <div class="about-community__grid">
+        <celem-card>
+          <div class="about-community__copy">
+            <div class="about-community__badges" aria-label="Canais sociais placeholder">
+              <celem-badge tone="gold">Discord em destaque</celem-badge>
+              <celem-badge tone="neutral">Links placeholder</celem-badge>
+            </div>
+
+            <h3>Comunidade & Contato</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. O Discord será o canal principal para acompanhar
+              novidades, suporte e conversas da comunidade.
+            </p>
+
+            <div class="about-socials" aria-label="Links sociais placeholder">
+              <celem-button variant="primary" href="#">Discord</celem-button>
+              <celem-button variant="secondary" href="#">YouTube</celem-button>
+              <celem-button variant="ghost" href="#">GitHub</celem-button>
+            </div>
+          </div>
+        </celem-card>
+
+        <celem-card>
+          <div class="about-contact">
+            <h3>Fale conosco no Discord</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. O contato formal será definido depois; por ora,
+              este bloco registra a intenção visual sem criar formulário funcional.
+            </p>
+            <span>Contato placeholder · sem envio nesta fase</span>
+          </div>
+        </celem-card>
+      </div>
+    </div>
   </celem-section>
 
-  <celem-section>
-    <!-- CTA FINAL -->
+  <celem-section tone="subtle">
+    <div class="about-final-cta">
+      <div>
+        <p class="about-final-cta__eyebrow">Próximo passo</p>
+        <h2>Conheça o ecossistema pelo Launcher</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. O caminho principal segue pelo download do Launcher.</p>
+      </div>
+
+      <celem-button variant="primary" size="lg" routerLink="/launcher" tabindex="-1">Baixar Launcher</celem-button>
+    </div>
   </celem-section>
 </div>

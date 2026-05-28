@@ -12,8 +12,8 @@ Decision: the `/about` route now points to `AboutComponent` instead of `UnderCon
 |---|---|---|
 | 1 | Intro | ✓ história placeholder |
 | 2 | Missão/Visão/Objetivos | ✓ cards institucionais |
-| 3 | Comunidade & Contato | ⏳ vazia |
-| 4 | CTA final | ⏳ vazia |
+| 3 | Comunidade & Contato | ✓ links placeholder |
+| 4 | CTA final | ✓ Launcher |
 
 ## Composition Rule
 
@@ -28,8 +28,29 @@ The About root stays transparent. Site atmosphere continues to come from the glo
 ## Missão/Visão/Objetivos A2
 
 - Section uses `CelemSectionHeader` with eyebrow `Direção`.
+- Header title: `Direção do Celem`.
 - Three `CelemCard` items:
   - Missão.
   - Visão.
   - Objetivos.
 - Grid behavior: three columns on desktop, one column on mobile.
+
+## Comunidade & Contato A3
+
+- Section uses `CelemSectionHeader` with eyebrow `Comunidade`.
+- Discord is the highlighted social link.
+- Social links use placeholder `href="#"` values:
+  - Discord.
+  - YouTube.
+  - GitHub.
+- Contact block is visual/informational only; no functional form or send integration exists in this phase.
+
+## CTA Final A3
+
+- CTA choice: `Baixar Launcher`, to keep the institutional page aligned with the main conversion funnel.
+- CTA target: `routerLink="/launcher"`.
+
+## Pendências
+
+- Replace placeholder social URLs with real channels.
+- Decide whether a future contact form is needed; no form integration was added in A3.
