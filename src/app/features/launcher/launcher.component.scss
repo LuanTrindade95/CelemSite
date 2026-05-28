@@ -75,6 +75,48 @@ h1 {
   min-width: 0;
 }
 
+.launcher-steps,
+.launcher-screenshots {
+  display: grid;
+  gap: 16px;
+}
+
+.launcher-steps__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  align-items: stretch;
+}
+
+.launcher-step {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.launcher-step h3,
+.launcher-step p {
+  margin: 0;
+}
+
+.launcher-step h3 {
+  color: var(--celem-text);
+  font-size: 1.04rem;
+  line-height: 1.2;
+}
+
+.launcher-step p {
+  color: var(--celem-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.launcher-screenshots__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
 @media (max-width: 920px) {
   .launcher-hero {
     grid-template-columns: 1fr;
@@ -87,6 +129,11 @@ h1 {
 
   h1 {
     font-size: 3.6rem;
+  }
+
+  .launcher-steps__grid,
+  .launcher-screenshots__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -112,5 +159,10 @@ h1 {
 
   .launcher-hero__actions celem-button {
     width: 100%;
+  }
+
+  .launcher-steps__grid,
+  .launcher-screenshots__grid {
+    grid-template-columns: 1fr;
   }
 }
