@@ -6,6 +6,8 @@ Route: `/launcher`
 
 Decision: the `/launcher` route now points to `LauncherComponent` instead of `UnderConstructionPageComponent`.
 
+Status: Launcher concluído para a fase atual, com placeholders e pendências documentados abaixo.
+
 ## Sections
 
 | Order | Section | State |
@@ -35,6 +37,7 @@ The Launcher root stays transparent. Site atmosphere continues to come from the 
 
 - Replace the placeholder download link with the real Launcher URL.
 - Replace placeholder requirements with validated Launcher requirements before publishing the download.
+- Replace placeholder screenshots with real Launcher imagery.
 
 ## Como funciona L3
 
@@ -68,7 +71,7 @@ The Launcher root stays transparent. Site atmosphere continues to come from the 
 
 ## FAQ L4
 
-- Section uses native `<details>/<summary>` accordion items for accessible keyboard behavior without custom JavaScript.
+- Section uses native `<details>/<summary>` accordion items with `aria-expanded`, `aria-controls`, visible focus and a small keyboard fallback for Enter/Space consistency.
 - Five placeholder questions:
   - O Launcher instala a Interface automaticamente?
   - Preciso configurar algo manualmente?
@@ -80,3 +83,20 @@ The Launcher root stays transparent. Site atmosphere continues to come from the 
 
 - Closing band reinforces `Baixar Launcher` as the primary action.
 - CTA uses the same placeholder destination as the Hero: `href="#launcher-download-placeholder"`.
+
+## Polish L5
+
+- Breakpoints verified:
+  - Mobile `<768px`: steps, screenshots, requirements, FAQ and final CTA stack in one column with no horizontal overflow.
+  - Tablet `768-1024px`: steps, screenshots and requirements use two columns; FAQ stays readable.
+  - Desktop `>1024px`: steps and requirements use four columns, screenshots use three columns, and CTA final stays in two columns.
+- Motion verified: local Launcher transitions stay within 160ms, hover lift remains approximately 1px, FAQ content uses a 160ms native details transition where supported, and `prefers-reduced-motion` reduces local transitions.
+- Accessibility verified:
+  - One `h1` in the Hero.
+  - Section headings use `h2`; card titles use `h3`.
+  - FAQ summaries expose `aria-expanded` and are operable by click, Enter and Space.
+  - Keyboard focus is visible with the gold focus ring on CTAs and FAQ summaries.
+  - Media placeholders use visible labels.
+- Route consistency verified:
+  - All `Baixar Launcher` CTAs use `href="#launcher-download-placeholder"`.
+  - `Conhecer a Interface` points to `/interface`.

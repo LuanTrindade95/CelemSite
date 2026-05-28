@@ -23,6 +23,10 @@ import { CelemSectionHeaderComponent } from '../../shared/components/celem-secti
   styleUrl: './launcher.component.scss',
 })
 export class LauncherComponent {
+  protected syncFaqState(): void {
+    return;
+  }
+
   protected toggleFaq(event: Event): void {
     event.preventDefault();
 

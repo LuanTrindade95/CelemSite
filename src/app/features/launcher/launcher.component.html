@@ -144,39 +144,69 @@
         title="Dúvidas rápidas antes de baixar" />
 
       <div class="launcher-faq__list">
-        <details>
-          <summary (keydown.enter)="toggleFaq($event)" (keydown.space)="toggleFaq($event)">
+        <details #faqInstall (toggle)="syncFaqState()">
+          <summary
+            aria-controls="launcher-faq-install"
+            [attr.aria-expanded]="faqInstall.open"
+            (keydown.enter)="toggleFaq($event)"
+            (keydown.space)="toggleFaq($event)">
             O Launcher instala a Interface automaticamente?
           </summary>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Esta resposta é placeholder.</p>
+          <p id="launcher-faq-install">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Esta resposta é placeholder.
+          </p>
         </details>
 
-        <details>
-          <summary (keydown.enter)="toggleFaq($event)" (keydown.space)="toggleFaq($event)">
+        <details #faqSetup (toggle)="syncFaqState()">
+          <summary
+            aria-controls="launcher-faq-setup"
+            [attr.aria-expanded]="faqSetup.open"
+            (keydown.enter)="toggleFaq($event)"
+            (keydown.space)="toggleFaq($event)">
             Preciso configurar algo manualmente?
           </summary>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Esta resposta é placeholder.</p>
+          <p id="launcher-faq-setup">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Esta resposta é placeholder.
+          </p>
         </details>
 
-        <details>
-          <summary (keydown.enter)="toggleFaq($event)" (keydown.space)="toggleFaq($event)">
+        <details #faqUpdates (toggle)="syncFaqState()">
+          <summary
+            aria-controls="launcher-faq-updates"
+            [attr.aria-expanded]="faqUpdates.open"
+            (keydown.enter)="toggleFaq($event)"
+            (keydown.space)="toggleFaq($event)">
             O Launcher atualiza sozinho?
           </summary>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Esta resposta é placeholder.</p>
+          <p id="launcher-faq-updates">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Esta resposta é placeholder.
+          </p>
         </details>
 
-        <details>
-          <summary (keydown.enter)="toggleFaq($event)" (keydown.space)="toggleFaq($event)">
+        <details #faqCommands (toggle)="syncFaqState()">
+          <summary
+            aria-controls="launcher-faq-commands"
+            [attr.aria-expanded]="faqCommands.open"
+            (keydown.enter)="toggleFaq($event)"
+            (keydown.space)="toggleFaq($event)">
             Posso continuar usando comandos?
           </summary>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Esta resposta é placeholder.</p>
+          <p id="launcher-faq-commands">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Esta resposta é placeholder.
+          </p>
         </details>
 
-        <details>
-          <summary (keydown.enter)="toggleFaq($event)" (keydown.space)="toggleFaq($event)">
+        <details #faqDownload (toggle)="syncFaqState()">
+          <summary
+            aria-controls="launcher-faq-download"
+            [attr.aria-expanded]="faqDownload.open"
+            (keydown.enter)="toggleFaq($event)"
+            (keydown.space)="toggleFaq($event)">
             Onde encontro o download real?
           </summary>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. O link definitivo será preenchido depois.</p>
+          <p id="launcher-faq-download">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. O link definitivo será preenchido depois.
+          </p>
         </details>
       </div>
     </div>

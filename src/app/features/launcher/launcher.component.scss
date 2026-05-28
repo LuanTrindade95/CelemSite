@@ -202,6 +202,18 @@ h1 {
   line-height: 1.55;
 }
 
+.launcher-faq details::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 160ms ease,
+    content-visibility 160ms ease allow-discrete;
+}
+
+.launcher-faq details[open]::details-content {
+  block-size: auto;
+}
+
 .launcher-final-cta {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -314,5 +326,20 @@ h1 {
 
   .launcher-final-cta celem-button {
     width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .launcher-page *,
+  .launcher-page *::before,
+  .launcher-page *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .launcher-faq details:hover,
+  .launcher-faq details:focus-within {
+    transform: none;
   }
 }
