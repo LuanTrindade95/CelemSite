@@ -6,6 +6,8 @@ Route: `/`
 
 Decision: the root route now points to `HomeComponent`; the command catalog remains available at `/commands`.
 
+Status: Home concluída para a fase atual, com placeholders documentados abaixo.
+
 ## Sections
 
 | Order | Section | State |
@@ -82,3 +84,26 @@ Every Home CTA labeled `Baixar Launcher` points to `routerLink="/launcher"` whil
 
 - Closing band reinforces `Baixar Launcher` as the primary action.
 - CTA: `Baixar Launcher`, linked to `routerLink="/launcher"` following the Home launcher CTA pattern.
+
+## Polish H6
+
+- Breakpoints verified:
+  - Mobile `<768px`: single-column content, media keeps `16:9`, no horizontal overflow.
+  - Tablet `768-1024px`: cards collapse to two columns where applicable, launcher/about/final CTA stack cleanly.
+  - Desktop `>1024px`: hero, launcher, about, card grids and final CTA use their intended multi-column layouts.
+- Motion verified: shared buttons/cards use 160ms transitions, border/tint shifts, and approximately 1px hover/focus lift.
+- Accessibility verified:
+  - One `h1` in the Hero.
+  - Section headings use `h2` through `CelemSectionHeader`; card titles use `h3`.
+  - Keyboard focus is visible with the gold focus ring on CTAs.
+  - Router CTA hosts are removed from the tab order so each CTA has one keyboard stop on the internal control.
+- Route consistency verified:
+  - All `Baixar Launcher` CTAs point to `/launcher`.
+  - Future/stub routes continue to use the same `UnderConstructionPageComponent` behavior.
+
+## Pendências
+
+- Replace placeholder copy with final product/community copy.
+- Replace `CelemMediaPlaceholder` blocks with real interface, launcher and news imagery.
+- Replace `/launcher`, `/interface`, `/about` and `/news` stubs with dedicated pages when each phase starts.
+- Keep Notícias outside the site-shell nav until the dedicated news page exists.
