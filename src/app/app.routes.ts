@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { CommandCatalogComponent } from './features/command-catalog/command-catalog.component';
+import { InterfaceComponent } from './features/interface/interface.component';
 import { DiscordAuthCallbackComponent } from './features/site-auth/discord-auth-callback.component';
 import { UnderConstructionPageComponent } from './features/static-page/under-construction-page.component';
 
@@ -21,10 +22,7 @@ export const routes: Routes = [
   },
   {
     path: 'interface',
-    component: UnderConstructionPageComponent,
-    data: {
-      titleKey: 'navInterface',
-    },
+    component: InterfaceComponent,
   },
   {
     path: 'about',
