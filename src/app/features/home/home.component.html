@@ -84,11 +84,76 @@
   </celem-section>
 
   <celem-section>
-    <!-- LAUNCHER -->
+    <div class="home-launcher">
+      <celem-section-header
+        eyebrow="Launcher Celem"
+        title="Instale a Interface pelo launcher"
+        subtitle="O launcher centraliza a instalação da Interface e prepara o ambiente para acessar o ecossistema Celem com menos passos." />
+
+      <div class="home-launcher__content">
+        <div class="home-copy-block">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. O launcher instala a Interface, mantém o fluxo de
+            entrada previsível e reduz a configuração manual antes de jogar.
+          </p>
+
+          <div class="home-actions" aria-label="Ações do launcher">
+            <celem-button variant="primary" routerLink="/launcher">Baixar Launcher</celem-button>
+            <celem-button variant="ghost" routerLink="/launcher">Saber mais</celem-button>
+          </div>
+        </div>
+
+        <celem-media-placeholder ratio="16:9" label="Prévia do Launcher" />
+      </div>
+    </div>
   </celem-section>
 
   <celem-section>
-    <!-- COMANDOS -->
+    <div class="home-commands">
+      <div class="home-commands__header">
+        <celem-section-header
+          eyebrow="Comandos"
+          title="Suporte completo quando você precisar"
+          subtitle="Os comandos continuam disponíveis para operação direta, mas a Interface cobre grande parte dos fluxos que antes exigiam digitação manual." />
+
+        <celem-button variant="secondary" routerLink="/commands">Ver todos os comandos</celem-button>
+      </div>
+
+      <div class="home-commands__cards">
+        <celem-card>
+          <div celem-card-header>
+            <celem-badge tone="gold">Administração</celem-badge>
+          </div>
+
+          <div class="command-example">
+            <code>.celem config</code>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ajustes continuam acessíveis via comando.</p>
+          </div>
+        </celem-card>
+
+        <celem-card>
+          <div celem-card-header>
+            <celem-badge tone="neutral">Consulta</celem-badge>
+          </div>
+
+          <div class="command-example">
+            <code>.celem status</code>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Estados importantes podem ser conferidos rápido.</p>
+          </div>
+        </celem-card>
+
+        <celem-card>
+          <div celem-card-header>
+            <celem-badge tone="success">Operação</celem-badge>
+          </div>
+
+          <div class="command-example">
+            <code>.celem sync</code>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Rotinas avançadas seguem disponíveis no catálogo.</p>
+          </div>
+        </celem-card>
+      </div>
+    </div>
   </celem-section>
 
   <celem-section>

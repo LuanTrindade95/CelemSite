@@ -6,6 +6,13 @@
   display: block;
 }
 
+.home-page celem-button,
+.home-page celem-card,
+.home-page celem-media-placeholder,
+.home-page celem-section-header {
+  min-width: 0;
+}
+
 .home-hero {
   display: grid;
   grid-template-columns: minmax(0, 0.88fr) minmax(340px, 1fr);
@@ -42,6 +49,7 @@ h1 {
   font-weight: 800;
   letter-spacing: 0;
   line-height: 0.94;
+  overflow-wrap: anywhere;
 }
 
 .home-hero__summary {
@@ -128,6 +136,84 @@ h1 {
   line-height: 1.5;
 }
 
+.home-launcher,
+.home-commands {
+  display: grid;
+  gap: 16px;
+}
+
+.home-launcher__content {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(320px, 1fr);
+  gap: 18px;
+  align-items: center;
+}
+
+.home-copy-block {
+  display: grid;
+  gap: 14px;
+  max-width: 58ch;
+}
+
+.home-copy-block p {
+  margin: 0;
+  color: var(--celem-muted);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.home-commands__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: end;
+}
+
+.home-commands__cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  align-items: stretch;
+}
+
+.home-commands__cards celem-card {
+  display: block;
+  height: 100%;
+}
+
+.command-example {
+  display: grid;
+  gap: 8px;
+}
+
+.command-example code {
+  width: fit-content;
+  max-width: 100%;
+  padding: 7px 9px;
+  overflow-wrap: anywhere;
+  border: 1px solid rgba(81, 91, 104, 0.46);
+  border-radius: var(--celem-radius-sm);
+  background: rgba(8, 11, 18, 0.72);
+  color: var(--celem-text);
+  font-family: var(--celem-font-mono);
+  font-size: 0.82rem;
+  line-height: 1.2;
+}
+
+.command-example p {
+  margin: 0;
+  color: var(--celem-muted);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
 @media (max-width: 920px) {
   .home-hero {
     grid-template-columns: 1fr;
@@ -144,6 +230,19 @@ h1 {
   }
 
   .home-interface__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-launcher__content {
+    grid-template-columns: 1fr;
+  }
+
+  .home-commands__header {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .home-commands__cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -176,5 +275,19 @@ h1 {
 
   .home-interface__header celem-button {
     width: 100%;
+  }
+
+  .home-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .home-actions celem-button,
+  .home-commands__header celem-button {
+    width: 100%;
+  }
+
+  .home-commands__cards {
+    grid-template-columns: 1fr;
   }
 }

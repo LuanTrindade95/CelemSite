@@ -12,8 +12,8 @@ Decision: the root route now points to `HomeComponent`; the command catalog rema
 |---|---|---|
 | 1 | Hero | ✓ scaffold com CTA de launcher |
 | 2 | Interface | ✓ destaque principal |
-| 3 | Launcher | ⏳ vazia |
-| 4 | Comandos | ⏳ vazia |
+| 3 | Launcher | ✓ seção com CTA de download |
+| 4 | Comandos | ✓ seção com exemplos estáticos |
 | 5 | Notícias | ⏳ vazia |
 | 6 | Sobre | ⏳ vazia |
 
@@ -41,3 +41,21 @@ Every Home CTA labeled `Baixar Launcher` points to `routerLink="/launcher"` whil
   - Configuração fácil.
   - Melhor visualização.
   - Qualidade de vida.
+
+## Launcher H4
+
+- Section header explains that the launcher installs the Interface.
+- Two-column desktop layout: short explanatory copy plus `CelemMediaPlaceholder ratio="16:9"`.
+- CTAs:
+  - `Baixar Launcher`, linked to `routerLink="/launcher"`.
+  - `Saber mais`, linked to `routerLink="/launcher"`.
+
+## Comandos H4
+
+- Section header acknowledges full command support while positioning the Interface as the preferred path for most flows.
+- Static command examples built with `CelemCard` and `CelemBadge`; no command-catalog styles or feature code are imported.
+- Cards:
+  - `.celem config` with `Administração` badge.
+  - `.celem status` with `Consulta` badge.
+  - `.celem sync` with `Operação` badge.
+- CTA: `Ver todos os comandos`, linked to `routerLink="/commands"`.
