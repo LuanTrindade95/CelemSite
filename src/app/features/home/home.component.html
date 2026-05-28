@@ -1,0 +1,259 @@
+<div class="home-page">
+  <celem-section>
+    <div class="home-hero">
+      <div class="home-hero__copy">
+        <p class="home-hero__eyebrow">ECOSSISTEMA CELEM</p>
+        <h1>Título placeholder da Home Celem</h1>
+        <p class="home-hero__summary">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer luctus mantém a experiência curta e direta.
+        </p>
+
+        <div class="home-hero__actions" aria-label="Ações principais">
+          <celem-button variant="primary" routerLink="/launcher" tabindex="-1">Baixar Launcher</celem-button>
+          <celem-button variant="secondary" href="#interface">Conhecer a Interface</celem-button>
+        </div>
+      </div>
+
+      <div class="home-hero__media">
+        <celem-media-placeholder ratio="16:9" label="Mockup da Interface" />
+      </div>
+    </div>
+  </celem-section>
+
+  <celem-section id="interface">
+    <div class="home-interface">
+      <div class="home-interface__header">
+        <celem-section-header
+          eyebrow="Interface Celem"
+          title="Um painel feito para operar Celem com clareza"
+          subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. A Interface centraliza o que importa para jogar, configurar e acompanhar o ecossistema." />
+
+        <celem-button variant="primary" routerLink="/interface" tabindex="-1">Explorar a Interface</celem-button>
+      </div>
+
+      <div class="home-interface__media">
+        <celem-media-placeholder ratio="16:9" label="Prévia da Interface" />
+      </div>
+
+      <div class="home-interface__cards">
+        <celem-card>
+          <div celem-card-header>
+            <span class="interface-card__mark">01</span>
+          </div>
+
+          <div class="interface-card__body">
+            <h3>Usabilidade direta</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse leitura fica objetiva.</p>
+          </div>
+        </celem-card>
+
+        <celem-card>
+          <div celem-card-header>
+            <span class="interface-card__mark">02</span>
+          </div>
+
+          <div class="interface-card__body">
+            <h3>Configuração fácil</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ajustes ficam acessíveis e previsíveis.</p>
+          </div>
+        </celem-card>
+
+        <celem-card>
+          <div celem-card-header>
+            <span class="interface-card__mark">03</span>
+          </div>
+
+          <div class="interface-card__body">
+            <h3>Melhor visualização</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Estados importantes ganham hierarquia.</p>
+          </div>
+        </celem-card>
+
+        <celem-card>
+          <div celem-card-header>
+            <span class="interface-card__mark">04</span>
+          </div>
+
+          <div class="interface-card__body">
+            <h3>Qualidade de vida</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fluxos recorrentes exigem menos esforço.</p>
+          </div>
+        </celem-card>
+      </div>
+    </div>
+  </celem-section>
+
+  <celem-section>
+    <div class="home-launcher">
+      <celem-section-header
+        eyebrow="Launcher Celem"
+        title="Instale a Interface pelo launcher"
+        subtitle="O launcher centraliza a instalação da Interface e prepara o ambiente para acessar o ecossistema Celem com menos passos." />
+
+      <div class="home-launcher__content">
+        <div class="home-copy-block">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. O launcher instala a Interface, mantém o fluxo de
+            entrada previsível e reduz a configuração manual antes de jogar.
+          </p>
+
+          <div class="home-actions" aria-label="Ações do launcher">
+            <celem-button variant="primary" routerLink="/launcher" tabindex="-1">Baixar Launcher</celem-button>
+            <celem-button variant="ghost" routerLink="/launcher" tabindex="-1">Saber mais</celem-button>
+          </div>
+        </div>
+
+        <celem-media-placeholder ratio="16:9" label="Prévia do Launcher" />
+      </div>
+    </div>
+  </celem-section>
+
+  <celem-section>
+    <div class="home-commands">
+      <div class="home-commands__header">
+        <celem-section-header
+          eyebrow="Comandos"
+          title="Suporte completo quando você precisar"
+          subtitle="Os comandos continuam disponíveis para operação direta, mas a Interface cobre grande parte dos fluxos que antes exigiam digitação manual." />
+
+        <celem-button variant="secondary" routerLink="/commands" tabindex="-1">Ver todos os comandos</celem-button>
+      </div>
+
+      <div class="home-commands__cards">
+        <celem-card>
+          <div celem-card-header>
+            <celem-badge tone="gold">Administração</celem-badge>
+          </div>
+
+          <div class="command-example">
+            <code>.celem config</code>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ajustes continuam acessíveis via comando.</p>
+          </div>
+        </celem-card>
+
+        <celem-card>
+          <div celem-card-header>
+            <celem-badge tone="neutral">Consulta</celem-badge>
+          </div>
+
+          <div class="command-example">
+            <code>.celem status</code>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Estados importantes podem ser conferidos rápido.</p>
+          </div>
+        </celem-card>
+
+        <celem-card>
+          <div celem-card-header>
+            <celem-badge tone="success">Operação</celem-badge>
+          </div>
+
+          <div class="command-example">
+            <code>.celem sync</code>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Rotinas avançadas seguem disponíveis no catálogo.</p>
+          </div>
+        </celem-card>
+      </div>
+    </div>
+  </celem-section>
+
+  <celem-section>
+    <div class="home-news">
+      <div class="home-news__header">
+        <celem-section-header
+          eyebrow="Novidades"
+          title="Novidades do Reino"
+          subtitle="Atualizações, eventos e notas rápidas do ecossistema Celem ficam reunidas aqui enquanto a página dedicada de notícias é preparada." />
+
+        <celem-button variant="secondary" routerLink="/news" tabindex="-1">Ver todas as notícias</celem-button>
+      </div>
+
+      <div class="home-news__cards">
+        <celem-card>
+          <div celem-card-header>
+            <celem-media-placeholder ratio="16:9" label="Thumb da notícia" />
+          </div>
+
+          <article class="news-preview">
+            <div class="news-preview__meta">
+              <celem-badge tone="gold">Update</celem-badge>
+              <time datetime="2026-06-04">04 jun 2026</time>
+            </div>
+
+            <h3>Atualização placeholder da Interface</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer luctus ante at leitura rápida.</p>
+          </article>
+        </celem-card>
+
+        <celem-card>
+          <div celem-card-header>
+            <celem-media-placeholder ratio="16:9" label="Thumb do evento" />
+          </div>
+
+          <article class="news-preview">
+            <div class="news-preview__meta">
+              <celem-badge tone="gold">Evento</celem-badge>
+              <time datetime="2026-06-12">12 jun 2026</time>
+            </div>
+
+            <h3>Evento comunitário placeholder</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent rotas mantêm a comunidade próxima.</p>
+          </article>
+        </celem-card>
+
+        <celem-card>
+          <div celem-card-header>
+            <celem-media-placeholder ratio="16:9" label="Thumb V Rising" />
+          </div>
+
+          <article class="news-preview">
+            <div class="news-preview__meta">
+              <celem-badge tone="gold">V Rising</celem-badge>
+              <time datetime="2026-06-20">20 jun 2026</time>
+            </div>
+
+            <h3>Nota placeholder do servidor</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sinais importantes ganham contexto.</p>
+          </article>
+        </celem-card>
+      </div>
+    </div>
+  </celem-section>
+
+  <celem-section>
+    <div class="home-about">
+      <div class="home-about__content">
+        <celem-section-header
+          eyebrow="Sobre e comunidade"
+          title="Um projeto guiado pela experiência da comunidade"
+          subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. A equipe Celem organiza ferramentas, servidor e interface para tornar a operação mais clara." />
+
+        <div class="home-copy-block">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer luctus, arcu at convallis facilisis,
+            aproxima jogadores, administradores e manutenção em uma experiência mais previsível.
+          </p>
+
+          <celem-button variant="primary" routerLink="/about" tabindex="-1">Conhecer o projeto</celem-button>
+        </div>
+      </div>
+
+      <div class="home-socials-placeholder" aria-label="Links sociais futuros">
+        <span>Discord</span>
+        <span>Comunidade</span>
+        <span>Guias</span>
+      </div>
+    </div>
+  </celem-section>
+
+  <celem-section tone="subtle">
+    <div class="home-final-cta">
+      <div>
+        <p class="home-final-cta__eyebrow">Próximo passo</p>
+        <h2>Comece pelo launcher</h2>
+        <p>Baixe o launcher para instalar a Interface e acessar o fluxo principal do ecossistema Celem.</p>
+      </div>
+
+      <celem-button variant="primary" size="lg" routerLink="/launcher" tabindex="-1">Baixar Launcher</celem-button>
+    </div>
+  </celem-section>
+</div>
