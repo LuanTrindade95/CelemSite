@@ -1,0 +1,226 @@
+<div class="launcher-page">
+  <celem-section>
+    <div class="launcher-hero">
+      <div class="launcher-hero__copy">
+        <p class="launcher-hero__eyebrow">LAUNCHER DO REINO</p>
+        <h1>O Launcher Celem instala e mantém a Interface</h1>
+        <p class="launcher-hero__summary">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. O launcher centraliza a instalação e mantém a
+          Interface pronta para entrar no reino.
+        </p>
+
+        <div class="launcher-hero__badges" aria-label="Destaques do Launcher">
+          <celem-badge tone="gold">Instala a Interface</celem-badge>
+          <celem-badge tone="neutral">Atualizações automáticas</celem-badge>
+        </div>
+
+        <div class="launcher-hero__actions" aria-label="Ações principais do Launcher">
+          <celem-button variant="primary" size="lg" href="#launcher-download-placeholder">Baixar Launcher</celem-button>
+          <celem-button variant="secondary" routerLink="/interface" tabindex="-1">Conhecer a Interface</celem-button>
+        </div>
+      </div>
+
+      <div class="launcher-hero__media">
+        <celem-media-placeholder ratio="16:9" label="Preview do Launcher Celem" />
+      </div>
+    </div>
+  </celem-section>
+
+  <celem-section>
+    <div class="launcher-steps">
+      <celem-section-header
+        eyebrow="Como funciona"
+        title="Baixar, instalar e jogar com a Interface" />
+
+      <div class="launcher-steps__grid">
+        <celem-card>
+          <div class="launcher-step">
+            <celem-badge tone="gold">01</celem-badge>
+            <h3>Baixar o launcher</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. O primeiro passo concentra o acesso em um ponto
+              claro.
+            </p>
+          </div>
+        </celem-card>
+
+        <celem-card>
+          <div class="launcher-step">
+            <celem-badge tone="gold">02</celem-badge>
+            <h3>Instalar</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. O fluxo guia a preparação inicial sem passos
+              dispersos.
+            </p>
+          </div>
+        </celem-card>
+
+        <celem-card>
+          <div class="launcher-step">
+            <celem-badge tone="gold">03</celem-badge>
+            <h3>Ativar a Interface</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. A Interface fica pronta para uso pelo próprio
+              launcher.
+            </p>
+          </div>
+        </celem-card>
+
+        <celem-card>
+          <div class="launcher-step">
+            <celem-badge tone="gold">04</celem-badge>
+            <h3>Jogar</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Entre no reino com o caminho visual preparado.</p>
+          </div>
+        </celem-card>
+      </div>
+    </div>
+  </celem-section>
+
+  <celem-section>
+    <div class="launcher-screenshots">
+      <celem-section-header
+        eyebrow="Screenshots"
+        title="Prévia visual do Launcher" />
+
+      <div class="launcher-screenshots__grid">
+        <celem-media-placeholder ratio="16:9" label="Screenshot placeholder do dashboard do Launcher" />
+        <celem-media-placeholder ratio="16:9" label="Screenshot placeholder de instalação da Interface" />
+        <celem-media-placeholder ratio="16:9" label="Screenshot placeholder de atualização" />
+        <celem-media-placeholder ratio="16:9" label="Screenshot placeholder de estado pronto para jogar" />
+        <celem-media-placeholder ratio="16:9" label="Screenshot placeholder de biblioteca" />
+        <celem-media-placeholder ratio="16:9" label="Screenshot placeholder de preferências" />
+      </div>
+    </div>
+  </celem-section>
+
+  <celem-section>
+    <div class="launcher-requirements">
+      <celem-section-header
+        eyebrow="Requisitos mínimos"
+        title="Base técnica placeholder para preparar o Launcher"
+        subtitle="Conteúdo ilustrativo. Os requisitos reais serão definidos antes da publicação do download." />
+
+      <div class="launcher-requirements__grid" aria-label="Requisitos mínimos placeholder">
+        <celem-card>
+          <div class="launcher-requirement">
+            <span>Sistema operacional</span>
+            <strong>Placeholder de SO compatível</strong>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+        </celem-card>
+
+        <celem-card>
+          <div class="launcher-requirement">
+            <span>Espaço em disco</span>
+            <strong>Placeholder de armazenamento</strong>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+        </celem-card>
+
+        <celem-card>
+          <div class="launcher-requirement">
+            <span>Dependências</span>
+            <strong>Placeholder de runtime</strong>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+        </celem-card>
+
+        <celem-card>
+          <div class="launcher-requirement">
+            <span>Versão do jogo</span>
+            <strong>Placeholder de versão suportada</strong>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+        </celem-card>
+      </div>
+    </div>
+  </celem-section>
+
+  <celem-section>
+    <div class="launcher-faq">
+      <celem-section-header
+        eyebrow="FAQ"
+        title="Dúvidas rápidas antes de baixar" />
+
+      <div class="launcher-faq__list">
+        <details #faqInstall (toggle)="syncFaqState()">
+          <summary
+            aria-controls="launcher-faq-install"
+            [attr.aria-expanded]="faqInstall.open"
+            (keydown.enter)="toggleFaq($event)"
+            (keydown.space)="toggleFaq($event)">
+            O Launcher instala a Interface automaticamente?
+          </summary>
+          <p id="launcher-faq-install">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Esta resposta é placeholder.
+          </p>
+        </details>
+
+        <details #faqSetup (toggle)="syncFaqState()">
+          <summary
+            aria-controls="launcher-faq-setup"
+            [attr.aria-expanded]="faqSetup.open"
+            (keydown.enter)="toggleFaq($event)"
+            (keydown.space)="toggleFaq($event)">
+            Preciso configurar algo manualmente?
+          </summary>
+          <p id="launcher-faq-setup">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Esta resposta é placeholder.
+          </p>
+        </details>
+
+        <details #faqUpdates (toggle)="syncFaqState()">
+          <summary
+            aria-controls="launcher-faq-updates"
+            [attr.aria-expanded]="faqUpdates.open"
+            (keydown.enter)="toggleFaq($event)"
+            (keydown.space)="toggleFaq($event)">
+            O Launcher atualiza sozinho?
+          </summary>
+          <p id="launcher-faq-updates">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Esta resposta é placeholder.
+          </p>
+        </details>
+
+        <details #faqCommands (toggle)="syncFaqState()">
+          <summary
+            aria-controls="launcher-faq-commands"
+            [attr.aria-expanded]="faqCommands.open"
+            (keydown.enter)="toggleFaq($event)"
+            (keydown.space)="toggleFaq($event)">
+            Posso continuar usando comandos?
+          </summary>
+          <p id="launcher-faq-commands">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Esta resposta é placeholder.
+          </p>
+        </details>
+
+        <details #faqDownload (toggle)="syncFaqState()">
+          <summary
+            aria-controls="launcher-faq-download"
+            [attr.aria-expanded]="faqDownload.open"
+            (keydown.enter)="toggleFaq($event)"
+            (keydown.space)="toggleFaq($event)">
+            Onde encontro o download real?
+          </summary>
+          <p id="launcher-faq-download">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. O link definitivo será preenchido depois.
+          </p>
+        </details>
+      </div>
+    </div>
+  </celem-section>
+
+  <celem-section tone="subtle">
+    <div class="launcher-final-cta">
+      <div>
+        <p class="launcher-final-cta__eyebrow">Próximo passo</p>
+        <h2>Baixe o Launcher para instalar a Interface</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. O download definitivo entra aqui na fase final.</p>
+      </div>
+
+      <celem-button variant="primary" size="lg" href="#launcher-download-placeholder">Baixar Launcher</celem-button>
+    </div>
+  </celem-section>
+</div>

@@ -10,6 +10,7 @@ export type SiteTranslationKey =
   | 'navLauncher'
   | 'navInterface'
   | 'navAbout'
+  | 'navNews'
   | 'eyebrow'
   | 'catalogTitle'
   | 'catalogSummary'
@@ -74,6 +75,7 @@ export const SITE_TRANSLATIONS: Record<SiteLanguageCode, SiteTranslationDictiona
     navLauncher: 'Launcher',
     navInterface: 'Interface',
     navAbout: 'About',
+    navNews: 'News',
     eyebrow: 'Celem ecosystem',
     catalogTitle: 'Commands',
     catalogSummary: 'Search commands, aliases, examples, and permissions from plugins across the Celem ecosystem.',
@@ -240,6 +242,7 @@ export const SITE_TRANSLATIONS: Record<SiteLanguageCode, SiteTranslationDictiona
     navLauncher: 'Launcher',
     navInterface: 'Interface',
     navAbout: 'Sobre',
+    navNews: 'Notícias',
     eyebrow: 'Ecossistema Celem',
     catalogTitle: 'Comandos',
     catalogSummary: 'Pesquise comandos, aliases, exemplos e permissões dos plugins do ecossistema Celem.',

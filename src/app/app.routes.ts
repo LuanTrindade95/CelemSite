@@ -1,14 +1,17 @@
 import { Routes } from '@angular/router';
+import { AboutComponent } from './features/about/about.component';
 import { CommandCatalogComponent } from './features/command-catalog/command-catalog.component';
+import { HomeComponent } from './features/home/home.component';
+import { InterfaceComponent } from './features/interface/interface.component';
+import { LauncherComponent } from './features/launcher/launcher.component';
 import { NewsDetailComponent } from './features/news/pages/news-detail/news-detail.component';
 import { NewsListComponent } from './features/news/pages/news-list/news-list.component';
 import { DiscordAuthCallbackComponent } from './features/site-auth/discord-auth-callback.component';
-import { UnderConstructionPageComponent } from './features/static-page/under-construction-page.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: CommandCatalogComponent,
+    component: HomeComponent,
   },
   {
     path: 'commands',
@@ -16,24 +19,15 @@ export const routes: Routes = [
   },
   {
     path: 'launcher',
-    component: UnderConstructionPageComponent,
-    data: {
-      titleKey: 'navLauncher',
-    },
+    component: LauncherComponent,
   },
   {
     path: 'interface',
-    component: UnderConstructionPageComponent,
-    data: {
-      titleKey: 'navInterface',
-    },
+    component: InterfaceComponent,
   },
   {
     path: 'about',
-    component: UnderConstructionPageComponent,
-    data: {
-      titleKey: 'navAbout',
-    },
+    component: AboutComponent,
   },
   {
     path: 'news',
