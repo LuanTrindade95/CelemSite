@@ -167,14 +167,78 @@
   </celem-section>
 
   <celem-section>
-    <!-- COMPARACAO -->
+    <div class="interface-comparison">
+      <div class="interface-comparison__header">
+        <celem-section-header
+          eyebrow="Interface e comandos"
+          title="Comandos continuam disponíveis. A Interface simplifica o caminho."
+          subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. O catálogo segue útil para operação direta, enquanto a Interface reduz a necessidade de memorizar sintaxe." />
+
+        <celem-button variant="ghost" routerLink="/commands" tabindex="-1">Ver todos os comandos</celem-button>
+      </div>
+
+      <div class="interface-comparison__grid">
+        <celem-card>
+          <div celem-card-header>
+            <div class="comparison-card__header">
+              <celem-badge tone="neutral">Comandos</celem-badge>
+              <span>Controle direto</span>
+            </div>
+          </div>
+
+          <div class="comparison-card">
+            <code>.celem interface sync --profile reino</code>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Comandos são poderosos, mas exigem digitar certo,
+              lembrar parâmetros e consultar sintaxe quando o fluxo fica mais específico.
+            </p>
+          </div>
+        </celem-card>
+
+        <celem-card>
+          <div celem-card-header>
+            <div class="comparison-card__header">
+              <celem-badge tone="gold">Interface</celem-badge>
+              <span>Caminho visual</span>
+            </div>
+          </div>
+
+          <div class="comparison-card">
+            <celem-media-placeholder ratio="16:9" label="Fluxo visual da Interface" />
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. A Interface aproxima a ação do contexto visual,
+              deixando escolhas importantes mais claras antes de confirmar.
+            </p>
+          </div>
+        </celem-card>
+      </div>
+    </div>
   </celem-section>
 
   <celem-section>
-    <!-- INTEGRACAO -->
+    <div class="interface-launcher">
+      <div class="interface-launcher__copy">
+        <celem-section-header
+          eyebrow="Integração"
+          title="A Interface chega pelo launcher"
+          subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. O launcher instala a Interface e mantém o caminho de entrada previsível para o ecossistema Celem." />
+
+        <celem-button variant="primary" routerLink="/launcher" tabindex="-1">Baixar Launcher</celem-button>
+      </div>
+
+      <celem-media-placeholder ratio="16:9" label="Instalação via Launcher" />
+    </div>
   </celem-section>
 
-  <celem-section>
-    <!-- CTA FINAL -->
+  <celem-section tone="subtle">
+    <div class="interface-final-cta">
+      <div>
+        <p class="interface-final-cta__eyebrow">Próximo passo</p>
+        <h2>Use a Interface como ponto de partida</h2>
+        <p>Baixe o launcher para instalar a Interface e experimentar o fluxo visual do Celem.</p>
+      </div>
+
+      <celem-button variant="primary" size="lg" routerLink="/launcher" tabindex="-1">Baixar Launcher</celem-button>
+    </div>
   </celem-section>
 </div>

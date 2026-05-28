@@ -13,9 +13,9 @@ Decision: the `/interface` route now points to `InterfaceComponent` instead of `
 | 1 | Hero | ✓ CTA de launcher e mockup |
 | 2 | Funcionalidades | ✓ blocos alternados |
 | 3 | Galeria | ✓ grid responsivo |
-| 4 | Comparação | ⏳ vazia |
-| 5 | Integração | ⏳ vazia |
-| 6 | CTA final | ⏳ vazia |
+| 4 | Comparação | ✓ Interface x Comandos |
+| 5 | Integração | ✓ Launcher |
+| 6 | CTA final | ✓ faixa de fechamento |
 
 ## Composition Rule
 
@@ -53,3 +53,22 @@ The Interface root stays transparent. Site atmosphere continues to come from the
 - Ratios mix `16:9` and `4:3` to create visual rhythm while preserving stable dimensions.
 - Decision: video previews use a local play overlay on top of `CelemMediaPlaceholder`; no new media component was introduced.
 - Debt: lightbox/interative gallery remains pending for a future phase.
+
+## Comparação I5
+
+- Message: commands remain available and useful, while the Interface is positioned as the more intuitive path for most users.
+- Layout: side-by-side cards on desktop, stacked on mobile.
+- Commands column uses static mono text with `--celem-font-mono`; no command-catalog styles or code are imported.
+- Interface column uses `CelemMediaPlaceholder ratio="16:9"` plus explanatory placeholder copy.
+- CTA: `Ver todos os comandos`, linked to `routerLink="/commands"`.
+
+## Integração I5
+
+- Explains that the Interface is installed through the Launcher.
+- Layout: short copy plus `CelemMediaPlaceholder ratio="16:9"`.
+- CTA: `Baixar Launcher`, linked to `routerLink="/launcher"`.
+
+## CTA Final I5
+
+- Closing band reinforces `Baixar Launcher` as the primary next action.
+- CTA: `Baixar Launcher`, linked to `routerLink="/launcher"`.
