@@ -101,6 +101,7 @@ Implementation note: current data is an in-memory array with symbolic `delay(150
 - Substituir títulos, resumos e corpos placeholder por conteúdo editorial real.
 - Substituir covers/placeholders por imagens reais otimizadas.
 - Executar o swap interno do `NewsService` para Supabase mantendo a assinatura pública.
+- Implementar estado de erro de API junto ao swap Supabase.
 - Avaliar paginação ou "carregar mais" quando o volume real de notícias justificar.
 
 ## Supabase Swap Checklist
