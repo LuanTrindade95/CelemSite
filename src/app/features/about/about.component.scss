@@ -80,10 +80,8 @@
 .about-pillars {
   display: grid;
   gap: 16px;
-}
-
-:host ::ng-deep .about-pillars .celem-section-header h2 {
-  overflow-wrap: anywhere;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .about-community {

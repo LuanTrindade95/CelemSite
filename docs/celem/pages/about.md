@@ -58,6 +58,7 @@ The About root stays transparent. Site atmosphere continues to come from the glo
 - Responsive behavior checked for desktop, tablet, and mobile.
 - Social links and final CTA use shared button focus/hover states.
 - Reduced motion preference is respected locally for About page transitions.
+- Residual `::ng-deep` selector removed; About keeps overflow protection through local section containers.
 
 ## Pendências
 
