@@ -22,4 +22,20 @@ import { CelemSectionHeaderComponent } from '../../shared/components/celem-secti
   templateUrl: './launcher.component.html',
   styleUrl: './launcher.component.scss',
 })
-export class LauncherComponent {}
+export class LauncherComponent {
+  protected toggleFaq(event: Event): void {
+    event.preventDefault();
+
+    const summary = event.currentTarget;
+    if (!(summary instanceof HTMLElement)) {
+      return;
+    }
+
+    const details = summary.closest('details');
+    if (!details) {
+      return;
+    }
+
+    details.open = !details.open;
+  }
+}
