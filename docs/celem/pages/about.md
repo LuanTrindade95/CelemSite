@@ -15,6 +15,8 @@ Decision: the `/about` route now points to `AboutComponent` instead of `UnderCon
 | 3 | Comunidade & Contato | ✓ links placeholder |
 | 4 | CTA final | ✓ Launcher |
 
+Status: Sobre concluída em A4, com placeholders pendentes registrados abaixo.
+
 ## Composition Rule
 
 The About root stays transparent. Site atmosphere continues to come from the global `body` background.
@@ -50,7 +52,15 @@ The About root stays transparent. Site atmosphere continues to come from the glo
 - CTA choice: `Baixar Launcher`, to keep the institutional page aligned with the main conversion funnel.
 - CTA target: `routerLink="/launcher"`.
 
+## Polish A4
+
+- Semantic hierarchy: Intro uses one `h1`; the following sections keep `h2` headings.
+- Responsive behavior checked for desktop, tablet, and mobile.
+- Social links and final CTA use shared button focus/hover states.
+- Reduced motion preference is respected locally for About page transitions.
+
 ## Pendências
 
 - Replace placeholder social URLs with real channels.
+- Replace placeholder institutional copy with final project text.
 - Decide whether a future contact form is needed; no form integration was added in A3.
