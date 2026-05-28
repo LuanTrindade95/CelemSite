@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AboutComponent } from './features/about/about.component';
 import { CommandCatalogComponent } from './features/command-catalog/command-catalog.component';
 import { HomeComponent } from './features/home/home.component';
 import { InterfaceComponent } from './features/interface/interface.component';
@@ -25,10 +26,7 @@ export const routes: Routes = [
   },
   {
     path: 'about',
-    component: UnderConstructionPageComponent,
-    data: {
-      titleKey: 'navAbout',
-    },
+    component: AboutComponent,
   },
   {
     path: 'news',
