@@ -1,5 +1,122 @@
 <div class="news-list-page">
   <celem-section>
-    <h1>Notícias Celem</h1>
+    <div class="news-list">
+      <celem-section-header
+        eyebrow="NOVIDADES"
+        title="Notícias"
+        subtitle="Atualizações placeholder do ecossistema Celem." />
+
+      <div class="news-featured" aria-label="Notícia em destaque">
+        @if (featured(); as item) {
+          <a class="news-featured__link" [routerLink]="['/news', item.slug]">
+            <celem-card>
+              <div class="news-featured__content">
+                <celem-media-placeholder
+                  ratio="16:9"
+                  label="Capa placeholder"
+                  [attr.aria-label]="'Capa placeholder da notícia: ' + item.title"
+                  [src]="item.coverImage ?? ''"
+                  [alt]="item.coverImage ? item.title : ''" />
+
+                <div class="news-featured__copy">
+                  <celem-badge [tone]="categoryTone(item.category)">
+                    {{ categoryLabel(item.category) }}
+                  </celem-badge>
+
+                  <div class="news-featured__text">
+                    <p class="news-featured__eyebrow">Destaque</p>
+                    <h2>{{ item.title }}</h2>
+                    <p class="news-featured__meta">
+                      {{ formatDate(item.publishedAt) }}
+                      @if (item.readingTimeMin) {
+                        <span>{{ item.readingTimeMin }} min</span>
+                      }
+                    </p>
+                    <p>{{ item.excerpt }}</p>
+                  </div>
+                </div>
+              </div>
+            </celem-card>
+          </a>
+        } @else {
+          <div class="news-featured__skeleton" aria-label="Carregando destaque">
+            <div></div>
+            <span></span>
+          </div>
+        }
+      </div>
+
+      <div class="news-filters" aria-label="Filtrar notícias por categoria">
+        <button
+          type="button"
+          class="news-filter"
+          [class.news-filter--active]="selectedCategory() === 'all'"
+          (click)="selectCategory('all')">
+          <celem-badge [tone]="selectedCategory() === 'all' ? 'gold' : 'neutral'">Todas</celem-badge>
+        </button>
+
+        @for (category of categories(); track category) {
+          <button
+            type="button"
+            class="news-filter"
+            [class.news-filter--active]="selectedCategory() === category"
+            (click)="selectCategory(category)">
+            <celem-badge [tone]="selectedCategory() === category ? 'gold' : 'neutral'">
+              {{ categoryLabel(category) }}
+            </celem-badge>
+          </button>
+        }
+      </div>
+
+      @if (loading()) {
+        <div class="news-grid" aria-label="Carregando notícias">
+          @for (slot of [0, 1, 2, 3, 4, 5]; track slot) {
+            <div class="news-skeleton">
+              <span></span>
+              <div></div>
+              <p></p>
+            </div>
+          }
+        </div>
+      } @else if (isEmpty()) {
+        <div class="news-empty" aria-live="polite">
+          <h2>Nenhuma notícia encontrada</h2>
+          <p>Não há itens placeholder para este filtro.</p>
+          <celem-button variant="secondary" (pressed)="selectCategory('all')">Limpar filtro</celem-button>
+        </div>
+      } @else {
+        <div class="news-grid">
+          @for (item of gridItems(); track item.id) {
+            <a class="news-card-link" [routerLink]="['/news', item.slug]">
+              <celem-card>
+                <div class="news-card">
+                  <celem-media-placeholder
+                    ratio="16:9"
+                    label="Capa placeholder"
+                    [attr.aria-label]="'Capa placeholder da notícia: ' + item.title"
+                    [src]="item.coverImage ?? ''"
+                    [alt]="item.coverImage ? item.title : ''" />
+
+                  <div class="news-card__body">
+                    <celem-badge [tone]="categoryTone(item.category)">
+                      {{ categoryLabel(item.category) }}
+                    </celem-badge>
+
+                    <h2>{{ item.title }}</h2>
+                    <p class="news-card__meta">
+                      {{ formatDate(item.publishedAt) }}
+                      @if (item.readingTimeMin) {
+                        <span>{{ item.readingTimeMin }} min</span>
+                      }
+                    </p>
+                    <p>{{ item.excerpt }}</p>
+                  </div>
+                </div>
+              </celem-card>
+            </a>
+          }
+        </div>
+      }
+    </div>
   </celem-section>
 </div>

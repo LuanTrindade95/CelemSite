@@ -50,4 +50,16 @@ Implementation note: current data is an in-memory array with symbolic `delay(150
 
 | Phase | State |
 |---|---|
-| N1 model/service/routes/shells | ⏳ scaffold |
+| N1 model/service/routes/shells | ✓ scaffold |
+| N2 listagem | ✓ destaque, filtro, grid e estados |
+
+## Listagem N2
+
+- Header uses `CelemSectionHeader` with eyebrow `NOVIDADES` and title `Notícias`.
+- Featured block consumes `NewsService.getFeatured()` and links to `/news/:slug`.
+- Category filters are generated from categories present in `NewsService.list()` data.
+- Filter calls `NewsService.list({ category })` and updates the list asynchronously.
+- Grid uses `CelemCard`, `CelemBadge`, and `CelemMediaPlaceholder`, with 3 columns on desktop, 2 on tablet, and 1 on mobile.
+- Loading state renders skeleton placeholders while the service delay resolves.
+- Empty state renders when a selected category has no items.
+- Pagination and "carregar mais" remain out of scope for N2.
