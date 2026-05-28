@@ -7,6 +7,7 @@
 }
 
 .interface-page celem-button,
+.interface-page celem-card,
 .interface-page celem-media-placeholder {
   min-width: 0;
 }
@@ -73,6 +74,73 @@ h1 {
   min-width: 0;
 }
 
+.interface-features {
+  display: grid;
+  gap: 16px;
+}
+
+.interface-features__list {
+  display: grid;
+  gap: 14px;
+}
+
+.feature-block {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
+  gap: 14px;
+  align-items: center;
+}
+
+.feature-block--reverse {
+  grid-template-columns: minmax(300px, 0.92fr) minmax(0, 1.08fr);
+}
+
+.feature-block--reverse .feature-block__media {
+  order: 2;
+}
+
+.feature-block--reverse celem-card {
+  order: 1;
+}
+
+.feature-block__media {
+  min-width: 0;
+}
+
+.feature-block celem-card {
+  display: block;
+  height: 100%;
+}
+
+.feature-block__copy {
+  display: grid;
+  gap: 10px;
+}
+
+.feature-block__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.feature-block__copy h3,
+.feature-block__copy p {
+  margin: 0;
+}
+
+.feature-block__copy h3 {
+  color: var(--celem-text);
+  font-size: 1.04rem;
+  line-height: 1.2;
+}
+
+.feature-block__copy p {
+  color: var(--celem-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
 @media (max-width: 920px) {
   .interface-hero {
     grid-template-columns: 1fr;
@@ -81,6 +149,21 @@ h1 {
 
   .interface-hero__copy {
     max-width: 720px;
+  }
+
+  .feature-block,
+  .feature-block--reverse {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-block .feature-block__media,
+  .feature-block--reverse .feature-block__media {
+    order: 1;
+  }
+
+  .feature-block celem-card,
+  .feature-block--reverse celem-card {
+    order: 2;
   }
 }
 
