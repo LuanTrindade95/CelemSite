@@ -5,3 +5,104 @@
 .interface-page {
   display: block;
 }
+
+.interface-page celem-button,
+.interface-page celem-media-placeholder {
+  min-width: 0;
+}
+
+.interface-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(340px, 1fr);
+  gap: 18px;
+  align-items: center;
+  min-height: clamp(280px, 42vw, 420px);
+}
+
+.interface-hero__copy {
+  display: grid;
+  gap: 12px;
+  max-width: 660px;
+}
+
+.interface-hero__eyebrow,
+.interface-hero__summary,
+h1 {
+  margin: 0;
+}
+
+.interface-hero__eyebrow {
+  color: var(--celem-gold);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+h1 {
+  color: var(--celem-text);
+  font-family: var(--celem-font-sans);
+  font-size: clamp(2.35rem, 5.1vw, 4.4rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 0.96;
+  overflow-wrap: anywhere;
+}
+
+.interface-hero__summary {
+  max-width: 58ch;
+  color: var(--celem-muted);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.interface-hero__badges,
+.interface-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.interface-hero__actions {
+  margin-top: 2px;
+}
+
+.interface-hero__media {
+  min-width: 0;
+}
+
+@media (max-width: 920px) {
+  .interface-hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .interface-hero__copy {
+    max-width: 720px;
+  }
+}
+
+@media (max-width: 560px) {
+  .interface-hero {
+    gap: 16px;
+  }
+
+  h1 {
+    font-size: clamp(2.05rem, 12vw, 3.25rem);
+  }
+
+  .interface-hero__summary {
+    font-size: 0.94rem;
+  }
+
+  .interface-hero__actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .interface-hero__actions celem-button {
+    width: 100%;
+  }
+}
