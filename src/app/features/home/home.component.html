@@ -9,7 +9,7 @@
         </p>
 
         <div class="home-hero__actions" aria-label="Ações principais">
-          <celem-button variant="primary">Baixar Launcher</celem-button>
+          <celem-button variant="primary" routerLink="/launcher">Baixar Launcher</celem-button>
           <celem-button variant="secondary" href="#interface">Conhecer a Interface</celem-button>
         </div>
       </div>
@@ -21,7 +21,66 @@
   </celem-section>
 
   <celem-section id="interface">
-    <!-- INTERFACE -->
+    <div class="home-interface">
+      <div class="home-interface__header">
+        <celem-section-header
+          eyebrow="Interface Celem"
+          title="Um painel feito para operar Celem com clareza"
+          subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. A Interface centraliza o que importa para jogar, configurar e acompanhar o ecossistema." />
+
+        <celem-button variant="primary" routerLink="/interface">Explorar a Interface</celem-button>
+      </div>
+
+      <div class="home-interface__media">
+        <celem-media-placeholder ratio="16:9" label="Prévia da Interface" />
+      </div>
+
+      <div class="home-interface__cards">
+        <celem-card>
+          <div celem-card-header>
+            <span class="interface-card__mark">01</span>
+          </div>
+
+          <div class="interface-card__body">
+            <h3>Usabilidade direta</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse leitura fica objetiva.</p>
+          </div>
+        </celem-card>
+
+        <celem-card>
+          <div celem-card-header>
+            <span class="interface-card__mark">02</span>
+          </div>
+
+          <div class="interface-card__body">
+            <h3>Configuração fácil</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ajustes ficam acessíveis e previsíveis.</p>
+          </div>
+        </celem-card>
+
+        <celem-card>
+          <div celem-card-header>
+            <span class="interface-card__mark">03</span>
+          </div>
+
+          <div class="interface-card__body">
+            <h3>Melhor visualização</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Estados importantes ganham hierarquia.</p>
+          </div>
+        </celem-card>
+
+        <celem-card>
+          <div celem-card-header>
+            <span class="interface-card__mark">04</span>
+          </div>
+
+          <div class="interface-card__body">
+            <h3>Qualidade de vida</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fluxos recorrentes exigem menos esforço.</p>
+          </div>
+        </celem-card>
+      </div>
+    </div>
   </celem-section>
 
   <celem-section>
