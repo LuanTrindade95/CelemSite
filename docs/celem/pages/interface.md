@@ -6,6 +6,8 @@ Route: `/interface`
 
 Decision: the `/interface` route now points to `InterfaceComponent` instead of `UnderConstructionPageComponent`.
 
+Status: Interface concluída para a fase atual, com placeholders e dívidas documentados abaixo.
+
 ## Sections
 
 | Order | Section | State |
@@ -72,3 +74,27 @@ The Interface root stays transparent. Site atmosphere continues to come from the
 
 - Closing band reinforces `Baixar Launcher` as the primary next action.
 - CTA: `Baixar Launcher`, linked to `routerLink="/launcher"`.
+
+## Polish I6
+
+- Breakpoints verified:
+  - Mobile `<768px`: content stacks in one column, feature media stays above text, gallery is one column, comparison stacks, and there is no horizontal overflow.
+  - Tablet `768-1024px`: feature blocks stack, gallery uses two columns, comparison/integration/CTA stack cleanly.
+  - Desktop `>1024px`: hero, alternating feature blocks, gallery, comparison, launcher integration and final CTA use their intended multi-column layouts.
+- Motion verified: shared buttons/cards keep 160ms transitions, border/tint shifts and approximately 1px hover/focus lift. No reveal-on-scroll, parallax or springy motion is present.
+- Accessibility verified:
+  - One `h1` in the Hero.
+  - Section headings use `h2`; feature cards use `h3`.
+  - Keyboard focus is visible with the gold focus ring on all CTAs.
+  - Media placeholders use visible labels, and video play overlays are decorative with `aria-hidden="true"`.
+- Route consistency verified:
+  - All `Baixar Launcher` CTAs point to `/launcher`.
+  - `Ver funcionalidades` points to `/interface#features`.
+  - `Ver todos os comandos` points to `/commands`.
+
+## Pendências
+
+- Replace placeholder copy with final product copy.
+- Replace all `CelemMediaPlaceholder` blocks with real Interface, Launcher and feature imagery.
+- Replace `/launcher` stub with the real Launcher/download experience when that phase starts.
+- Implement lightbox/interactive gallery behavior in a future phase.
