@@ -1,5 +1,51 @@
 <div class="news-detail-page">
   <celem-section>
-    <h1>Detalhe da notícia</h1>
+    <div class="news-detail">
+      <celem-button variant="ghost" routerLink="/news" tabindex="-1">← Voltar para Notícias</celem-button>
+
+      @if (loading()) {
+        <div class="news-detail__loading" aria-label="Carregando notícia">
+          <span></span>
+          <div></div>
+          <p></p>
+        </div>
+      } @else if (item(); as article) {
+        <article class="news-article">
+          <header class="news-article__header">
+            <celem-badge [tone]="categoryTone(article.category)">
+              {{ categoryLabel(article.category) }}
+            </celem-badge>
+
+            <h1>{{ article.title }}</h1>
+
+            <p class="news-article__meta">
+              {{ formatDate(article.publishedAt) }}
+              @if (article.readingTimeMin) {
+                <span>{{ article.readingTimeMin }} min de leitura</span>
+              }
+            </p>
+          </header>
+
+          <celem-media-placeholder
+            ratio="16:9"
+            label="Capa placeholder"
+            [attr.aria-label]="'Capa placeholder da notícia: ' + article.title"
+            [src]="article.coverImage ?? ''"
+            [alt]="article.coverImage ? article.title : ''" />
+
+          <div class="news-article__body">
+            @for (paragraph of article.body; track paragraph) {
+              <p>{{ paragraph }}</p>
+            }
+          </div>
+        </article>
+      } @else {
+        <div class="news-detail__not-found" aria-live="polite">
+          <h1>Notícia não encontrada</h1>
+          <p>O slug informado não existe nos dados placeholder atuais.</p>
+          <celem-button variant="secondary" routerLink="/news" tabindex="-1">Voltar para Notícias</celem-button>
+        </div>
+      }
+    </div>
   </celem-section>
 </div>

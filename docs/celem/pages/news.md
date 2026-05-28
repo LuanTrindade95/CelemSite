@@ -52,6 +52,7 @@ Implementation note: current data is an in-memory array with symbolic `delay(150
 |---|---|
 | N1 model/service/routes/shells | ✓ scaffold |
 | N2 listagem | ✓ destaque, filtro, grid e estados |
+| N3 detalhe | ✓ cabeçalho, cover, corpo, voltar e not-found |
 
 ## Listagem N2
 
@@ -63,3 +64,13 @@ Implementation note: current data is an in-memory array with symbolic `delay(150
 - Loading state renders skeleton placeholders while the service delay resolves.
 - Empty state renders when a selected category has no items.
 - Pagination and "carregar mais" remain out of scope for N2.
+
+## Detalhe N3
+
+- Detail route reads `slug` from `ActivatedRoute` and calls `NewsService.getBySlug(slug)`.
+- Article header renders `CelemBadge`, `h1`, formatted date, and optional reading time.
+- Cover uses `CelemMediaPlaceholder ratio="16:9"` with placeholder label when `coverImage` is empty.
+- Body renders the `body: string[]` array as plain text paragraphs, with controlled reading measure.
+- Navigation uses `CelemButton variant="ghost"` back to `/news`.
+- Not-found state handles unknown slugs without breaking the app and includes a CTA back to `/news`.
+- "Leia também" remains out of scope for N3.
