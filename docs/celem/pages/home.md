@@ -14,8 +14,9 @@ Decision: the root route now points to `HomeComponent`; the command catalog rema
 | 2 | Interface | ✓ destaque principal |
 | 3 | Launcher | ✓ seção com CTA de download |
 | 4 | Comandos | ✓ seção com exemplos estáticos |
-| 5 | Notícias | ⏳ vazia |
-| 6 | Sobre | ⏳ vazia |
+| 5 | Notícias | ✓ prévia com cards |
+| 6 | Sobre/Comunidade | ✓ bloco institucional |
+| 7 | CTA final | ✓ faixa de fechamento |
 
 ## Composition Rule
 
@@ -59,3 +60,25 @@ Every Home CTA labeled `Baixar Launcher` points to `routerLink="/launcher"` whil
   - `.celem status` with `Consulta` badge.
   - `.celem sync` with `Operação` badge.
 - CTA: `Ver todos os comandos`, linked to `routerLink="/commands"`.
+
+## Notícias H5
+
+- Home contains a placeholder news preview only; no blog or CMS exists in this phase.
+- Dedicated route `/news` was created as an `UnderConstructionPageComponent` stub with `data: { titleKey: 'navNews' }`.
+- Notícias remains outside the site-shell nav for now.
+- Cards:
+  - Update, dated `04 jun 2026`.
+  - Evento, dated `12 jun 2026`.
+  - V Rising, dated `20 jun 2026`.
+- CTA: `Ver todas as notícias`, linked to `routerLink="/news"`.
+
+## Sobre/Comunidade H5
+
+- Section header introduces the project and community with placeholder copy.
+- CTA: `Conhecer o projeto`, linked to `routerLink="/about"`.
+- Social/Discord area is a non-interactive placeholder for future links.
+
+## CTA Final H5
+
+- Closing band reinforces `Baixar Launcher` as the primary action.
+- CTA: `Baixar Launcher`, linked to `routerLink="/launcher"` following the Home launcher CTA pattern.

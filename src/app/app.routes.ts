@@ -35,6 +35,13 @@ export const routes: Routes = [
     },
   },
   {
+    path: 'news',
+    component: UnderConstructionPageComponent,
+    data: {
+      titleKey: 'navNews',
+    },
+  },
+  {
     path: 'auth/callback',
     component: DiscordAuthCallbackComponent,
   },
