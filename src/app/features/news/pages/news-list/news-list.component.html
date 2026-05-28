@@ -8,7 +8,10 @@
 
       <div class="news-featured" aria-label="Notícia em destaque">
         @if (featured(); as item) {
-          <a class="news-featured__link" [routerLink]="['/news', item.slug]">
+          <a
+            class="news-featured__link"
+            [routerLink]="['/news', item.slug]"
+            [attr.aria-label]="'Abrir notícia em destaque: ' + item.title">
             <celem-card>
               <div class="news-featured__content">
                 <celem-media-placeholder
@@ -25,7 +28,7 @@
 
                   <div class="news-featured__text">
                     <p class="news-featured__eyebrow">Destaque</p>
-                    <h2>{{ item.title }}</h2>
+                    <h3>{{ item.title }}</h3>
                     <p class="news-featured__meta">
                       {{ formatDate(item.publishedAt) }}
                       @if (item.readingTimeMin) {
@@ -51,6 +54,8 @@
           type="button"
           class="news-filter"
           [class.news-filter--active]="selectedCategory() === 'all'"
+          [attr.aria-label]="'Filtrar por todas as categorias'"
+          [attr.aria-pressed]="selectedCategory() === 'all'"
           (click)="selectCategory('all')">
           <celem-badge [tone]="selectedCategory() === 'all' ? 'gold' : 'neutral'">Todas</celem-badge>
         </button>
@@ -60,6 +65,8 @@
             type="button"
             class="news-filter"
             [class.news-filter--active]="selectedCategory() === category"
+            [attr.aria-label]="'Filtrar por ' + categoryLabel(category)"
+            [attr.aria-pressed]="selectedCategory() === category"
             (click)="selectCategory(category)">
             <celem-badge [tone]="selectedCategory() === category ? 'gold' : 'neutral'">
               {{ categoryLabel(category) }}
@@ -87,7 +94,10 @@
       } @else {
         <div class="news-grid">
           @for (item of gridItems(); track item.id) {
-            <a class="news-card-link" [routerLink]="['/news', item.slug]">
+            <a
+              class="news-card-link"
+              [routerLink]="['/news', item.slug]"
+              [attr.aria-label]="'Abrir notícia: ' + item.title">
               <celem-card>
                 <div class="news-card">
                   <celem-media-placeholder
@@ -102,7 +112,7 @@
                       {{ categoryLabel(item.category) }}
                     </celem-badge>
 
-                    <h2>{{ item.title }}</h2>
+                    <h3>{{ item.title }}</h3>
                     <p class="news-card__meta">
                       {{ formatDate(item.publishedAt) }}
                       @if (item.readingTimeMin) {

@@ -55,6 +55,7 @@ Implementation note: current data is an in-memory array with symbolic `delay(150
 | N2 listagem | ✓ destaque, filtro, grid e estados |
 | N3 detalhe | ✓ cabeçalho, cover, corpo, voltar e not-found |
 | N4 integração Home | ✓ NewsService + checklist Supabase |
+| N5 polish final | ✓ responsividade, motion e a11y |
 
 ## Listagem N2
 
@@ -83,6 +84,24 @@ Implementation note: current data is an in-memory array with symbolic `delay(150
 - Home cards link to `/news/:slug`.
 - Home CTA `Ver todas as notícias` remains linked to `/news`.
 - All current News UI reads through `NewsService`; components do not import placeholder data directly.
+
+## Polish N5
+
+- Notícias concluída para a fundação atual, com dados e mídia placeholder.
+- Listagem validada em mobile, tablet e desktop: destaque, filtros e grid colapsam sem overflow.
+- Detalhe validado em mobile, tablet e desktop: largura de leitura controlada, cover proporcional e ordem de leitura preservada.
+- Filtros usam botões com `aria-pressed`, foco dourado visível e rótulos de categoria.
+- Cards da listagem são links navegáveis por teclado com foco dourado visível e `aria-label` descritivo.
+- Detalhe mantém um único `h1` no artigo ou no estado not-found, com CTA de retorno para `/news`.
+- Badges de categoria e datas seguem o mesmo mapeamento visual e formatação entre Home, listagem e detalhe.
+- Motion permanece no orçamento do kit: transições de 160ms, hover lift sutil e fallback para `prefers-reduced-motion`.
+
+## Pendências
+
+- Substituir títulos, resumos e corpos placeholder por conteúdo editorial real.
+- Substituir covers/placeholders por imagens reais otimizadas.
+- Executar o swap interno do `NewsService` para Supabase mantendo a assinatura pública.
+- Avaliar paginação ou "carregar mais" quando o volume real de notícias justificar.
 
 ## Supabase Swap Checklist
 
