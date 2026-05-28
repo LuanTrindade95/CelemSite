@@ -12,7 +12,7 @@ Decision: the `/interface` route now points to `InterfaceComponent` instead of `
 |---|---|---|
 | 1 | Hero | ✓ CTA de launcher e mockup |
 | 2 | Funcionalidades | ✓ blocos alternados |
-| 3 | Galeria | ⏳ vazia |
+| 3 | Galeria | ✓ grid responsivo |
 | 4 | Comparação | ⏳ vazia |
 | 5 | Integração | ⏳ vazia |
 | 6 | CTA final | ⏳ vazia |
@@ -42,3 +42,14 @@ The Interface root stays transparent. Site atmosphere continues to come from the
   - Atalhos para fluxos importantes.
 - Media: each block uses `CelemMediaPlaceholder ratio="16:9"` as a temporary preview.
 - Copy is illustrative placeholder content and not final product wording.
+
+## Galeria I4
+
+- Section uses `CelemSectionHeader` plus a responsive grid of eight `CelemMediaPlaceholder` previews.
+- Grid behavior:
+  - Desktop: 3 columns.
+  - Tablet: 2 columns.
+  - Mobile: 1 column.
+- Ratios mix `16:9` and `4:3` to create visual rhythm while preserving stable dimensions.
+- Decision: video previews use a local play overlay on top of `CelemMediaPlaceholder`; no new media component was introduced.
+- Debt: lightbox/interative gallery remains pending for a future phase.

@@ -141,6 +141,45 @@ h1 {
   line-height: 1.55;
 }
 
+.interface-gallery {
+  display: grid;
+  gap: 16px;
+}
+
+.interface-gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.gallery-item {
+  position: relative;
+  min-width: 0;
+}
+
+.gallery-item__play {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(242, 210, 138, 0.58);
+  border-radius: var(--celem-radius-pill);
+  background: rgba(8, 11, 18, 0.78);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+  transform: translate(-50%, -50%);
+}
+
+.gallery-item__play::before {
+  content: "";
+  width: 0;
+  height: 0;
+  margin-left: 3px;
+  border-block: 9px solid transparent;
+  border-left: 13px solid var(--celem-focus);
+}
+
 @media (max-width: 920px) {
   .interface-hero {
     grid-template-columns: 1fr;
@@ -165,6 +204,10 @@ h1 {
   .feature-block--reverse celem-card {
     order: 2;
   }
+
+  .interface-gallery__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 560px) {
@@ -187,5 +230,9 @@ h1 {
 
   .interface-hero__actions celem-button {
     width: 100%;
+  }
+
+  .interface-gallery__grid {
+    grid-template-columns: 1fr;
   }
 }
