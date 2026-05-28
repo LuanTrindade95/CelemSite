@@ -65,13 +65,9 @@ Every Home CTA labeled `Baixar Launcher` points to `routerLink="/launcher"` whil
 
 ## Notícias H5
 
-- Home contains a placeholder news preview only; no blog or CMS exists in this phase.
-- Dedicated route `/news` was created as an `UnderConstructionPageComponent` stub with `data: { titleKey: 'navNews' }`.
-- Notícias remains outside the site-shell nav for now.
-- Cards:
-  - Update, dated `04 jun 2026`.
-  - Evento, dated `12 jun 2026`.
-  - V Rising, dated `20 jun 2026`.
+- Home news preview consumes `NewsService.getRecent(3)`.
+- Cards are rendered from the same placeholder data source used by `/news`.
+- Each card links to `/news/:slug`.
 - CTA: `Ver todas as notícias`, linked to `routerLink="/news"`.
 
 ## Sobre/Comunidade H5
@@ -105,5 +101,5 @@ Every Home CTA labeled `Baixar Launcher` points to `routerLink="/launcher"` whil
 
 - Replace placeholder copy with final product/community copy.
 - Replace `CelemMediaPlaceholder` blocks with real interface, launcher and news imagery.
-- Replace `/launcher`, `/interface`, `/about` and `/news` stubs with dedicated pages when each phase starts.
-- Keep Notícias outside the site-shell nav until the dedicated news page exists.
+- Replace `/launcher`, `/interface` and `/about` stubs with dedicated pages when each phase starts.
+- Keep Notícias outside the site-shell nav until a dedicated nav decision is made.

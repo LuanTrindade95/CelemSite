@@ -132,6 +132,16 @@ export class NewsService {
     return this.list().pipe(map((items) => items.filter((item) => item.featured)));
   }
 
+  public getRecent(limit: number): Observable<NewsItem[]> {
+    return this.list().pipe(
+      map((items) =>
+        [...items]
+          .sort((left, right) => new Date(right.publishedAt).getTime() - new Date(left.publishedAt).getTime())
+          .slice(0, limit),
+      ),
+    );
+  }
+
   public getBySlug(slug: string): Observable<NewsItem | undefined> {
     return this.list().pipe(map((items) => items.find((item) => item.slug === slug)));
   }

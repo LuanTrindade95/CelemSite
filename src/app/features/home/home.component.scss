@@ -199,6 +199,20 @@ h1 {
   height: 100%;
 }
 
+.home-news__link {
+  display: block;
+  min-width: 0;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+.home-news__link:focus-visible {
+  border-radius: var(--celem-radius-md);
+  outline: 2px solid var(--celem-focus);
+  outline-offset: 3px;
+}
+
 .command-example {
   display: grid;
   gap: 8px;
