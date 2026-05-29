@@ -32,7 +32,7 @@ The Home root stays transparent. Site atmosphere continues to come from the glob
 
 ## Launcher CTA Pattern
 
-Every Home CTA labeled `Baixar Launcher` points to `routerLink="/launcher"` while the launcher route is still a local stub. An external download URL will replace this route in a future session. This pattern applies to the Hero, the Launcher section (H4), and the final CTA (H5).
+Every Home CTA labeled `Baixar Launcher` points to `routerLink="/launcher"`, now served by `LauncherComponent`. The real external download URL remains a Launcher-page pending item for a future session. This pattern applies to the Hero, the Launcher section (H4), and the final CTA (H5).
 
 ## Interface H3
 
@@ -95,11 +95,10 @@ Every Home CTA labeled `Baixar Launcher` points to `routerLink="/launcher"` whil
   - Router CTA hosts are removed from the tab order so each CTA has one keyboard stop on the internal control.
 - Route consistency verified:
   - All `Baixar Launcher` CTAs point to `/launcher`.
-  - Future/stub routes continue to use the same `UnderConstructionPageComponent` behavior.
+  - `/launcher`, `/interface`, `/about`, and `/news` are dedicated routes in the integrated site.
 
 ## Pendências
 
 - Replace placeholder copy with final product/community copy.
 - Replace `CelemMediaPlaceholder` blocks with real interface, launcher and news imagery.
-- Replace `/launcher`, `/interface` and `/about` stubs with dedicated pages when each phase starts.
 - Keep Notícias outside the site-shell nav until a dedicated nav decision is made.

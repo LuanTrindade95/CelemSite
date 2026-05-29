@@ -96,5 +96,5 @@ The Interface root stays transparent. Site atmosphere continues to come from the
 
 - Replace placeholder copy with final product copy.
 - Replace all `CelemMediaPlaceholder` blocks with real Interface, Launcher and feature imagery.
-- Replace `/launcher` stub with the real Launcher/download experience when that phase starts.
+- Replace the Launcher placeholder download URL with the real external download URL when available.
 - Implement lightbox/interactive gallery behavior in a future phase.
