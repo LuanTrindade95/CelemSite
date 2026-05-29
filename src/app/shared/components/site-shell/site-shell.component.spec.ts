@@ -2,10 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { SiteShellComponent } from './site-shell.component';
 import { SiteAuthService } from '../../services/site-auth.service';
+import { SiteLanguageService } from '../../services/site-language.service';
 
 describe('SiteShellComponent', () => {
   let fixture: ComponentFixture<SiteShellComponent>;
   let authService: SiteAuthService;
+  let languageService: SiteLanguageService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -14,6 +16,8 @@ describe('SiteShellComponent', () => {
     }).compileComponents();
 
     authService = TestBed.inject(SiteAuthService);
+    languageService = TestBed.inject(SiteLanguageService);
+    languageService.applySessionPreference('brazilian');
     fixture = TestBed.createComponent(SiteShellComponent);
     fixture.detectChanges();
   });
