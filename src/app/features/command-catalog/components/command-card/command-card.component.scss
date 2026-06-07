@@ -28,6 +28,11 @@
   border-color: rgba(67, 91, 80, 0.58);
 }
 
+.command-card--player:hover,
+.command-card--player:focus-within {
+  border-color: rgba(78, 155, 109, 0.54);
+}
+
 .command-card--admin {
   border-color: rgba(121, 93, 52, 0.62);
   background:
