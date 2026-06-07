@@ -85,7 +85,9 @@ Current catalog behavior:
 - the permission filter only appears for authenticated administrators
 - command audience variants are rendered as separate visible items when the API provides them
 - each catalog item may include `audience: "player" | "admin"`, `variantLabel`, and `isAdminVariant`; a valid `audience` is the primary visibility source, while `category` is only a legacy fallback
-- anonymous and player sessions operate only on the visible player audience list before search, filters, pagination, grid/list rendering, and card copy; authenticated admins can see player and admin variants
+- anonymous and player sessions operate only on the visible player audience list before search, filters, pagination, grid/list rendering, and card copy; they must never render or search admin-only `usage`, `examples`, descriptions, or variant labels
+- authenticated admins can see player variants, admin variants, and admin-only commands; hybrid commands may appear as two cards, visually distinguished by the audience badge and variant styling
+- the audience filter keeps the existing internal `permission` state name for compatibility, but its values are normalized audiences (`player` or `admin`) and labels reuse `playerCategory` / `adminCategory`
 - sort options are intentionally limited to `Project` and `Command`
 - the catalog supports both grid and list views
 - pagination is client-side, shows six commands per page, and exposes previous/next arrows alongside the page numbers
@@ -191,6 +193,8 @@ Current runtime behavior:
 - command translations are generated from plugin localization resources in `Celem2026` and compiled into the backend function bundle.
 - the Angular app requests the current site language on every catalog read and falls back to the public endpoint if the protected request is unavailable.
 - when the backend returns audience variants, `audience` wins over `isAdminVariant`, `variantLabel`, `category`, and permission text; these fallback fields exist only for legacy payload compatibility.
+- frontend visibility remains defensive even when the backend has already filtered the payload: non-admin sessions derive all project lists, audience filters, search, result counts, pagination, grid/list rendering, and copy actions from the player-only visible list.
+- admin-only text must live only in `admin` variants. A `player` variant must not carry admin target syntax, admin examples, or descriptions such as "for admins"; otherwise that text could become searchable in the player experience.
 
 ## Metadata Platform Direction
 

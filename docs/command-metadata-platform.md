@@ -855,8 +855,11 @@ Frontend recommendations:
 - Use fallback audience inference only for legacy payloads without a valid `audience`: `isAdminVariant`, then `variantLabel`, then `category`, then permission text if necessary.
 - Keep `category` as a legacy compatibility field, not the source of truth for variant visibility.
 - Keep admin-only usage, examples, parameters, and descriptions out of `player` audience variants; those details must live in a separate `admin` variant.
-- Run search, filters, pagination, grid/list rendering, and card metadata only against the session-visible command list.
-- Anonymous and non-admin player sessions must receive/render only player-visible variants. Authenticated admin sessions may render both player and admin variants, with player variants ordered before admin variants for the same `commandKey` or base `id`.
+- Run search, filters, pagination, result counts, grid/list rendering, card badges, and card copy only against the session-visible command list.
+- Anonymous and non-admin player sessions must receive/render only player-visible variants. The frontend must not render or search admin-only `usage`, examples, descriptions, parameter syntax, or variant labels for those sessions, even if a backend regression accidentally includes an admin variant in the raw payload.
+- Authenticated admin sessions may render player variants, admin variants, and admin-only commands. Hybrid commands may appear as two cards, with player ordered before admin when `commandKey` or the base `id` identifies equivalent variants.
+- Use `variantLabel` as the display label when it does not contradict a valid `audience`; otherwise use the localized audience labels (`playerCategory` / `adminCategory`).
+- Existing frontend filter state may keep a legacy `permission` property name, but the value should be the normalized audience (`player` or `admin`) rather than raw permission text.
 - Add API filters for plugin, category, permission, language, tag, and status.
 - Add command ID based routes for deep links.
 - Add autocomplete endpoint consumption.
@@ -938,6 +941,15 @@ The current site consumes:
 - `https://oaivdxyvlqyrrickkldl.supabase.co/functions/v1/command-catalog` for public-only fallback reads.
 
 The current backend catalog bundle is generated from plugin source under `Celem2026` rather than from Markdown docs.
+
+Current CelemSite behavior:
+
+- `CommandCatalogItem` accepts `audience?: "player" | "admin"`, `variantLabel?: string`, and `isAdminVariant?: boolean`.
+- `audience` is the authoritative field when valid; legacy fallback order is `isAdminVariant`, `variantLabel`, `category`, then permission text.
+- Anonymous and non-admin player sessions derive projects, audience filters, search, result counts, pagination, grid/list rendering, and card copy from player-visible variants only.
+- Authenticated admins derive the same UI surfaces from player plus admin variants, including admin-only commands.
+- Command cards display a single audience badge and do not duplicate that label in metadata.
+- The local fallback keeps `.bank balance` as a player variant and `.bank balance <player>` as a separate admin variant so admin text is not mixed into the player item.
 
 ## Sources Verified
 
