@@ -32,20 +32,14 @@ export class CommandCardComponent {
   }
 
   public displayPermission(): string {
-    if (this.command.variantLabel?.trim()) {
-      const normalizedVariant = normalizeCommandAudience(this.command.variantLabel);
-      if (normalizedVariant === 'admin') {
-        return this.text('adminCategory');
-      }
+    const audience = resolveCommandAudience(this.command);
+    const explicitAudience = normalizeCommandAudience(this.command.audience);
+    const variantAudience = normalizeCommandAudience(this.command.variantLabel);
 
-      if (normalizedVariant === 'player') {
-        return this.text('playerCategory');
-      }
-
+    if (!explicitAudience && !variantAudience && this.command.variantLabel?.trim()) {
       return this.command.variantLabel;
     }
 
-    const audience = resolveCommandAudience(this.command);
     if (audience === 'admin') {
       return this.text('adminCategory');
     }

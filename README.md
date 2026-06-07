@@ -83,6 +83,9 @@ Current catalog behavior:
 - the primary search field lives in the hero section and supports `Ctrl + K` to focus it instantly
 - project and sort controls stay inline on desktop with responsive two-column and three-column layouts, then move into a mobile filter drawer on smaller screens
 - the permission filter only appears for authenticated administrators
+- command audience variants are rendered as separate visible items when the API provides them
+- each catalog item may include `audience: "player" | "admin"`, `variantLabel`, and `isAdminVariant`; a valid `audience` is the primary visibility source, while `category` is only a legacy fallback
+- anonymous and player sessions operate only on the visible player audience list before search, filters, pagination, grid/list rendering, and card copy; authenticated admins can see player and admin variants
 - sort options are intentionally limited to `Project` and `Command`
 - the catalog supports both grid and list views
 - pagination is client-side, shows six commands per page, and exposes previous/next arrows alongside the page numbers
@@ -187,6 +190,7 @@ Current runtime behavior:
 - `site-command-catalog` returns the role-aware catalog for the authenticated site session.
 - command translations are generated from plugin localization resources in `Celem2026` and compiled into the backend function bundle.
 - the Angular app requests the current site language on every catalog read and falls back to the public endpoint if the protected request is unavailable.
+- when the backend returns audience variants, `audience` wins over `isAdminVariant`, `variantLabel`, `category`, and permission text; these fallback fields exist only for legacy payload compatibility.
 
 ## Metadata Platform Direction
 

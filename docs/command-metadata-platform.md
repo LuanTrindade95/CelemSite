@@ -103,6 +103,9 @@ The final metadata model must include:
 - `commands[].id`: stable command ID.
 - `commands[].status`: `active`, `deprecated`, `removed`, or `hidden`.
 - `commands[].category`: enum-backed category.
+- `commands[].audience`: primary audience variant, currently `player` or `admin`.
+- `commands[].variantLabel`: display label for the audience variant, such as `Player` or `Admin`.
+- `commands[].isAdminVariant`: boolean compatibility flag for admin-specific variants.
 - `commands[].command`: canonical visible command text.
 - `commands[].aliases`: alternate command inputs.
 - `commands[].tags`: normalized search and discovery tags.
@@ -131,6 +134,9 @@ Example `commands.json`:
       "id": "celem-bank.account.balance",
       "status": "active",
       "category": "player",
+      "audience": "player",
+      "variantLabel": "Player",
+      "isAdminVariant": false,
       "command": ".bank balance",
       "aliases": [".bank ba"],
       "tags": ["economy", "balance", "account"],
@@ -797,6 +803,11 @@ Normalized Supabase tables
 Frontend recommendations:
 
 - Keep the current local fallback during migration.
+- Treat `audience` as the primary visibility contract. If `audience` is a valid `player` or `admin` value, it wins over `isAdminVariant`, `variantLabel`, `category`, and permission text.
+- Use fallback audience inference only for legacy payloads without a valid `audience`: `isAdminVariant`, then `variantLabel`, then `category`, then permission text if necessary.
+- Keep `category` as a legacy compatibility field, not the source of truth for variant visibility.
+- Run search, filters, pagination, grid/list rendering, and card metadata only against the session-visible command list.
+- Anonymous and non-admin player sessions must receive/render only player-visible variants. Authenticated admin sessions may render both player and admin variants, with player variants ordered before admin variants for the same `commandKey` or base `id`.
 - Add API filters for plugin, category, permission, language, tag, and status.
 - Add command ID based routes for deep links.
 - Add autocomplete endpoint consumption.

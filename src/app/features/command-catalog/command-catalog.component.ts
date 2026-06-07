@@ -193,11 +193,14 @@ function searchableText(command: CommandCatalogItem): string {
 function compareCommands(left: CommandCatalogItem, right: CommandCatalogItem, sortMode: CommandCatalogFilters['sortMode']): number {
   switch (sortMode) {
     case 'command':
-      return left.command.localeCompare(right.command) || compareAudience(left, right);
+      return compareEquivalentVariantAudience(left, right)
+        || left.command.localeCompare(right.command)
+        || compareAudience(left, right);
     case 'project':
     default:
       return left.projectName.localeCompare(right.projectName)
         || left.sortOrder - right.sortOrder
+        || compareEquivalentVariantAudience(left, right)
         || left.command.localeCompare(right.command)
         || compareAudience(left, right);
   }
@@ -213,6 +216,14 @@ function compareAudience(left: CommandCatalogItem, right: CommandCatalogItem): n
 
 function audienceSortOrder(command: CommandCatalogItem): number {
   return resolveCommandAudience(command) === 'admin' ? 1 : 0;
+}
+
+function compareEquivalentVariantAudience(left: CommandCatalogItem, right: CommandCatalogItem): number {
+  return variantGroupKey(left) === variantGroupKey(right) ? compareAudience(left, right) : 0;
+}
+
+function variantGroupKey(command: CommandCatalogItem): string {
+  return (command.commandKey || command.id).trim().toLowerCase();
 }
 
 function buildCatalogSessionKey(session: SiteSessionPayload): string {

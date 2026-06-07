@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 import { CommandCatalogComponent } from './command-catalog.component';
 import { CommandCatalogApiService } from './services/command-catalog-api.service';
 import { CommandCatalogItem } from './models/command-catalog.models';
+import { LOCAL_COMMAND_CATALOG } from './services/local-command-catalog';
 import { SiteAuthService, SiteSessionPayload } from '../../shared/services/site-auth.service';
 import { SiteLanguageService } from '../../shared/services/site-language.service';
 import { SiteI18nService } from '../../shared/services/site-i18n.service';
@@ -133,6 +134,29 @@ describe('CommandCatalogComponent', () => {
     expect(text).toContain('.bank balance Luan');
     expect(text).toContain('Admin-only balance lookup.');
     expect(fixture.nativeElement.querySelectorAll('celem-command-card').length).toBe(2);
+
+    const cards = [...fixture.nativeElement.querySelectorAll('celem-command-card')] as HTMLElement[];
+    expect(cards[0].textContent).toContain('.bank balance');
+    expect(cards[0].textContent).not.toContain('.bank balance Luan');
+    expect(cards[1].textContent).toContain('.bank balance Luan');
+  });
+
+  it('keeps local fallback player commands free of admin-only searchable text', () => {
+    const fallbackText = LOCAL_COMMAND_CATALOG.flatMap((command) => [
+      command.command,
+      command.permission,
+      command.description,
+      command.usage,
+      ...command.aliases,
+      ...command.examples,
+    ]).join(' ').toLocaleLowerCase();
+
+    expect(fallbackText).not.toContain('[player...]');
+    expect(fallbackText).not.toContain('<player>');
+    expect(fallbackText).not.toContain('optional target requires admin');
+    expect(fallbackText).not.toContain('for admins');
+    expect(fallbackText).not.toContain('.bank balance luan');
+    expect(fallbackText).not.toContain('admin');
   });
 
   it('reloads the catalog when the auth session changes during logout', async () => {
@@ -254,25 +278,6 @@ function buildAudienceVariantCommands(): CommandCatalogItem[] {
       commandKey: 'bank.balance',
       projectSlug: 'celem-bank',
       projectName: 'CelemBank',
-      audience: 'player',
-      variantLabel: 'Player',
-      isAdminVariant: false,
-      category: 'Player',
-      command: '.bank balance',
-      aliases: ['.balance'],
-      permission: 'Player; optional target requires admin',
-      description: 'Shows the current balance.',
-      usage: '.bank balance',
-      examples: ['.bank balance'],
-      language: 'english',
-      sourcePath: 'CelemBank/docs/player/commands.md',
-      sortOrder: 1,
-    },
-    {
-      id: 'bank-balance',
-      commandKey: 'bank.balance',
-      projectSlug: 'celem-bank',
-      projectName: 'CelemBank',
       audience: 'admin',
       variantLabel: 'Admin',
       isAdminVariant: true,
@@ -285,6 +290,25 @@ function buildAudienceVariantCommands(): CommandCatalogItem[] {
       examples: ['.bank balance Luan'],
       language: 'english',
       sourcePath: 'CelemBank/docs/admin/commands.md',
+      sortOrder: 1,
+    },
+    {
+      id: 'bank-balance',
+      commandKey: 'bank.balance',
+      projectSlug: 'celem-bank',
+      projectName: 'CelemBank',
+      audience: 'player',
+      variantLabel: 'Player',
+      isAdminVariant: false,
+      category: 'Player',
+      command: '.bank balance',
+      aliases: ['.balance'],
+      permission: 'Player; optional target requires admin',
+      description: 'Shows the current balance.',
+      usage: '.bank balance',
+      examples: ['.bank balance'],
+      language: 'english',
+      sourcePath: 'CelemBank/docs/player/commands.md',
       sortOrder: 1,
     },
   ];

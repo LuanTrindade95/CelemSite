@@ -38,14 +38,23 @@ export interface CommandCatalogFilters {
 }
 
 export function resolveCommandAudience(command: CommandCatalogItem): CommandAudience {
-  return isAdminAudienceVariant(command) ? 'admin' : 'player';
+  const explicitAudience = normalizeCommandAudience(command.audience);
+  if (explicitAudience) {
+    return explicitAudience;
+  }
+
+  if (command.isAdminVariant === true) {
+    return 'admin';
+  }
+
+  return normalizeCommandAudience(command.variantLabel)
+    ?? normalizeCommandAudience(command.category)
+    ?? normalizeCommandAudience(command.permission)
+    ?? 'player';
 }
 
 export function isAdminAudienceVariant(command: CommandCatalogItem): boolean {
-  return command.isAdminVariant === true
-    || normalizeCommandAudience(command.audience) === 'admin'
-    || normalizeCommandAudience(command.variantLabel) === 'admin'
-    || normalizeCommandAudience(command.category) === 'admin';
+  return resolveCommandAudience(command) === 'admin';
 }
 
 export function normalizeCommandAudience(value: string | null | undefined): CommandAudience | null {
