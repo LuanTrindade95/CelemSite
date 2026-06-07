@@ -193,15 +193,15 @@ function searchableText(command: CommandCatalogItem): string {
 function compareCommands(left: CommandCatalogItem, right: CommandCatalogItem, sortMode: CommandCatalogFilters['sortMode']): number {
   switch (sortMode) {
     case 'command':
-      return compareEquivalentVariantAudience(left, right)
-        || left.command.localeCompare(right.command)
+      return left.command.localeCompare(right.command)
+        || compareEquivalentVariantAudience(left, right)
         || compareAudience(left, right);
     case 'project':
     default:
       return left.projectName.localeCompare(right.projectName)
         || left.sortOrder - right.sortOrder
-        || compareEquivalentVariantAudience(left, right)
         || left.command.localeCompare(right.command)
+        || compareEquivalentVariantAudience(left, right)
         || compareAudience(left, right);
   }
 }

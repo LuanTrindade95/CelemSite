@@ -93,6 +93,7 @@ describe('CommandCatalogComponent', () => {
     expect(text).not.toContain('.bank balance <player>');
     expect(text).not.toContain('Admin-only balance lookup.');
     expect(fixture.nativeElement.querySelectorAll('celem-command-card').length).toBe(1);
+    expect(resultSummary()).toBe('1 resultsFound');
 
     const searchInput = fixture.nativeElement.querySelector('.hero-search__field input') as HTMLInputElement;
     searchInput.value = '.bank balance <player>';
@@ -102,6 +103,7 @@ describe('CommandCatalogComponent', () => {
     expect(fixture.nativeElement.textContent).not.toContain('.bank balance <player>');
     expect(fixture.nativeElement.textContent).not.toContain('Admin-only balance lookup.');
     expect(fixture.nativeElement.querySelectorAll('celem-command-card').length).toBe(0);
+    expect(resultSummary()).toBe('0 resultsFound');
   });
 
   it('renders player and admin audience variants for admins', async () => {
@@ -142,6 +144,78 @@ describe('CommandCatalogComponent', () => {
     expect(cards[0].textContent).toContain('.bank balance');
     expect(cards[0].textContent).not.toContain('.bank balance Luan');
     expect(cards[1].textContent).toContain('.bank balance Luan');
+  });
+
+  it('searches admin variant-only usage only for admins', async () => {
+    loadCommands.and.returnValue(of(buildAudienceVariantCommands()));
+    session.set({
+      isAuthenticated: true,
+      user: {
+        id: 'user-1',
+        discordId: 'discord-1',
+        displayName: 'Admin',
+        avatarUrl: 'https://cdn.example/avatar.png',
+      },
+      memberships: [{
+        guildId: 'guild-1',
+        displayName: 'Admin',
+        avatarUrl: 'https://cdn.example/avatar.png',
+        isMember: true,
+        roleIds: ['admin-role'],
+      }],
+      isAdmin: true,
+      preferredLanguageCode: 'english',
+      languageOptions: [],
+    });
+    fixture.destroy();
+    fixture = TestBed.createComponent(CommandCatalogComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    search('.bank balance <player>');
+
+    expect(fixture.nativeElement.textContent).toContain('.bank balance <player>');
+    expect(fixture.nativeElement.textContent).toContain('Admin-only balance lookup.');
+    expect(fixture.nativeElement.querySelectorAll('celem-command-card').length).toBe(1);
+    expect(resultSummary()).toBe('1 resultsFound');
+  });
+
+  it('returns player and admin variants when admins search the shared command stem', async () => {
+    loadCommands.and.returnValue(of(buildAudienceVariantCommands()));
+    session.set({
+      isAuthenticated: true,
+      user: {
+        id: 'user-1',
+        discordId: 'discord-1',
+        displayName: 'Admin',
+        avatarUrl: 'https://cdn.example/avatar.png',
+      },
+      memberships: [{
+        guildId: 'guild-1',
+        displayName: 'Admin',
+        avatarUrl: 'https://cdn.example/avatar.png',
+        isMember: true,
+        roleIds: ['admin-role'],
+      }],
+      isAdmin: true,
+      preferredLanguageCode: 'english',
+      languageOptions: [],
+    });
+    fixture.destroy();
+    fixture = TestBed.createComponent(CommandCatalogComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    search('.bank balance');
+
+    const cards = [...fixture.nativeElement.querySelectorAll('celem-command-card')] as HTMLElement[];
+    expect(cards.length).toBe(2);
+    expect(cards[0].textContent).toContain('.bank balance');
+    expect(cards[0].textContent).not.toContain('.bank balance <player>');
+    expect(cards[1].textContent).toContain('.bank balance <player>');
+    expect(resultSummary()).toBe('2 resultsFound');
   });
 
   it('keeps local fallback player commands free of admin-only searchable text', () => {
@@ -274,6 +348,17 @@ describe('CommandCatalogComponent', () => {
 
     expect(document.activeElement).toBe(searchInput);
   });
+
+  function search(query: string): void {
+    const searchInput = fixture.nativeElement.querySelector('.hero-search__field input') as HTMLInputElement;
+    searchInput.value = query;
+    searchInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+  }
+
+  function resultSummary(): string {
+    return (fixture.nativeElement.querySelector('.results-bar__summary') as HTMLElement).textContent?.trim() ?? '';
+  }
 });
 
 function buildCommands(category: 'admin' | 'player', count: number): CommandCatalogItem[] {
