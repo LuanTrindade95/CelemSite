@@ -3,7 +3,7 @@ import { signal } from '@angular/core';
 import { of } from 'rxjs';
 import { CommandCatalogComponent } from './command-catalog.component';
 import { CommandCatalogApiService } from './services/command-catalog-api.service';
-import { CommandCatalogItem } from './models/command-catalog.models';
+import { CommandCatalogItem, isAdminAudienceVariant } from './models/command-catalog.models';
 import { LOCAL_COMMAND_CATALOG } from './services/local-command-catalog';
 import { SiteAuthService, SiteSessionPayload } from '../../shared/services/site-auth.service';
 import { SiteLanguageService } from '../../shared/services/site-language.service';
@@ -142,7 +142,7 @@ describe('CommandCatalogComponent', () => {
   });
 
   it('keeps local fallback player commands free of admin-only searchable text', () => {
-    const fallbackText = LOCAL_COMMAND_CATALOG.flatMap((command) => [
+    const fallbackText = LOCAL_COMMAND_CATALOG.filter((command) => !isAdminAudienceVariant(command)).flatMap((command) => [
       command.command,
       command.permission,
       command.description,
@@ -157,6 +157,24 @@ describe('CommandCatalogComponent', () => {
     expect(fallbackText).not.toContain('for admins');
     expect(fallbackText).not.toContain('.bank balance luan');
     expect(fallbackText).not.toContain('admin');
+  });
+
+  it('keeps local fallback examples split by audience variant', () => {
+    const balancePlayer = LOCAL_COMMAND_CATALOG.find((command) =>
+      command.commandKey === 'celem-bank.account.balance' && command.audience === 'player');
+    const balanceAdmin = LOCAL_COMMAND_CATALOG.find((command) =>
+      command.commandKey === 'celem-bank.account.balance' && command.audience === 'admin');
+    const adminOnly = LOCAL_COMMAND_CATALOG.find((command) =>
+      command.commandKey === 'celem-bank.admin.reload' && command.audience === 'admin');
+
+    expect(balancePlayer?.usage).toBe('.bank balance');
+    expect(balancePlayer?.examples).toEqual(['.bank balance']);
+    expect(balancePlayer?.isAdminVariant).toBeFalse();
+    expect(balanceAdmin?.usage).toBe('.bank balance <player>');
+    expect(balanceAdmin?.examples).toContain('.bank balance Luan');
+    expect(balanceAdmin?.isAdminVariant).toBeTrue();
+    expect(adminOnly?.command).toBe('.bank reload');
+    expect(adminOnly?.isAdminVariant).toBeTrue();
   });
 
   it('reloads the catalog when the auth session changes during logout', async () => {
