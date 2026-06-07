@@ -1,5 +1,6 @@
 import { Component, Input, inject, signal } from '@angular/core';
 import {
+  CommandAudience,
   CommandCatalogItem,
   ViewMode,
   normalizeCommandAudience,
@@ -31,24 +32,32 @@ export class CommandCardComponent {
     return this.language.getDisplayName(languageCode);
   }
 
-  public displayPermission(): string {
+  public displayAudienceLabel(): string {
     const audience = resolveCommandAudience(this.command);
-    const explicitAudience = normalizeCommandAudience(this.command.audience);
-    const variantAudience = normalizeCommandAudience(this.command.variantLabel);
+    const variantLabel = this.command.variantLabel?.trim();
+    const variantAudience = normalizeCommandAudience(variantLabel);
 
-    if (!explicitAudience && !variantAudience && this.command.variantLabel?.trim()) {
-      return this.command.variantLabel;
+    if (variantLabel && (!variantAudience || variantAudience === audience)) {
+      return variantLabel;
     }
 
+    return this.fallbackAudienceLabel(audience);
+  }
+
+  public audience(): CommandAudience {
+    return resolveCommandAudience(this.command);
+  }
+
+  public isAdminVariant(): boolean {
+    return this.audience() === 'admin';
+  }
+
+  private fallbackAudienceLabel(audience: CommandAudience): string {
     if (audience === 'admin') {
       return this.text('adminCategory');
     }
 
     return this.text('playerCategory');
-  }
-
-  public isAdminVariant(): boolean {
-    return resolveCommandAudience(this.command) === 'admin';
   }
 
   public metadataCountLabel(): string | null {

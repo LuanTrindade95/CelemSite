@@ -24,6 +24,22 @@
   transform: translateY(-1px);
 }
 
+.command-card--player {
+  border-color: rgba(67, 91, 80, 0.58);
+}
+
+.command-card--admin {
+  border-color: rgba(121, 93, 52, 0.62);
+  background:
+    linear-gradient(180deg, #0b1020f2, #070a12eb),
+    radial-gradient(circle at top right, rgba(200, 164, 93, 0.1), transparent 40%);
+}
+
+.command-card--admin:hover,
+.command-card--admin:focus-within {
+  border-color: rgba(200, 164, 93, 0.46);
+}
+
 .command-card--list {
   height: auto;
   min-height: 0;
@@ -71,18 +87,20 @@ header code {
   font-size: 0.95rem;
 }
 
-.permission {
+.audience-badge {
   max-width: 42%;
   padding: 5px 9px;
   border: 1px solid rgba(78, 155, 109, 0.42);
   border-radius: 999px;
+  background: rgba(78, 155, 109, 0.08);
   color: #b7f0cf;
   font-size: 0.75rem;
   text-align: right;
 }
 
-.permission.admin {
+.audience-badge--admin {
   border-color: rgba(211, 138, 50, 0.62);
+  background: rgba(200, 164, 93, 0.09);
   color: #f4cf9d;
 }
 
@@ -169,7 +187,7 @@ footer {
     display: grid;
   }
 
-  .permission {
+  .audience-badge {
     max-width: 100%;
     width: fit-content;
     text-align: left;

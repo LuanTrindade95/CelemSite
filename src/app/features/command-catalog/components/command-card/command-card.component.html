@@ -1,10 +1,14 @@
-<article class="command-card" [class.command-card--list]="viewMode === 'list'">
+<article
+  class="command-card"
+  [class.command-card--list]="viewMode === 'list'"
+  [class.command-card--admin]="isAdminVariant()"
+  [class.command-card--player]="!isAdminVariant()">
   <header>
     <div>
       <p class="project">{{ command.projectName }}</p>
       <code [celemHighlightSearch]="command.command" [searchTerm]="searchTerm"></code>
     </div>
-    <span class="permission" [class.admin]="isAdminVariant()">{{ displayPermission() }}</span>
+    <span class="audience-badge" [class.audience-badge--admin]="isAdminVariant()">{{ displayAudienceLabel() }}</span>
   </header>
 
   <p class="description" [attr.title]="command.description">{{ command.description }}</p>
@@ -19,7 +23,6 @@
   <footer>
     <div class="meta">
       <span class="meta-pill">{{ displayLanguage(command.language) }}</span>
-      <span class="meta-pill">{{ displayPermission() }}</span>
       @if (metadataCountLabel(); as countLabel) {
         <span class="meta-count">{{ countLabel }}</span>
       }

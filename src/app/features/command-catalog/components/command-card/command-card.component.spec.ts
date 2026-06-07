@@ -32,9 +32,10 @@ describe('CommandCardComponent', () => {
     });
     fixture.detectChanges();
 
-    const permissionPill = fixture.nativeElement.querySelector('.permission') as HTMLElement;
-    expect(permissionPill.textContent?.trim()).toMatch(/Player|Jogador/);
-    expect(permissionPill.classList.contains('admin')).toBeFalse();
+    const audienceBadge = fixture.nativeElement.querySelector('.audience-badge') as HTMLElement;
+    expect(audienceBadge.textContent?.trim()).toMatch(/Player|Jogador/);
+    expect(audienceBadge.classList.contains('audience-badge--admin')).toBeFalse();
+    expect(fixture.nativeElement.textContent).not.toContain('optional target requires admin');
   });
 
   it('lets audience player win over isAdminVariant true', () => {
@@ -44,9 +45,9 @@ describe('CommandCardComponent', () => {
     });
     fixture.detectChanges();
 
-    const permissionPill = fixture.nativeElement.querySelector('.permission') as HTMLElement;
-    expect(permissionPill.classList.contains('admin')).toBeFalse();
-    expect(permissionPill.textContent?.trim()).not.toBe('Admin');
+    const audienceBadge = fixture.nativeElement.querySelector('.audience-badge') as HTMLElement;
+    expect(audienceBadge.classList.contains('audience-badge--admin')).toBeFalse();
+    expect(audienceBadge.textContent?.trim()).not.toBe('Admin');
   });
 
   it('lets audience player win over variantLabel admin', () => {
@@ -56,9 +57,9 @@ describe('CommandCardComponent', () => {
     });
     fixture.detectChanges();
 
-    const permissionPill = fixture.nativeElement.querySelector('.permission') as HTMLElement;
-    expect(permissionPill.classList.contains('admin')).toBeFalse();
-    expect(permissionPill.textContent?.trim()).not.toBe('Admin');
+    const audienceBadge = fixture.nativeElement.querySelector('.audience-badge') as HTMLElement;
+    expect(audienceBadge.classList.contains('audience-badge--admin')).toBeFalse();
+    expect(audienceBadge.textContent?.trim()).not.toBe('Admin');
   });
 
   it('lets audience player win over category admin', () => {
@@ -68,9 +69,9 @@ describe('CommandCardComponent', () => {
     });
     fixture.detectChanges();
 
-    const permissionPill = fixture.nativeElement.querySelector('.permission') as HTMLElement;
-    expect(permissionPill.classList.contains('admin')).toBeFalse();
-    expect(permissionPill.textContent?.trim()).not.toBe('Admin');
+    const audienceBadge = fixture.nativeElement.querySelector('.audience-badge') as HTMLElement;
+    expect(audienceBadge.classList.contains('audience-badge--admin')).toBeFalse();
+    expect(audienceBadge.textContent?.trim()).not.toBe('Admin');
   });
 
   it('renders an admin class and badge for admin variants', () => {
@@ -82,9 +83,11 @@ describe('CommandCardComponent', () => {
     });
     fixture.detectChanges();
 
-    const permissionPill = fixture.nativeElement.querySelector('.permission') as HTMLElement;
-    expect(permissionPill.classList.contains('admin')).toBeTrue();
-    expect(permissionPill.textContent?.trim()).toBe('Admin');
+    const card = fixture.nativeElement.querySelector('.command-card') as HTMLElement;
+    const audienceBadge = fixture.nativeElement.querySelector('.audience-badge') as HTMLElement;
+    expect(card.classList.contains('command-card--admin')).toBeTrue();
+    expect(audienceBadge.classList.contains('audience-badge--admin')).toBeTrue();
+    expect(audienceBadge.textContent?.trim()).toBe('Admin');
   });
 
   it('keeps legacy payloads without audience compatible', () => {
@@ -94,8 +97,43 @@ describe('CommandCardComponent', () => {
     });
     fixture.detectChanges();
 
-    const permissionPill = fixture.nativeElement.querySelector('.permission') as HTMLElement;
-    expect(permissionPill.classList.contains('admin')).toBeTrue();
+    const audienceBadge = fixture.nativeElement.querySelector('.audience-badge') as HTMLElement;
+    expect(audienceBadge.classList.contains('audience-badge--admin')).toBeTrue();
+  });
+
+  it('applies the admin visual class only to admin variants', () => {
+    let card = fixture.nativeElement.querySelector('.command-card') as HTMLElement;
+    expect(card.classList.contains('command-card--admin')).toBeFalse();
+    expect(card.classList.contains('command-card--player')).toBeTrue();
+
+    setCommand({
+      audience: 'admin',
+      variantLabel: 'Admin',
+      category: 'admin',
+    });
+    fixture.detectChanges();
+
+    card = fixture.nativeElement.querySelector('.command-card') as HTMLElement;
+    expect(card.classList.contains('command-card--admin')).toBeTrue();
+    expect(card.classList.contains('command-card--player')).toBeFalse();
+  });
+
+  it('copies the usage for the current variant', async () => {
+    const writeText = jasmine.createSpy('writeText').and.resolveTo();
+    Object.defineProperty(globalThis.navigator, 'clipboard', {
+      configurable: true,
+      value: { writeText },
+    });
+    setCommand({
+      audience: 'admin',
+      command: '.bank balance',
+      usage: '.bank balance <player>',
+    });
+    fixture.detectChanges();
+
+    await fixture.componentInstance.copyPrimaryUsage();
+
+    expect(writeText).toHaveBeenCalledOnceWith('.bank balance <player>');
   });
 
   function setCommand(partial: Partial<CommandCatalogItem> = {}): void {
