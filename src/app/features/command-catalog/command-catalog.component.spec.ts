@@ -90,14 +90,16 @@ describe('CommandCatalogComponent', () => {
     expect(text).toContain('.bank balance');
     expect(text).toContain('Shows the current balance.');
     expect(text).not.toContain('.bank balance Luan');
+    expect(text).not.toContain('.bank balance <player>');
     expect(text).not.toContain('Admin-only balance lookup.');
     expect(fixture.nativeElement.querySelectorAll('celem-command-card').length).toBe(1);
 
     const searchInput = fixture.nativeElement.querySelector('.hero-search__field input') as HTMLInputElement;
-    searchInput.value = 'Admin-only balance lookup';
+    searchInput.value = '.bank balance <player>';
     searchInput.dispatchEvent(new Event('input'));
     fixture.detectChanges();
 
+    expect(fixture.nativeElement.textContent).not.toContain('.bank balance <player>');
     expect(fixture.nativeElement.textContent).not.toContain('Admin-only balance lookup.');
     expect(fixture.nativeElement.querySelectorAll('celem-command-card').length).toBe(0);
   });
@@ -132,6 +134,7 @@ describe('CommandCatalogComponent', () => {
     const text = fixture.nativeElement.textContent;
     expect(text).toContain('.bank balance');
     expect(text).toContain('.bank balance Luan');
+    expect(text).toContain('.bank balance <player>');
     expect(text).toContain('Admin-only balance lookup.');
     expect(fixture.nativeElement.querySelectorAll('celem-command-card').length).toBe(2);
 
@@ -178,6 +181,7 @@ describe('CommandCatalogComponent', () => {
   });
 
   it('reloads the catalog when the auth session changes during logout', async () => {
+    loadCommands.and.returnValue(of(buildAudienceVariantCommands()));
     session.set({
       isAuthenticated: true,
       user: {
@@ -201,7 +205,8 @@ describe('CommandCatalogComponent', () => {
     await fixture.whenStable();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.textContent).toContain('.admin command 1');
+    expect(fixture.nativeElement.textContent).toContain('.bank balance <player>');
+    expect(fixture.nativeElement.textContent).toContain('Admin-only balance lookup.');
 
     session.set({
       isAuthenticated: false,
@@ -215,9 +220,9 @@ describe('CommandCatalogComponent', () => {
     await fixture.whenStable();
     fixture.detectChanges();
 
-    expect(loadCommands).toHaveBeenCalledTimes(3);
-    expect(fixture.nativeElement.textContent).toContain('.player command 1');
-    expect(fixture.nativeElement.textContent).not.toContain('.admin command 1');
+    expect(fixture.nativeElement.textContent).toContain('.bank balance');
+    expect(fixture.nativeElement.textContent).not.toContain('.bank balance <player>');
+    expect(fixture.nativeElement.textContent).not.toContain('Admin-only balance lookup.');
   });
 
   it('paginates the catalog with six cards per page', async () => {
