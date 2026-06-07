@@ -144,41 +144,24 @@ Example `commands.json`:
         "visibility": "public",
         "admin_only": false,
         "required_permissions": ["basic"],
-        "conditional": [
-          {
-            "when": "target_player_argument_present",
-            "requires_admin": true
-          }
-        ]
+        "conditional": []
       },
-      "parameters": [
-        {
-          "name": "player",
-          "type": "PlayerData",
-          "required": false,
-          "remainder": true,
-          "description": "Optional target player. Requires admin."
-        }
-      ],
-      "usage": ".bank balance [player...]",
+      "parameters": [],
+      "usage": ".bank balance",
       "examples": [
         {
           "input": ".bank balance",
           "description": "Show your own balance."
-        },
-        {
-          "input": ".bank balance Luan",
-          "description": "Admin-only target lookup."
         }
       ],
       "translations": {
         "en": {
-          "description": "Shows the current balance for the sender or, for admins, another player.",
-          "usage": ".bank balance [player...]"
+          "description": "Shows the current balance for the sender.",
+          "usage": ".bank balance"
         },
         "pt-BR": {
-          "description": "Mostra o saldo atual do jogador ou, para administradores, de outro jogador.",
-          "usage": ".banco saldo [player...]"
+          "description": "Mostra o saldo atual do jogador.",
+          "usage": ".banco saldo"
         }
       },
       "relationships": [
@@ -196,9 +179,71 @@ Example `commands.json`:
         "docs": "docs/user/commands.md"
       },
       "ai": {
-        "summary": "Use this command to inspect bank currency balances.",
+        "summary": "Use this command to inspect your own bank currency balance.",
         "intent_phrases": ["check balance", "view money", "bank account"],
         "risk_level": "low"
+      }
+    },
+    {
+      "id": "celem-bank.account.balance.admin",
+      "status": "active",
+      "category": "admin",
+      "audience": "admin",
+      "variantLabel": "Admin",
+      "isAdminVariant": true,
+      "command": ".bank balance <player>",
+      "aliases": [".bank ba"],
+      "tags": ["economy", "balance", "account", "admin"],
+      "permissions": {
+        "visibility": "admin",
+        "admin_only": true,
+        "required_permissions": ["admin"],
+        "conditional": []
+      },
+      "parameters": [
+        {
+          "name": "player",
+          "type": "PlayerData",
+          "required": true,
+          "remainder": true,
+          "description": "Target player for an administrator balance lookup."
+        }
+      ],
+      "usage": ".bank balance <player>",
+      "examples": [
+        {
+          "input": ".bank balance Luan",
+          "description": "Show another player's balance as an administrator."
+        }
+      ],
+      "translations": {
+        "en": {
+          "description": "Shows another player's current balance for administrators.",
+          "usage": ".bank balance <player>"
+        },
+        "pt-BR": {
+          "description": "Mostra o saldo atual de outro jogador para administradores.",
+          "usage": ".banco saldo <jogador>"
+        }
+      },
+      "relationships": [
+        {
+          "type": "related",
+          "command_id": "celem-bank.account.deposit"
+        },
+        {
+          "type": "requires_plugin",
+          "plugin_id": "celem-core"
+        }
+      ],
+      "source": {
+        "path": "Commanding/BankCommands.cs",
+        "docs": "docs/user/commands.md"
+      },
+      "ai": {
+        "summary": "Use this admin variant to inspect another player's bank currency balance.",
+        "intent_phrases": ["check balance", "view money", "bank account"],
+        "risk_level": "moderate"
       }
     }
   ]
@@ -679,8 +724,11 @@ Example response:
         "command": ".bank balance",
         "aliases": [".bank ba"],
         "category": "player",
+        "audience": "player",
+        "variantLabel": "Player",
+        "isAdminVariant": false,
         "description": "Shows the current balance.",
-        "usage": ".bank balance [player...]",
+        "usage": ".bank balance",
         "tags": ["economy", "balance"],
         "permissions": {
           "visibility": "public",
@@ -806,6 +854,7 @@ Frontend recommendations:
 - Treat `audience` as the primary visibility contract. If `audience` is a valid `player` or `admin` value, it wins over `isAdminVariant`, `variantLabel`, `category`, and permission text.
 - Use fallback audience inference only for legacy payloads without a valid `audience`: `isAdminVariant`, then `variantLabel`, then `category`, then permission text if necessary.
 - Keep `category` as a legacy compatibility field, not the source of truth for variant visibility.
+- Keep admin-only usage, examples, parameters, and descriptions out of `player` audience variants; those details must live in a separate `admin` variant.
 - Run search, filters, pagination, grid/list rendering, and card metadata only against the session-visible command list.
 - Anonymous and non-admin player sessions must receive/render only player-visible variants. Authenticated admin sessions may render both player and admin variants, with player variants ordered before admin variants for the same `commandKey` or base `id`.
 - Add API filters for plugin, category, permission, language, tag, and status.
