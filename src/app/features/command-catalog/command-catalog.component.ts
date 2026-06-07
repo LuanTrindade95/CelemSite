@@ -5,7 +5,14 @@ import { distinctUntilChanged, switchMap } from 'rxjs';
 import { CommandCardComponent } from './components/command-card/command-card.component';
 import { CommandToolbarComponent } from './components/command-toolbar/command-toolbar.component';
 import { CommandCatalogApiService } from './services/command-catalog-api.service';
-import { CommandCatalogFilters, CommandCatalogItem, ViewMode } from './models/command-catalog.models';
+import {
+  CommandCatalogFilters,
+  CommandCatalogItem,
+  ViewMode,
+  isAdminAudienceVariant,
+  normalizeCommandAudience,
+  resolveCommandAudience,
+} from './models/command-catalog.models';
 import { SiteAuthService, SiteSessionPayload } from '../../shared/services/site-auth.service';
 import { SiteI18nService } from '../../shared/services/site-i18n.service';
 import { SiteLanguageService } from '../../shared/services/site-language.service';
@@ -32,6 +39,10 @@ export class CommandCatalogComponent {
   @ViewChild('searchInput') private searchInput?: ElementRef<HTMLInputElement>;
 
   protected readonly text = (key: Parameters<SiteI18nService['text']>[0]) => this.i18n.text(key);
+  protected readonly canFilterByPermission = computed(() => {
+    const session = this.auth.session();
+    return session.isAuthenticated && session.isAdmin;
+  });
   protected readonly commands = toSignal(
     toObservable(computed(() => ({
       languageCode: this.language.currentLanguage(),
@@ -45,17 +56,17 @@ export class CommandCatalogComponent {
     ),
     { initialValue: [] },
   );
+  protected readonly visibleCommands = computed(() => {
+    const canSeeAdminVariants = this.canFilterByPermission();
+    return this.commands().filter((command) => canSeeAdminVariants || !isAdminAudienceVariant(command));
+  });
   protected readonly filters = signal<CommandCatalogFilters>(INITIAL_FILTERS);
   protected readonly viewMode = signal<ViewMode>('grid');
   protected readonly currentPage = signal(1);
   protected readonly pageSize = 6;
-  protected readonly canFilterByPermission = computed(() => {
-    const session = this.auth.session();
-    return session.isAuthenticated && session.isAdmin;
-  });
-  protected readonly projects = computed(() => unique(this.commands().map((command) => command.projectName)));
-  protected readonly permissions = computed(() => unique(this.commands().map((command) => command.category)));
-  protected readonly filteredCommands = computed(() => filterAndSort(this.commands(), this.filters()));
+  protected readonly projects = computed(() => unique(this.visibleCommands().map((command) => command.projectName)));
+  protected readonly permissions = computed(() => unique(this.visibleCommands().map((command) => resolveCommandAudience(command))));
+  protected readonly filteredCommands = computed(() => filterAndSort(this.visibleCommands(), this.filters()));
   protected readonly pageCount = computed(() => Math.max(1, Math.ceil(this.filteredCommands().length / this.pageSize)));
   protected readonly pageNumbers = computed(() =>
     Array.from({ length: this.pageCount() }, (_, index) => index + 1),
@@ -66,7 +77,9 @@ export class CommandCatalogComponent {
     return this.filteredCommands().slice(start, start + this.pageSize);
   });
   protected readonly displayCategory = (category: string) =>
-    normalizeCategory(category) === 'admin' ? this.text('adminCategory') : this.text('playerCategory');
+    normalizeCommandAudience(category) === 'admin' ? this.text('adminCategory') : this.text('playerCategory');
+  protected readonly commandTrackKey = (command: CommandCatalogItem) =>
+    `${command.id}:${resolveCommandAudience(command)}:${command.command}:${command.usage}`;
 
   public constructor() {
     effect(() => {
@@ -154,15 +167,18 @@ function filterAndSort(commands: CommandCatalogItem[], filters: CommandCatalogFi
 
   return commands
     .filter((command) => !filters.project || command.projectName === filters.project)
-    .filter((command) => !filters.permission || normalizeCategory(command.category) === normalizeCategory(filters.permission))
+    .filter((command) => !filters.permission || resolveCommandAudience(command) === normalizeCommandAudience(filters.permission))
     .filter((command) => !query || searchableText(command).includes(query))
     .sort((left, right) => compareCommands(left, right, filters.sortMode));
 }
 
 function searchableText(command: CommandCatalogItem): string {
+  const audience = resolveCommandAudience(command);
   return [
     command.projectName,
-    normalizeCategory(command.category),
+    audience,
+    command.variantLabel ?? '',
+    command.category,
     command.command,
     command.permission,
     command.description,
@@ -177,10 +193,13 @@ function searchableText(command: CommandCatalogItem): string {
 function compareCommands(left: CommandCatalogItem, right: CommandCatalogItem, sortMode: CommandCatalogFilters['sortMode']): number {
   switch (sortMode) {
     case 'command':
-      return left.command.localeCompare(right.command);
+      return left.command.localeCompare(right.command) || compareAudience(left, right);
     case 'project':
     default:
-      return left.projectName.localeCompare(right.projectName) || left.sortOrder - right.sortOrder || left.command.localeCompare(right.command);
+      return left.projectName.localeCompare(right.projectName)
+        || left.sortOrder - right.sortOrder
+        || left.command.localeCompare(right.command)
+        || compareAudience(left, right);
   }
 }
 
@@ -188,8 +207,12 @@ function unique(values: string[]): string[] {
   return [...new Set(values.filter(Boolean))].sort((left, right) => left.localeCompare(right));
 }
 
-function normalizeCategory(value: string): string {
-  return value.trim().toLowerCase();
+function compareAudience(left: CommandCatalogItem, right: CommandCatalogItem): number {
+  return audienceSortOrder(left) - audienceSortOrder(right);
+}
+
+function audienceSortOrder(command: CommandCatalogItem): number {
+  return resolveCommandAudience(command) === 'admin' ? 1 : 0;
 }
 
 function buildCatalogSessionKey(session: SiteSessionPayload): string {

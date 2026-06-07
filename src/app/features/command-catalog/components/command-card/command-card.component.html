@@ -4,7 +4,7 @@
       <p class="project">{{ command.projectName }}</p>
       <code [celemHighlightSearch]="command.command" [searchTerm]="searchTerm"></code>
     </div>
-    <span class="permission" [class.admin]="command.category.toLowerCase().includes('admin')">{{ displayPermission() }}</span>
+    <span class="permission" [class.admin]="isAdminVariant()">{{ displayPermission() }}</span>
   </header>
 
   <p class="description" [attr.title]="command.description">{{ command.description }}</p>

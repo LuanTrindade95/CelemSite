@@ -1,5 +1,10 @@
 import { Component, Input, inject, signal } from '@angular/core';
-import { CommandCatalogItem, ViewMode } from '../../models/command-catalog.models';
+import {
+  CommandCatalogItem,
+  ViewMode,
+  normalizeCommandAudience,
+  resolveCommandAudience,
+} from '../../models/command-catalog.models';
 import { HighlightSearchDirective } from '../../directives/highlight-search.directive';
 import { SiteI18nService } from '../../../../shared/services/site-i18n.service';
 import { SiteLanguageService } from '../../../../shared/services/site-language.service';
@@ -27,16 +32,29 @@ export class CommandCardComponent {
   }
 
   public displayPermission(): string {
-    const normalizedPermission = this.command.permission.trim().toLowerCase();
-    if (normalizedPermission.includes('admin')) {
+    if (this.command.variantLabel?.trim()) {
+      const normalizedVariant = normalizeCommandAudience(this.command.variantLabel);
+      if (normalizedVariant === 'admin') {
+        return this.text('adminCategory');
+      }
+
+      if (normalizedVariant === 'player') {
+        return this.text('playerCategory');
+      }
+
+      return this.command.variantLabel;
+    }
+
+    const audience = resolveCommandAudience(this.command);
+    if (audience === 'admin') {
       return this.text('adminCategory');
     }
 
-    if (normalizedPermission.includes('player')) {
-      return this.text('playerCategory');
-    }
+    return this.text('playerCategory');
+  }
 
-    return this.command.permission;
+  public isAdminVariant(): boolean {
+    return resolveCommandAudience(this.command) === 'admin';
   }
 
   public metadataCountLabel(): string | null {

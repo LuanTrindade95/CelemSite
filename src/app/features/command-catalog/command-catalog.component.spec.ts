@@ -33,6 +33,9 @@ describe('CommandCatalogComponent', () => {
       languageOptions: [],
     });
     currentLanguage.set('english');
+    loadCommands.and.callFake(() => of(session().isAuthenticated
+      ? buildCommands('admin', 7)
+      : buildCommands('player', 7)));
     loadCommands.calls.reset();
 
     await TestBed.configureTestingModule({
@@ -72,6 +75,64 @@ describe('CommandCatalogComponent', () => {
 
   it('renders loaded commands', () => {
     expect(fixture.nativeElement.textContent).toContain('.player command 1');
+  });
+
+  it('hides admin audience variants from anonymous users before search and pagination', async () => {
+    loadCommands.and.returnValue(of(buildAudienceVariantCommands()));
+    fixture.destroy();
+    fixture = TestBed.createComponent(CommandCatalogComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('.bank balance');
+    expect(text).toContain('Shows the current balance.');
+    expect(text).not.toContain('.bank balance Luan');
+    expect(text).not.toContain('Admin-only balance lookup.');
+    expect(fixture.nativeElement.querySelectorAll('celem-command-card').length).toBe(1);
+
+    const searchInput = fixture.nativeElement.querySelector('.hero-search__field input') as HTMLInputElement;
+    searchInput.value = 'Admin-only balance lookup';
+    searchInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).not.toContain('Admin-only balance lookup.');
+    expect(fixture.nativeElement.querySelectorAll('celem-command-card').length).toBe(0);
+  });
+
+  it('renders player and admin audience variants for admins', async () => {
+    loadCommands.and.returnValue(of(buildAudienceVariantCommands()));
+    session.set({
+      isAuthenticated: true,
+      user: {
+        id: 'user-1',
+        discordId: 'discord-1',
+        displayName: 'Admin',
+        avatarUrl: 'https://cdn.example/avatar.png',
+      },
+      memberships: [{
+        guildId: 'guild-1',
+        displayName: 'Admin',
+        avatarUrl: 'https://cdn.example/avatar.png',
+        isMember: true,
+        roleIds: ['admin-role'],
+      }],
+      isAdmin: true,
+      preferredLanguageCode: 'english',
+      languageOptions: [],
+    });
+    fixture.destroy();
+    fixture = TestBed.createComponent(CommandCatalogComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('.bank balance');
+    expect(text).toContain('.bank balance Luan');
+    expect(text).toContain('Admin-only balance lookup.');
+    expect(fixture.nativeElement.querySelectorAll('celem-command-card').length).toBe(2);
   });
 
   it('reloads the catalog when the auth session changes during logout', async () => {
@@ -184,4 +245,47 @@ function buildCommands(category: 'admin' | 'player', count: number): CommandCata
     sourcePath: `CelemBank/docs/${category}/commands-${index + 1}.md`,
     sortOrder: index + 1,
   }));
+}
+
+function buildAudienceVariantCommands(): CommandCatalogItem[] {
+  return [
+    {
+      id: 'bank-balance',
+      commandKey: 'bank.balance',
+      projectSlug: 'celem-bank',
+      projectName: 'CelemBank',
+      audience: 'player',
+      variantLabel: 'Player',
+      isAdminVariant: false,
+      category: 'Player',
+      command: '.bank balance',
+      aliases: ['.balance'],
+      permission: 'Player; optional target requires admin',
+      description: 'Shows the current balance.',
+      usage: '.bank balance',
+      examples: ['.bank balance'],
+      language: 'english',
+      sourcePath: 'CelemBank/docs/player/commands.md',
+      sortOrder: 1,
+    },
+    {
+      id: 'bank-balance',
+      commandKey: 'bank.balance',
+      projectSlug: 'celem-bank',
+      projectName: 'CelemBank',
+      audience: 'admin',
+      variantLabel: 'Admin',
+      isAdminVariant: true,
+      category: 'Admin',
+      command: '.bank balance Luan',
+      aliases: [],
+      permission: 'Admin',
+      description: 'Admin-only balance lookup.',
+      usage: '.bank balance <player>',
+      examples: ['.bank balance Luan'],
+      language: 'english',
+      sourcePath: 'CelemBank/docs/admin/commands.md',
+      sortOrder: 1,
+    },
+  ];
 }

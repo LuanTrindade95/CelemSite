@@ -52,7 +52,7 @@
 
   @if (filteredCommands().length > 0) {
     <section class="grid" [class.grid--list]="viewMode() === 'list'" aria-live="polite">
-      @for (command of paginatedCommands(); track command.id) {
+      @for (command of paginatedCommands(); track commandTrackKey(command)) {
         <celem-command-card [command]="command" [searchTerm]="filters().query" [viewMode]="viewMode()" />
       }
     </section>
