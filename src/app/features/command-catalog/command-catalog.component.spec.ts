@@ -8,6 +8,7 @@ import { LOCAL_COMMAND_CATALOG } from './services/local-command-catalog';
 import { SiteAuthService, SiteSessionPayload } from '../../shared/services/site-auth.service';
 import { SiteLanguageService } from '../../shared/services/site-language.service';
 import { SiteI18nService } from '../../shared/services/site-i18n.service';
+import { SITE_LANGUAGE_OPTIONS, SiteLanguageCode } from '../../shared/i18n/site-language';
 
 describe('CommandCatalogComponent', () => {
   let fixture: ComponentFixture<CommandCatalogComponent>;
@@ -19,7 +20,7 @@ describe('CommandCatalogComponent', () => {
     preferredLanguageCode: 'english' as const,
     languageOptions: [],
   });
-  const currentLanguage = signal<'english'>('english');
+  const currentLanguage = signal<SiteLanguageCode>('english');
   const loadCommands = jasmine.createSpy('loadCommands').and.callFake(() => of(session().isAuthenticated
     ? buildCommands('admin', 7)
     : buildCommands('player', 7)));
@@ -216,6 +217,75 @@ describe('CommandCatalogComponent', () => {
     expect(cards[0].textContent).not.toContain('.bank balance <player>');
     expect(cards[1].textContent).toContain('.bank balance <player>');
     expect(resultSummary()).toBe('2 resultsFound');
+  });
+
+  it('reloads the catalog for every supported site language', async () => {
+    currentLanguage.set('ukrainian');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    loadCommands.calls.reset();
+
+    for (const option of SITE_LANGUAGE_OPTIONS) {
+      currentLanguage.set(option.code);
+      fixture.detectChanges();
+      await fixture.whenStable();
+    }
+
+    expect(loadCommands.calls.allArgs().map(([languageCode]) => languageCode))
+      .toEqual(SITE_LANGUAGE_OPTIONS.map((option) => option.code));
+  });
+
+  it('searches localized translated text from the selected language payload', async () => {
+    loadCommands.and.returnValue(of(buildTranslatedCatalogCommands()));
+    currentLanguage.set('brazilian');
+    fixture.destroy();
+    fixture = TestBed.createComponent(CommandCatalogComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    search('saldo atual');
+
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('.bank balance');
+    expect(text).toContain('Mostra o saldo atual do jogador.');
+    expect(fixture.nativeElement.querySelectorAll('celem-command-card').length).toBe(1);
+    expect(resultSummary()).toBe('1 resultsFound');
+  });
+
+  it('searches English fallback text when the requested language has no translation', async () => {
+    loadCommands.and.returnValue(of(buildEnglishFallbackCommands()));
+    currentLanguage.set('german');
+    fixture.destroy();
+    fixture = TestBed.createComponent(CommandCatalogComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    search('current balance');
+
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('.bank balance');
+    expect(text).toContain('Shows the current balance for the sender.');
+    expect(fixture.nativeElement.querySelectorAll('celem-command-card').length).toBe(1);
+    expect(resultSummary()).toBe('1 resultsFound');
+  });
+
+  it('keeps translated admin text out of anonymous search results', async () => {
+    loadCommands.and.returnValue(of(buildTranslatedAudienceVariantCommands()));
+    currentLanguage.set('german');
+    fixture.destroy();
+    fixture = TestBed.createComponent(CommandCatalogComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    search('administratoren');
+
+    expect(fixture.nativeElement.textContent).not.toContain('.bank balance <player>');
+    expect(fixture.nativeElement.textContent).not.toContain('Nur fuer Administratoren.');
+    expect(fixture.nativeElement.querySelectorAll('celem-command-card').length).toBe(0);
+    expect(resultSummary()).toBe('0 resultsFound');
   });
 
   it('keeps local fallback player commands free of admin-only searchable text', () => {
@@ -417,6 +487,97 @@ function buildAudienceVariantCommands(): CommandCatalogItem[] {
       examples: ['.bank balance'],
       language: 'english',
       sourcePath: 'CelemBank/docs/player/commands.md',
+      sortOrder: 1,
+    },
+  ];
+}
+
+function buildTranslatedCatalogCommands(): CommandCatalogItem[] {
+  return [
+    {
+      id: 'bank-balance-player-brazilian',
+      commandKey: 'celem-bank.account.balance',
+      projectSlug: 'celem-bank',
+      projectName: 'CelemBank',
+      audience: 'player',
+      variantLabel: 'Player',
+      isAdminVariant: false,
+      category: 'Player',
+      command: '.bank balance',
+      aliases: ['.saldo'],
+      permission: 'Player',
+      description: 'Mostra o saldo atual do jogador.',
+      usage: '.bank balance',
+      examples: ['.bank balance'],
+      language: 'brazilian',
+      sourcePath: 'CelemBank/Localization/Commands.json',
+      sortOrder: 1,
+    },
+  ];
+}
+
+function buildEnglishFallbackCommands(): CommandCatalogItem[] {
+  return [
+    {
+      id: 'bank-balance-player-english-fallback',
+      commandKey: 'celem-bank.account.balance',
+      projectSlug: 'celem-bank',
+      projectName: 'CelemBank',
+      audience: 'player',
+      variantLabel: 'Player',
+      isAdminVariant: false,
+      category: 'Player',
+      command: '.bank balance',
+      aliases: [],
+      permission: 'Player',
+      description: 'Shows the current balance for the sender.',
+      usage: '.bank balance',
+      examples: ['.bank balance'],
+      language: 'english',
+      sourcePath: 'CelemBank/Localization/Commands.json',
+      sortOrder: 1,
+    },
+  ];
+}
+
+function buildTranslatedAudienceVariantCommands(): CommandCatalogItem[] {
+  return [
+    {
+      id: 'bank-balance-player-german',
+      commandKey: 'celem-bank.account.balance',
+      projectSlug: 'celem-bank',
+      projectName: 'CelemBank',
+      audience: 'player',
+      variantLabel: 'Player',
+      isAdminVariant: false,
+      category: 'Player',
+      command: '.bank balance',
+      aliases: [],
+      permission: 'Player',
+      description: 'Zeigt deinen aktuellen Kontostand.',
+      usage: '.bank balance',
+      examples: ['.bank balance'],
+      language: 'german',
+      sourcePath: 'CelemBank/Localization/Commands.json',
+      sortOrder: 1,
+    },
+    {
+      id: 'bank-balance-admin-german',
+      commandKey: 'celem-bank.account.balance',
+      projectSlug: 'celem-bank',
+      projectName: 'CelemBank',
+      audience: 'admin',
+      variantLabel: 'Admin',
+      isAdminVariant: true,
+      category: 'Admin',
+      command: '.bank balance <player>',
+      aliases: [],
+      permission: 'Admin',
+      description: 'Nur fuer Administratoren.',
+      usage: '.bank balance <player>',
+      examples: ['.bank balance Luan'],
+      language: 'german',
+      sourcePath: 'CelemBank/Localization/Commands.json',
       sortOrder: 1,
     },
   ];

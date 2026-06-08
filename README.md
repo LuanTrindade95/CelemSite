@@ -192,6 +192,9 @@ Current runtime behavior:
 - `site-command-catalog` returns the role-aware catalog for the authenticated site session.
 - command translations are generated from plugin localization resources in `Celem2026` and compiled into the backend function bundle.
 - the Angular app requests the current site language on every catalog read and falls back to the public endpoint if the protected request is unavailable.
+- the request language uses the 16-language V Rising site set: `english`, `french`, `german`, `spanish`, `brazilian`, `schinese`, `italian`, `hungarian`, `japanese`, `koreana`, `polish`, `russian`, `turkish`, `tchinese`, `thai`, and `ukrainian`.
+- command search runs on the language-specific payload returned by the backend. When a command has translated text for the selected language, that text is searchable; when the backend falls back to English, the English fallback text remains searchable and the item language identifies the fallback.
+- current translation coverage is intentionally conservative and still mostly English fallback. The frontend must not present fallback-backed commands as fully translated coverage.
 - when the backend returns audience variants, `audience` wins over `isAdminVariant`, `variantLabel`, `category`, and permission text; these fallback fields exist only for legacy payload compatibility.
 - frontend visibility remains defensive even when the backend has already filtered the payload: non-admin sessions derive all project lists, audience filters, search, result counts, pagination, grid/list rendering, and copy actions from the player-only visible list.
 - admin-only text must live only in `admin` variants. A `player` variant must not carry admin target syntax, admin examples, or descriptions such as "for admins"; otherwise that text could become searchable in the player experience.

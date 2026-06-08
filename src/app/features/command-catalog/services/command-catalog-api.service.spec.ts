@@ -24,6 +24,9 @@ describe('CommandCatalogApiService', () => {
     service.loadCommands(languageCode).subscribe((commands) => {
       expect(commands.length).toBe(1);
       expect(commands[0].command).toBe('.bank balance');
+      expect(commands[0].audience).toBe('player');
+      expect(commands[0].variantLabel).toBe('Player');
+      expect(commands[0].isAdminVariant).toBeFalse();
     });
 
     const request = http.expectOne((candidate) =>
@@ -36,6 +39,9 @@ describe('CommandCatalogApiService', () => {
         id: '1',
         projectSlug: 'celem-bank',
         projectName: 'CelemBank',
+        audience: 'player',
+        variantLabel: 'Player',
+        isAdminVariant: false,
         category: 'player',
         command: '.bank balance',
         aliases: [],
