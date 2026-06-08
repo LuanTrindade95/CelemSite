@@ -946,8 +946,8 @@ Current CelemSite behavior:
 
 - `CommandCatalogItem` accepts `audience?: "player" | "admin"`, `variantLabel?: string`, and `isAdminVariant?: boolean`.
 - Catalog reads request one of the 16 supported site language codes: `english`, `french`, `german`, `spanish`, `brazilian`, `schinese`, `italian`, `hungarian`, `japanese`, `koreana`, `polish`, `russian`, `turkish`, `tchinese`, `thai`, and `ukrainian`.
-- Search uses only the command items returned for the active language selection and current session visibility. Translated descriptions, aliases, usage, and examples are searchable when present; English fallback text remains searchable when the backend returns an English fallback item for a missing locale.
-- Current generated coverage is still mostly English fallback. The site should expose the selected language and item language honestly instead of treating fallback content as complete localization.
+- Search uses only the command items returned for the active language selection and current session visibility. Catalog descriptions are covered for all supported site languages; executable command syntax, aliases, usage, examples, and placeholders stay sourced from plugin metadata so the UI does not invent commands the server cannot execute.
+- Current generated coverage is complete at the catalog-description layer and tracked in `CelemBackend/docs/command-translation-coverage.md`; generated translations should still be reviewed by native speakers over time.
 - `audience` is the authoritative field when valid; legacy fallback order is `isAdminVariant`, `variantLabel`, `category`, then permission text.
 - Anonymous and non-admin player sessions derive projects, audience filters, search, result counts, pagination, grid/list rendering, and card copy from player-visible variants only.
 - Authenticated admins derive the same UI surfaces from player plus admin variants, including admin-only commands.
